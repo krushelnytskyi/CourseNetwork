@@ -1,5 +1,7 @@
 <?php
 
+use PDO;
+
 // Allow execute this file only from command line
 // Example: > php installation.php
 if (php_sapi_name() === 'cli') {
@@ -45,6 +47,7 @@ class Install
     {
         // TODO: create database installation
         // TODO: from file config/database/version_1.sql
+        // google doc
     }
 
     /**
