@@ -2,29 +2,17 @@
 
 namespace System;
 
+use System\Pattern\Singleton;
+
 /**
  * Class Dispatcher
  * @package System
+ *
+ * @method static Dispatcher getInstance()
  */
 class Dispatcher
 {
-
-    /**
-     * @var Dispatcher|null
-     */
-    private static $instance;
-
-    /**
-     * @return null|Dispatcher
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    use Singleton;
 
     public function dispatch()
     {
@@ -32,17 +20,29 @@ class Dispatcher
 
         // users/login
         list($controller, $action) = explode('/', $url);
-
         $controller = 'MVC\Controllers\\' . ucfirst($controller);
 
-        if (class_exists($controller) === true) {
-            $controller = new $controller();
-
-            $action = $action . 'Action';
-
-            if (method_exists($controller, $action)) {
-                $controller->$action();
+        foreach (Config::getInstance()->get('routes', 'urls') as $configUrl => $rule) {
+            if ($url === $configUrl) {
+                $controller = $rule['controller'];
+                $action = $rule['action'];
             }
+        }
+
+        foreach (Config::getInstance()->get('routes', 'patterns') as $pattern => $rule) {
+            if (preg_match('/' . $pattern . '/', $url) === 1) {
+                $controller = preg_replace('/' . $pattern . '/', $rule['controller'], $url);
+                $action = preg_replace('/' . $pattern . '/', $rule['action'], $url);
+            }
+        }
+
+        $action = $action . 'Action';
+
+        if (class_exists($controller) === true && method_exists($controller, $action)) {
+            $controller = new $controller();
+            $controller->$action();
+        } else {
+            $this->handleNotFound();
         }
     }
 
@@ -55,11 +55,19 @@ class Dispatcher
         if (file_exists($realPath) === true) {
             include_once $realPath;
         } else {
-            include_once APP_ROOT . 'MVC/Views/404.phtml';
+            $this->handleNotFound();
         }
 
         $viewContent = ob_get_clean();
 
         include_once APP_ROOT . 'MVC/Layout/main.phtml';
+    }
+
+    /**
+     * Include 404.phtml view
+     */
+    public function handleNotFound()
+    {
+        $this->display('404');
     }
 }
