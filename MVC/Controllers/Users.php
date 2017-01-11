@@ -3,6 +3,7 @@
 namespace MVC\Controllers;
 
 use System\Dispatcher;
+use PDO;
 
 /**
  * Class Users
@@ -15,7 +16,7 @@ class Users
      * Login action
      */
     public function loginAction()
-    {	    	 
+    {
         Dispatcher::getInstance()->display('users/login');
     }
 

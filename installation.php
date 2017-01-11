@@ -47,7 +47,31 @@ class Install
     {
         // TODO: create database installation
         // TODO: from file config/database/version_1.sql
-        // google doc
+        $dbForConnect = parse_ini_file (APP_ROOT . 'config/database.ini');
+
+        try {
+            $dsn = 'mysql:host=' . $dbForConnect['host'] .';dbname=;charset=utf8';
+            $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+
+        $file = APP_ROOT . 'config/database/version_1.sql';
+
+        if( file_exists($file) == true ) {
+            $file =  file_get_contents( $file );
+            $patern[0] = '/(\/\*.*)/' ;
+            $querys = trim(preg_replace($patern, '', $file));
+            $querys = explode(';', $querys);
+
+            foreach ($querys as $val) {
+                $val = trim($val . ';');
+                $query = $pdo->prepare($val);
+                $query->execute();
+            }
+        }
+
+        $pdo = null;
     }
 
     /**
