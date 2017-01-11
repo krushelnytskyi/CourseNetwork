@@ -43,7 +43,7 @@ class Install
      */
     public function installDatabase()
     {
-        $dbForConnect = parse_ini_file('config/database.ini');
+        $dbForConnect = include 'config/database.php';
 
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] .';dbname=;charset=utf8';
