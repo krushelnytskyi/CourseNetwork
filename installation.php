@@ -1,7 +1,5 @@
 <?php
 
-use PDO;
-
 // Allow execute this file only from command line
 // Example: > php installation.php
 if (php_sapi_name() === 'cli') {
@@ -45,33 +43,29 @@ class Install
      */
     public function installDatabase()
     {
-        // TODO: create database installation
-        // TODO: from file config/database/version_1.sql
-        $dbForConnect = parse_ini_file (APP_ROOT . 'config/database.ini');
+        $dbForConnect = parse_ini_file('config/database.ini');
 
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] .';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
-        } catch (PDOException $e) {
-            die($e->getMessage());
-        }
 
-        $file = APP_ROOT . 'config/database/version_1.sql';
+            $file = 'config/database/version_1.sql';
 
-        if( file_exists($file) == true ) {
-            $file =  file_get_contents( $file );
-            $patern[0] = '/(\/\*.*)/' ;
-            $querys = preg_replace($patern, '', $file);
-            $querys = explode(';', $querys);
+            if (true === file_exists($file)) {
+                $file = file_get_contents($file);
+                $pattern[0] = '/(\/\*.*)/';
+                $queries = preg_replace($pattern, '', $file);
+                $queries = explode(';', $queries);
 
-            foreach ($querys as $val) {
-                $val = trim($val . ';');
-                $query = $pdo->prepare($val);
-                $query->execute();
+                foreach ($queries as $query) {
+                    $query = $pdo->prepare(trim($query . ';'));
+                    $query->execute();
+                }
             }
-        }
 
-        $pdo = null;
+        } catch (PDOException $e) {
+            $this->abort($e->getMessage());
+        }
     }
 
     /**
