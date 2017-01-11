@@ -61,7 +61,7 @@ class Install
         if( file_exists($file) == true ) {
             $file =  file_get_contents( $file );
             $patern[0] = '/(\/\*.*)/' ;
-            $querys = trim(preg_replace($patern, '', $file));
+            $querys = preg_replace($patern, '', $file);
             $querys = explode(';', $querys);
 
             foreach ($querys as $val) {

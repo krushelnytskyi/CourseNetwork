@@ -3,7 +3,6 @@
 namespace MVC\Controllers;
 
 use System\Dispatcher;
-use PDO;
 
 /**
  * Class Users
