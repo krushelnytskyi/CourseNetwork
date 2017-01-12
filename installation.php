@@ -1,7 +1,5 @@
 <?php
 
-use PDO;
-
 // Allow execute this file only from command line
 // Example: > php installation.php
 if (php_sapi_name() === 'cli') {
@@ -45,9 +43,29 @@ class Install
      */
     public function installDatabase()
     {
-        // TODO: create database installation
-        // TODO: from file config/database/version_1.sql
-        // google doc
+        $dbForConnect = include 'config/database.php';
+
+        try {
+            $dsn = 'mysql:host=' . $dbForConnect['host'] .';dbname=;charset=utf8';
+            $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
+
+            $file = 'config/database/version_1.sql';
+
+            if (true === file_exists($file)) {
+                $file = file_get_contents($file);
+                $pattern[0] = '/(\/\*.*)/';
+                $queries = preg_replace($pattern, '', $file);
+                $queries = explode(';', $queries);
+
+                foreach ($queries as $query) {
+                    $query = $pdo->prepare(trim($query . ';'));
+                    $query->execute();
+                }
+            }
+
+        } catch (PDOException $e) {
+            $this->abort($e->getMessage());
+        }
     }
 
     /**

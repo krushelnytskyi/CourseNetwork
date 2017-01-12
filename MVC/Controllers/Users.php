@@ -2,6 +2,7 @@
 
 namespace MVC\Controllers;
 
+use System\Config;
 use System\Dispatcher;
 
 /**
@@ -15,7 +16,7 @@ class Users
      * Login action
      */
     public function loginAction()
-    {	    	 
+    {
         Dispatcher::getInstance()->display('users/login');
     }
 
@@ -25,6 +26,13 @@ class Users
     public function registerAction()
     {
         Dispatcher::getInstance()->display('users/register');
+    }
+
+    public function testAction()
+    {
+        $dbHost
+            = Config::getInstance()->get('database', 'host', 'localhost');
+        var_dump($dbHost);
     }
 
 }
