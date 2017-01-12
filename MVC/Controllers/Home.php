@@ -2,14 +2,14 @@
 
 namespace MVC\Controllers;
 
-use System\Dispatcher;
+use System\MVC\Controllers\BaseController;
 
-class Home
+class Home extends BaseController
 {
 
     public function indexAction()
     {
-        Dispatcher::getInstance()->display('home/index');
+        $this->forward('users/login');
     }
 
 }

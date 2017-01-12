@@ -14,9 +14,11 @@ class Dispatcher
 {
     use Singleton;
 
-    public function dispatch()
+    public function dispatch($url = null)
     {
-        $url = trim($_SERVER['REQUEST_URI'], '/');
+        if (null === $url) {
+            $url = trim($_SERVER['REQUEST_URI'], '/');
+        }
 
         // users/login
         list($controller, $action) = explode('/', $url);
@@ -46,28 +48,11 @@ class Dispatcher
         }
     }
 
-    public function display($viewPath)
-    {
-        $realPath = APP_ROOT . 'MVC/Views/' . $viewPath . '.phtml';
-
-        ob_start();
-
-        if (file_exists($realPath) === true) {
-            include_once $realPath;
-        } else {
-            $this->handleNotFound();
-        }
-
-        $viewContent = ob_get_clean();
-
-        include_once APP_ROOT . 'MVC/Layout/main.phtml';
-    }
-
     /**
      * Include 404.phtml view
      */
     public function handleNotFound()
     {
-        $this->display('404');
+        View::getInstance()->view('404');
     }
 }

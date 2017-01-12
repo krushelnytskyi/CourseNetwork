@@ -4,12 +4,13 @@ namespace MVC\Controllers;
 
 use System\Config;
 use System\Dispatcher;
+use System\MVC\Controllers\BaseController;
 
 /**
  * Class Users
  * @package MVC\Controllers
  */
-class Users
+class Users extends BaseController
 {
 
     /**
@@ -17,7 +18,7 @@ class Users
      */
     public function loginAction()
     {
-        Dispatcher::getInstance()->display('users/login');
+        $this->getView()->view('users/login');
     }
 
     /**
@@ -25,14 +26,7 @@ class Users
      */
     public function registerAction()
     {
-        Dispatcher::getInstance()->display('users/register');
-    }
-
-    public function testAction()
-    {
-        $dbHost
-            = Config::getInstance()->get('database', 'host', 'localhost');
-        var_dump($dbHost);
+        $this->getView()->view('users/register');
     }
 
 }
