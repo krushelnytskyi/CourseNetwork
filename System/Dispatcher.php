@@ -29,10 +29,10 @@ class Dispatcher
     public function dispatch()
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
-
+        
         // users/login
         list($controller, $action) = explode('/', $url);
-
+		
         $controller = 'MVC\Controllers\\' . ucfirst($controller);
 
         if (class_exists($controller) === true) {
