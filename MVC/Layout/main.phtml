@@ -10,9 +10,12 @@
     <script src="/assets/js/application.js"></script>
 </head>
 <body>
+<div class="wrapper">
     <?php include 'menu/guest.phtml'; ?>
-    <div class="container">
-        <?= $viewContent; ?>
-    </div>
+
+    <?= $viewContent; ?>
+
+    <?php include 'footer.phtml'; ?>
+</div>
 </body>
 </html>

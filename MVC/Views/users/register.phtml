@@ -1,5 +1,61 @@
-<form action="/users/login" method="post">
-    <input type="text" name="login">
-    <input type="password" name="password">
-    <button>Log in</button>
-</form>
+<div class="container">
+    <section class="section-login">
+        <div class="row">
+            <div class="col-xl-5 offset-xl-1 loginRegisterLeft no-paddings">
+                <div>
+                    <form action="/users/login" method="post">
+                        <h1>Join CourseNetwork</h1>
+                        <hr>
+                        <div class="form-group d-flex justify-content-end">
+                            <label for="email">Full name</label>
+                            <div class="col-xl-9 no-padding-right">
+                                <input type="text" class="form-control" name="name" id="name">
+                            </div>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-end">
+                            <label for="email">Your email</label>
+                            <div class="col-xl-9 no-padding-right">
+                                <input type="text" class="form-control" name="email" id="email" placeholder="example: youremail@mail.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-end">
+                            <label for="password">Your password</label>
+                            <div class="col-xl-9 no-padding-right">
+                                <input type="password" class="form-control" name="password" id="password">
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <span class="register-notice">
+                                By joining, you agree to our <a href="#">Terms & Conditions</a>
+                            </span>
+                        </div>
+
+                        <div class="text-right">
+                            <button class="btn btn-custom1">Register</button>
+                        </div>
+
+                        <hr>
+                        <div class="register-already-member d-flex justify-content-center">
+                            <span>Already a member?</span>
+                            <a href="/users/login">Sign in</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-xl-5 loginRegisterRight registerRight d-flex  align-items-center">
+                <div>
+                    <h3>Welcome to CourseNetwork!</h3>
+                    <p>Here you'll find the most talented gurus and the best freelance jobs on the market.</p>
+                    <h3>Collaborate with ease.</h3>
+                    <p>Use our work room tools to easily manage your team, workload, and hires.</p>
+                    <h3>Pay and get paid without worry.</h3>
+                    <p>SafePay and other payment security features ensure simple and safe transactions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
