@@ -1,18 +1,47 @@
-<div class="row">
-    <div class="offset-md-3 col-md-6">
-        <form action="/users/login" method="post">
-            <div class="form-group">
-                <label for="email">User email</label>
-                <input type="text" class="form-control" name="email" id="email" placeholder="example: youremail@mail.com">
-            </div>
-            <div class="form-group">
-                <label for="password">User password</label>
-                <input type="password" class="form-control" name="password" id="password">
+<div class="container">
+    <section class="section-login">
+        <div class="row">
+            <div class="col-xl-5 offset-xl-1 loginRegisterLeft no-paddings">
+                <div>
+                    <form action="/ users/login" method="post">
+                        <h1>Sign in to CourseNetwork</h1>
+                        <hr>
+                        <div class="form-group d-flex justify-content-end">
+                            <label for="email">Your email</label>
+                            <div class="col-xl-9 no-padding-right">
+                                <input type="text" class="form-control" name="email" id="email" placeholder="example: youremail@mail.com">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                            <label for="password">Your password</label>
+                            <div class="col-xl-9 no-padding-right">
+                                <input type="password" class="form-control" name="password" id="password">
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <button class="btn btn-custom1">Log in</button>
+                        </div>
+                        <hr>
+                        <div class="login-no-register d-flex justify-content-center">
+                            <span>New to CourseNetwork?</span>
+                            <a href="/users/register">Register</a>
+                            <span>&nbsp;|&nbsp;</span>
+                            <a href="#">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <div class="text-right">
-                <button class="btn btn-primary">Log in</button>
+            <div class="col-xl-5 loginRegisterRight d-flex align-items-center">
+                <div>
+                    <h3>Welcome Back!</h3>
+                    <p>We're glad to count you among the more than 15 people who
+                        have used CourseNetwork to complete over 0 million jobs worth over
+                        $0 million.</p>
+                    <p>Sign in to access the most talented gurus and the best freelance jobs on the market.</p>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </section>
 </div>
