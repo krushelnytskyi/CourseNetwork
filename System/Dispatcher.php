@@ -17,9 +17,18 @@ class Dispatcher
     public function dispatch()
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
-
+        
         // users/login
-        list($controller, $action) = explode('/', $url);
+        $urlParts = explode('/', $url);
+        
+        if (true === isset($urlParts[0])) {
+        	$controller = $urlParts[0];
+        }
+
+        if (true === isset($urlParts[1])) {
+        	$action = $urlParts[1];
+        }
+        
         $controller = 'MVC\Controllers\\' . ucfirst($controller);
 
         foreach (Config::getInstance()->get('routes', 'urls') as $configUrl => $rule) {
