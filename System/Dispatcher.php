@@ -14,10 +14,12 @@ class Dispatcher
 {
     use Singleton;
 
-    public function dispatch()
+    public function dispatch($url = false)
     {
-        $url = trim($_SERVER['REQUEST_URI'], '/');
-        
+        if ($url === false) {
+            $url = trim($_SERVER['REQUEST_URI'], '/');
+        }
+
         // users/login
         $urlParts = explode('/', $url);
         

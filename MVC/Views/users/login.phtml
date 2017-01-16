@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xl-5 offset-xl-1 loginRegisterLeft no-paddings">
                 <div>
-                    <form action="/ users/login" method="post">
+                    <form action="/users/login" method="post">
                         <h1>Sign in to CourseNetwork</h1>
                         <hr>
                         <div class="form-group d-flex justify-content-end">
@@ -30,6 +30,11 @@
                             <a href="#">Forgot password?</a>
                         </div>
                     </form>
+                    <?php if (isset($this->error) === true) : ?>
+                        <div class="alert alert-danger">
+                            <?= $this->error ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

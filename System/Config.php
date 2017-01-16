@@ -21,7 +21,7 @@ class Config
      *
      * @return array|string|null
      */
-    public function get($config, $key, $default = null)
+    public function get($config, $key = [], $default = null)
     {
         $file = APP_ROOT . 'config/' . $config . '.php';
 
