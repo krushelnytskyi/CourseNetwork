@@ -11,6 +11,14 @@ use System\Database\Statement;
 class Select extends Statement
 {
 
+    const ALLOWED_CONDITIONS = [
+        '=', '>', '<', '>=', '<=', '!='
+    ];
+
+    const PATTERN_WHERE        = '%s `%s` %s \'%s\'';
+    const PATTERN_WHERE_IN     = '%s `%s` IN (%s)';
+    const PATTERN_WHERE_NOT_IN = '%s `%s` NOT IN (%s)';
+
     /**
      * @var array|string
      */
@@ -19,17 +27,12 @@ class Select extends Statement
     /**
      * @var string
      */
-    protected $where = '';
+    protected $where;
 
     /**
      * @var string
      */
-    protected $orderBy = '';
-
-    /**
-     * @var array
-     */
-    private $delimiters = ['=', '>', '<', '>=', '<=', '!='];
+    protected $orderBy;
 
     /**
      * @param string|array $columns
@@ -38,25 +41,33 @@ class Select extends Statement
     public function columns($columns = '*')
     {
         if (true == is_array($columns)) {
-            $this->columns = '\'' . implode('\', \'', $columns) . '\'';
+            $this->columns = '`' . implode('`, `', $columns) . '`';
         }
 
         return $this;
     }
 
     /**
-     * @param string $field
-     * @param string $delimiter
-     * @param string $value
-     * @return object $this
+     * @param $field
+     * @param $delimiter
+     * @param $value
+     * @param string $additionalCondition
+     * @return $this
      */
     public function where($field, $delimiter, $value, $additionalCondition = '')
     {
-        if (false == in_array($delimiter, $this->delimiters)) {
+        if (false == in_array($delimiter, static::ALLOWED_CONDITIONS)) {
             return $this;
         }
 
-        $this->where .= $additionalCondition . $field . $delimiter . $value;
+        $this->where .= sprintf(
+            static::PATTERN_WHERE,
+            $additionalCondition,
+            $field,
+            $delimiter,
+            $this->connection->getLink()->real_escape_string($value)
+        );
+
         return $this;
     }
 
@@ -91,6 +102,29 @@ class Select extends Statement
     }
 
     /**
+     * @param $field
+     * @param $values
+     * @param string $additionalCondition
+     * @return $this
+     */
+    public function whereIn($field, $values, $additionalCondition = '')
+    {
+        $this->where .= sprintf(
+            static::PATTERN_WHERE_IN,
+            $additionalCondition,
+            $field,
+            '\'' . implode('\', \'', array_map(
+                function ($value) {
+                    return $this->connection->getLink()->real_escape_string($value);
+                },
+                $values
+            )) . '\''
+        );
+
+        return $this;
+    }
+
+    /**
      * @param string $field
      * @param string $sort
      * @return object $this
@@ -113,16 +147,23 @@ class Select extends Statement
         $sql = 'SELECT ' . $this->columns .
                 ' FROM ' . $this->table;
 
-        if ('' !== $this->where) {
+        if (null !== $this->where) {
             $sql .= ' WHERE ' . $this->where;
         }
 
-        if ('' !== $this->orderBy) {
+        if (null !== $this->orderBy) {
             $sql .= ' ORDER BY ' . $this->orderBy;
         }
 
-        if (0 !== $this->limit) {
-            $sql .= ' LIMIT ' . $this->offset . ',' . $this->limit;
+        if (0 < $this->limit) {
+
+            $sql .= ' LIMIT ';
+
+            if (0 < $this->offset) {
+                $sql .= (int)$this->offset . ', ';
+            }
+
+            $sql .= (int)$this->limit;
         }
 
         $result = $this->connection->getLink()->query($sql);
