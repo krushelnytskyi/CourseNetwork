@@ -79,7 +79,7 @@ class Select extends Statement
      */
     public function andWhere($field, $delimiter, $value)
     {
-        if ('' === $this->where) {
+        if (null === $this->where) {
             return $this;
         }
 
@@ -94,7 +94,7 @@ class Select extends Statement
      */
     public function orWhere($field, $delimiter, $value)
     {
-        if ('' === $this->where) {
+        if (null === $this->where) {
             return $this;
         }
 
@@ -109,8 +109,27 @@ class Select extends Statement
      */
     public function whereIn($field, $values, $additionalCondition = '')
     {
+        return $this->buildWere($field, $values, static::PATTERN_WHERE_IN);
+    }
+
+    /**
+     * @param $field
+     * @param $values
+     * @param string $additionalCondition
+     * @return object $this
+     */
+    public function whereNotIn($field, $values)
+    {
+        return $this->buildWere($field, $values, static::PATTERN_WHERE_NOT_IN);
+    }
+
+    protected function buildWere($field, $values, $additionalCondition)
+    {
+        if (null != $this->where) {
+            $this->where .= ' AND ';
+        }
+
         $this->where .= sprintf(
-            static::PATTERN_WHERE_IN,
             $additionalCondition,
             $field,
             '\'' . implode('\', \'', array_map(
