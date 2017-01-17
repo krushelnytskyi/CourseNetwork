@@ -40,7 +40,7 @@ class Select extends Statement
         if (true == is_array($columns)) {
             $this->columns = '\'' . implode('\', \'', $columns) . '\'';
         }
-        
+
         return $this;
     }
 
