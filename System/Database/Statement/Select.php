@@ -38,9 +38,9 @@ class Select extends Statement
     public function columns($columns = '*')
     {
         if (true == is_array($columns)) {
-            $this->columns = implode(',', $columns);
+            $this->columns = '\'' . implode('\', \'', $columns) . '\'';
         }
-
+        
         return $this;
     }
 
@@ -115,6 +115,14 @@ class Select extends Statement
 
         if ('' !== $this->where) {
             $sql .= ' WHERE ' . $this->where;
+        }
+
+        if ('' !== $this->orderBy) {
+            $sql .= ' ORDER BY ' . $this->orderBy;
+        }
+
+        if (0 !== $this->limit) {
+            $sql .= ' LIMIT ' . $this->offset . ',' . $this->limit;
         }
 
         $result = $this->connection->getLink()->query($sql);
