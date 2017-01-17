@@ -151,7 +151,7 @@ class Select extends Statement
     /**
      * @return $this
      */
-    public function or()
+    public function _or()
     {
         $this->whereCondition = 'OR';
         return $this;
@@ -160,7 +160,7 @@ class Select extends Statement
     /**
      * @return $this
      */
-    public function and()
+    public function _and()
     {
         $this->whereCondition = 'AND';
         return $this;
