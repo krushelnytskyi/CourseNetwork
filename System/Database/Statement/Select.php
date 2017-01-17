@@ -4,6 +4,10 @@ namespace System\Database\Statement;
 
 use System\Database\Statement;
 
+/**
+ * Class Select
+ * @package System\Database\Statement
+ */
 class Select extends Statement
 {
 
@@ -60,7 +64,7 @@ class Select extends Statement
      * @param string $field
      * @param string $delimiter
      * @param string $value
-     * @return objeect $this
+     * @return object $this
      */
     public function andWhere($field, $delimiter, $value)
     {
@@ -68,7 +72,7 @@ class Select extends Statement
             return $this;
         }
 
-        $this->where($field, $delimiter, $value, ' AND');
+        return $this->where($field, $delimiter, $value, ' AND');
     }
 
     /**
@@ -83,7 +87,7 @@ class Select extends Statement
             return $this;
         }
 
-        $this->where($field, $delimiter, $value, ' OR');
+        return $this->where($field, $delimiter, $value, ' OR');
     }
 
     /**
@@ -98,35 +102,6 @@ class Select extends Statement
     }
 
     /**
-     * @param int $start
-     * @param int $finish
-     * @return object $this
-     */
-    public function limit($start = 0, $finish = 0)
-    {
-        if ((int)($start) == 0 && (int)($finish) == 0) {
-            return $this;
-        }
-
-        $this->limit = $start . ',' . $finish;
-        return $this;
-    }
-
-    /**
-     * @param int $offset
-     * @return object $this
-     */
-    public function offset($offset = 0)
-    {
-        if ((int)($offset) == 0) {
-            return $this;
-        }
-
-        $this->offset = $offset;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function execute()
@@ -136,12 +111,22 @@ class Select extends Statement
         }
 
         $sql = 'SELECT ' . $this->columns .
-                ' FROM ' . $this->table .
-                ' WHERE ' . $this->where .
-                ' ORDER BY ' . $this->orderBy .
-                ' OFFSEt ' . $this->offset . ';';
+                ' FROM ' . $this->table;
 
-        return $this->connection->getLink()->query($sql);
+        if ('' !== $this->where) {
+            $sql .= ' WHERE ' . $this->where;
+        }
+
+        $result = $this->connection->getLink()->query($sql);
+        $resultArray = [];
+
+        if (true === $result instanceof \mysqli_result) {
+            while (null !== ($row = $result->fetch_assoc())) {
+                $resultArray[] = $row;
+            }
+        }
+
+        return $resultArray;
     }
 
 }
