@@ -4,8 +4,26 @@ namespace System\Database\Statement;
 
 use System\Database\Statement;
 
+/**
+ * Class Select
+ * @package System\Database\Statement
+ */
 class Select extends Statement
 {
+
+    /**
+     * Allowed conditions for where
+     */
+    const ALLOWED_CONDITIONS = [
+        '=', '>', '<', '>=', '<=', '!='
+    ];
+
+    /**
+     * Where patterns
+     */
+    const PATTERN_WHERE        = '%s `%s` %s \'%s\'';
+    const PATTERN_WHERE_IN     = '%s `%s` IN (%s)';
+    const PATTERN_WHERE_NOT_IN = '%s `%s` NOT IN (%s)';
 
     /**
      * @var array|string
@@ -13,21 +31,182 @@ class Select extends Statement
     protected $columns = '*';
 
     /**
-     * @param $columns
-     * @return $this
+     * @var string
      */
-    public function columns($columns)
+    protected $where;
+
+    /**
+     * @var string
+     */
+    protected $orderBy;
+
+    /**
+     * @var string
+     */
+    protected $whereCondition;
+
+    /**
+     * @param string|array $columns
+     * @return object $this
+     */
+    public function columns($columns = '*')
     {
-        $this->columns = $columns;
+        if (true == is_array($columns)) {
+            $this->columns = '`' . implode('`, `', $columns) . '`';
+        }
+
         return $this;
     }
 
-    public function where($criteria)
+    /**
+     * @param $field
+     * @param $delimiter
+     * @param $value
+     * @return $this
+     */
+    public function where($field, $delimiter, $value)
     {
+        if (false == in_array($delimiter, static::ALLOWED_CONDITIONS)) {
+            return $this;
+        }
+
+        $where = sprintf(
+            static::PATTERN_WHERE,
+            $this->whereCondition,
+            $field,
+            $delimiter,
+            $this->connection->getLink()->real_escape_string($value)
+        );
+
+        if (null !== $this->whereCondition) {
+            $this->where .= $where;
+            $this->whereCondition = null;
+        } else {
+            $this->where = $where;
+        }
+
+        return $this;
     }
 
+    /**
+     * @param $field
+     * @param $values
+     * @return $this
+     */
+    public function whereIn($field, $values)
+    {
+        return $this->buildWere($field, $values, static::PATTERN_WHERE_IN);
+    }
+
+    /**
+     * @param $field
+     * @param $values
+     * @return object $this
+     */
+    public function whereNotIn($field, $values)
+    {
+        return $this->buildWere($field, $values, static::PATTERN_WHERE_NOT_IN);
+    }
+
+    /**
+     * @param $field
+     * @param $values
+     * @param $additionalCondition
+     * @return $this
+     */
+    protected function buildWere($field, $values, $additionalCondition)
+    {
+        if (null !== $this->whereCondition) {
+            $this->where .= ' ' . $this->whereCondition . ' ';
+            $this->whereCondition = null;
+        } else {
+            $this->where = null;
+        }
+
+        $this->where .= sprintf(
+            $additionalCondition,
+            $field,
+            '\'' . implode('\', \'', array_map(
+                function ($value) {
+                    return $this->connection->getLink()->real_escape_string($value);
+                },
+                $values
+            )) . '\''
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param string $field
+     * @param string $sort
+     * @return object $this
+     */
+    public function orderBy($field, $sort = 'ASC')
+    {
+        $this->orderBy = $field . ' ' . $sort;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function _or()
+    {
+        $this->whereCondition = 'OR';
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function _and()
+    {
+        $this->whereCondition = 'AND';
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
     public function execute()
     {
+        if (false == $this->connection->getLink()) {
+            return null;
+        }
+
+        $sql = 'SELECT ' . $this->columns .
+                ' FROM ' . $this->table;
+
+        if (null !== $this->where) {
+            $sql .= ' WHERE ' . $this->where;
+        }
+
+        if (null !== $this->orderBy) {
+            $sql .= ' ORDER BY ' . $this->orderBy;
+        }
+
+        if (0 < $this->limit) {
+
+            $sql .= ' LIMIT ';
+
+            if (0 < $this->offset) {
+                $sql .= (int)$this->offset . ', ';
+            }
+
+            $sql .= (int)$this->limit;
+        }
+
+        $result = $this->connection->getLink()->query($sql);
+        $resultArray = [];
+
+        if (true === $result instanceof \mysqli_result) {
+            while (null !== ($row = $result->fetch_assoc())) {
+                $resultArray[] = $row;
+            }
+        }
+
+        return $resultArray;
     }
 
 }
