@@ -11,10 +11,16 @@ use System\Database\Statement;
 class Select extends Statement
 {
 
+    /**
+     * Allowed conditions for where
+     */
     const ALLOWED_CONDITIONS = [
         '=', '>', '<', '>=', '<=', '!='
     ];
 
+    /**
+     * Where patterns
+     */
     const PATTERN_WHERE        = '%s `%s` %s \'%s\'';
     const PATTERN_WHERE_IN     = '%s `%s` IN (%s)';
     const PATTERN_WHERE_NOT_IN = '%s `%s` NOT IN (%s)';
@@ -35,6 +41,11 @@ class Select extends Statement
     protected $orderBy;
 
     /**
+     * @var string
+     */
+    protected $whereCondition;
+
+    /**
      * @param string|array $columns
      * @return object $this
      */
@@ -51,63 +62,38 @@ class Select extends Statement
      * @param $field
      * @param $delimiter
      * @param $value
-     * @param string $additionalCondition
      * @return $this
      */
-    public function where($field, $delimiter, $value, $additionalCondition = '')
+    public function where($field, $delimiter, $value)
     {
         if (false == in_array($delimiter, static::ALLOWED_CONDITIONS)) {
             return $this;
         }
 
-        $this->where .= sprintf(
+        $where = sprintf(
             static::PATTERN_WHERE,
-            $additionalCondition,
+            $this->whereCondition,
             $field,
             $delimiter,
             $this->connection->getLink()->real_escape_string($value)
         );
 
+        if (null !== $this->whereCondition) {
+            $this->where .= $where;
+            $this->whereCondition = null;
+        } else {
+            $this->where = $where;
+        }
+
         return $this;
-    }
-
-    /**
-     * @param string $field
-     * @param string $delimiter
-     * @param string $value
-     * @return object $this
-     */
-    public function andWhere($field, $delimiter, $value)
-    {
-        if (null === $this->where) {
-            return $this;
-        }
-
-        return $this->where($field, $delimiter, $value, ' AND');
-    }
-
-    /**
-     * @param string $field
-     * @param string $delimiter
-     * @param string $value
-     * @return object $this
-     */
-    public function orWhere($field, $delimiter, $value)
-    {
-        if (null === $this->where) {
-            return $this;
-        }
-
-        return $this->where($field, $delimiter, $value, ' OR');
     }
 
     /**
      * @param $field
      * @param $values
-     * @param string $additionalCondition
      * @return $this
      */
-    public function whereIn($field, $values, $additionalCondition = '')
+    public function whereIn($field, $values)
     {
         return $this->buildWere($field, $values, static::PATTERN_WHERE_IN);
     }
@@ -115,7 +101,6 @@ class Select extends Statement
     /**
      * @param $field
      * @param $values
-     * @param string $additionalCondition
      * @return object $this
      */
     public function whereNotIn($field, $values)
@@ -123,10 +108,19 @@ class Select extends Statement
         return $this->buildWere($field, $values, static::PATTERN_WHERE_NOT_IN);
     }
 
+    /**
+     * @param $field
+     * @param $values
+     * @param $additionalCondition
+     * @return $this
+     */
     protected function buildWere($field, $values, $additionalCondition)
     {
-        if (null != $this->where) {
-            $this->where .= ' AND ';
+        if (null !== $this->whereCondition) {
+            $this->where .= ' ' . $this->whereCondition . ' ';
+            $this->whereCondition = null;
+        } else {
+            $this->where = null;
         }
 
         $this->where .= sprintf(
@@ -151,6 +145,24 @@ class Select extends Statement
     public function orderBy($field, $sort = 'ASC')
     {
         $this->orderBy = $field . ' ' . $sort;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function or()
+    {
+        $this->whereCondition = 'OR';
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function and()
+    {
+        $this->whereCondition = 'AND';
         return $this;
     }
 
