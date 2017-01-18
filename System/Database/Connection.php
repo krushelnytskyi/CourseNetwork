@@ -3,6 +3,7 @@
 namespace System\Database;
 
 use System\Config;
+use System\Database\Statement\Insert;
 use System\Database\Statement\Select;
 use System\Pattern\Singleton;
 
@@ -37,7 +38,7 @@ class Connection
     /**
      * @return \mysqli
      */
-    public function getLink(): \mysqli
+    public function getLink()//: \mysqli
     {
         return $this->link;
     }
@@ -65,7 +66,7 @@ class Connection
 
     public function insert()
     {
-
+        return new Insert();
     }
 
     public function delete()
