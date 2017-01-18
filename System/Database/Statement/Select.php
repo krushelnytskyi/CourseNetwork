@@ -52,7 +52,7 @@ class Select extends Statement
     public function columns($columns = '*')
     {
         if (true == is_array($columns)) {
-            $this->columns = '`' . implode('`, `', $columns) . '`';
+            $this->columns = $this->encodeColumns($columns);
         }
 
         return $this;

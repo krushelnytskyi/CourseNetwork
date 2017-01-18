@@ -67,10 +67,31 @@ abstract class Statement
     }
 
     /**
+     * @param array $columns
+     * @return string
+     */
+    protected function encodeColumns(array $columns)
+    {
+        return '`' . implode('`, `', $columns) . '`';
+    }
+
+    /**
+     * @param array $values
+     * @return string
+     */
+    protected function encodeValues(array $values)
+    {
+        $values = array_map(function($value) {
+            return $this->connection->getLink()->real_escape_string($value);
+        }, $values);
+
+        return '\'' . implode('\', \'', $values) . '\'';
+    }
+
+    /**
      * Build query, execute
      *
      * @return mixed
      */
     abstract public function execute();
-
 }

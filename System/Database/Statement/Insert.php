@@ -4,6 +4,10 @@ namespace System\Database\Statement;
 
 use System\Database\Statement;
 
+/**
+ * Class Insert
+ * @package System\Database\Statement
+ */
 class Insert extends Statement
 {
 
@@ -19,17 +23,19 @@ class Insert extends Statement
 
     /**
      * @param $columns
+     * @return $this
      */
-    public function columns($columns)
+    public function columns(array $columns)
     {
         $this->columns = $columns;
+        return $this;
     }
 
     /**
-     * @param $values
+     * @param array $values
      * @return $this
      */
-    public function values($values)
+    public function values(array $values)
     {
         if (array_values($values) === $values) {
             $this->values = $values;
@@ -46,7 +52,17 @@ class Insert extends Statement
      */
     public function execute()
     {
-        return $this->connection->getLink()->insert_id;
+        $sql = 'INSERT INTO ' . $this->table;
+
+        if (null !== $this->columns) {
+            $sql .= ' (' . $this->encodeColumns($this->columns) . ') ';
+        }
+
+        $sql .= ' VALUES ' . '(' . $this->encodeValues($this->values) . ')';
+
+        $result = $this->connection->getLink()->query($sql);
+
+        return (false === $result) ? false : $this->connection->getLink()->insert_id;
     }
 
 }
