@@ -22,8 +22,8 @@ class Select extends Statement
      * Where patterns
      */
     const PATTERN_WHERE        = '%s `%s` %s \'%s\'';
-    const PATTERN_WHERE_IN     = '%s `%s` IN (%s)';
-    const PATTERN_WHERE_NOT_IN = '%s `%s` NOT IN (%s)';
+    const PATTERN_WHERE_IN     = '`%s` IN (%s)';
+    const PATTERN_WHERE_NOT_IN = '`%s` NOT IN (%s)';
 
     /**
      * @var array|string
@@ -95,26 +95,26 @@ class Select extends Statement
      */
     public function whereIn($field, $values)
     {
-        return $this->buildWere($field, $values, static::PATTERN_WHERE_IN);
+        return $this->buildWhere($field, $values, static::PATTERN_WHERE_IN);
     }
 
     /**
      * @param $field
      * @param $values
-     * @return object $this
+     * @return $this
      */
     public function whereNotIn($field, $values)
     {
-        return $this->buildWere($field, $values, static::PATTERN_WHERE_NOT_IN);
+        return $this->buildWhere($field, $values, static::PATTERN_WHERE_NOT_IN);
     }
 
     /**
      * @param $field
      * @param $values
-     * @param $additionalCondition
+     * @param $pattern
      * @return $this
      */
-    protected function buildWere($field, $values, $additionalCondition)
+    protected function buildWhere($field, $values, $pattern)
     {
         if (null !== $this->whereCondition) {
             $this->where .= ' ' . $this->whereCondition . ' ';
@@ -124,7 +124,7 @@ class Select extends Statement
         }
 
         $this->where .= sprintf(
-            $additionalCondition,
+            $pattern,
             $field,
             '\'' . implode('\', \'', array_map(
                 function ($value) {
@@ -140,7 +140,7 @@ class Select extends Statement
     /**
      * @param string $field
      * @param string $sort
-     * @return object $this
+     * @return $this
      */
     public function orderBy($field, $sort = 'ASC')
     {
