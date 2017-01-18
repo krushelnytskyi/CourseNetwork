@@ -38,7 +38,7 @@ class Connection
     /**
      * @return \mysqli
      */
-    public function getLink()//: \mysqli
+    public function getLink(): \mysqli
     {
         return $this->link;
     }
@@ -59,11 +59,17 @@ class Connection
         return $data;
     }
 
+    /**
+     * @return Select
+     */
     public function select()
     {
         return new Select();
     }
 
+    /**
+     * @return Insert
+     */
     public function insert()
     {
         return new Insert();
