@@ -71,7 +71,7 @@ class Dispatcher
 
         $viewContent = ob_get_clean();
 
-        include_once APP_ROOT . 'MVC/Layout/main.phtml';
+        //include_once APP_ROOT . 'MVC/Layout/main.phtml';
     }
 
     /**

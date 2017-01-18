@@ -70,7 +70,7 @@ class Connection
 
     public function delete()
     {
-
+        return new Delete();
     }
 
     public function update()
