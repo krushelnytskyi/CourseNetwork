@@ -42,11 +42,11 @@ class Insert extends Statement
     }
 
     /**
-     * @return int Last inserted ID
+     * @return int|bool Last inserted ID
      */
     public function execute()
     {
-        $this->values;
+        return $this->connection->getLink()->insert_id;
     }
 
 }
