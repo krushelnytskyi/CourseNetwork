@@ -5,7 +5,6 @@ namespace MVC\Controllers;
 use System\Config;
 use System\Controller;
 use System\Database\Connection;
-use System\Dispatcher;
 
 /**
  * Class Users
