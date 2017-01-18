@@ -10,12 +10,10 @@ class Insert extends Statement
     protected $values;
 
     /**
-     * @param mixed $values
-     *
-     *
-     *
+     * @param $values
+     * @return $this
      */
-    public function setValues($values)
+    public function values($values)
     {
         $this->values = $values;
         return $this;

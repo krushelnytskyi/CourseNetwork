@@ -59,6 +59,16 @@ class Select extends Statement
     }
 
     /**
+     * @param string $field
+     * @return $this
+     */
+    public function count($field = '*')
+    {
+        $this->columns = 'COUNT(' . $field . ') AS count';
+        return $this;
+    }
+
+    /**
      * @param $field
      * @param $delimiter
      * @param $value
