@@ -7,7 +7,23 @@ use System\Database\Statement;
 class Insert extends Statement
 {
 
+    /**
+     * @var array
+     */
+    protected $columns;
+
+    /**
+     * @var array
+     */
     protected $values;
+
+    /**
+     * @param $columns
+     */
+    public function columns($columns)
+    {
+        $this->columns = $columns;
+    }
 
     /**
      * @param $values
@@ -15,13 +31,22 @@ class Insert extends Statement
      */
     public function values($values)
     {
-        $this->values = $values;
+        if (array_values($values) === $values) {
+            $this->values = $values;
+        } else {
+            $this->columns = array_keys($values);
+            $this->values = array_values($values);
+        }
+
         return $this;
     }
 
+    /**
+     * @return int|bool Last inserted ID
+     */
     public function execute()
     {
-        $this->values;
+        return $this->connection->getLink()->insert_id;
     }
 
 }
