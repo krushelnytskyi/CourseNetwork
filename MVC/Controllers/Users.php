@@ -113,7 +113,15 @@ class Users extends Controller
 
     public function testAction()
     {
-        $this->getView()->view('test');
+        $statement = Connection::getInstance()
+            ->select()
+            ->count()
+            ->from('users');
+
+
+        var_dump($statement->execute());
+
+//        $this->getView()->view('test');
     }
 
 }
