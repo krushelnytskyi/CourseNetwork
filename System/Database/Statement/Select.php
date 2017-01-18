@@ -114,7 +114,7 @@ class Select extends Statement
      * @param $additionalCondition
      * @return $this
      */
-    protected function buildWere($field, $values, $additionalCondition)
+    protected function buildWhere($field, $values, $additionalCondition)
     {
         if (null !== $this->whereCondition) {
             $this->where .= ' ' . $this->whereCondition . ' ';
