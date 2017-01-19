@@ -7,9 +7,16 @@ use System\Pattern\Singleton;
 /**
  * Class Session
  * @package System\Auth
+ *
+ * @method static Session getInstance()
  */
 class Session
 {
+
+    /**
+     * Session offset
+     */
+    const IDENTITY = 'IDENTITY';
 
     use Singleton;
 
@@ -26,18 +33,31 @@ class Session
      */
     public function hasIdentity()
     {
+        return true === isset($_SESSION[static::IDENTITY]);
     }
 
     public function setIdentity($identity)
     {
-        $_SESSION[''] = $identity;
+        $_SESSION[static::IDENTITY] = $identity;
     }
 
+    /**
+     * @return null
+     */
     public function getIdentity()
     {
+        if ($this->hasIdentity() === true) {
+            return $_SESSION[static::IDENTITY];
+        } else {
+            return null;
+        }
     }
 
+    /**
+     * Destroying session
+     */
     public function clearIdentity()
     {
+        session_destroy();
     }
 }

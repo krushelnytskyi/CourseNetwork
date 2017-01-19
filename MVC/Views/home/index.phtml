@@ -110,7 +110,7 @@
 <div class="home-container clearfix">
   <section class="section-home section-why-course-network clearfix">
     <div class="container">
-      <h3>Why CourseNetwork?</h3>
+      <h3><?= \System\Auth\Session::getInstance()->getIdentity(); ?></h3>
       <div class="row">
         <div class="col-xl-4">
           <img src="/assets/img/index-page/icons/vault16.png" alt="" class="why-course-newtwor-img">

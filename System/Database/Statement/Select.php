@@ -163,7 +163,10 @@ class Select extends Statement
      */
     public function _or()
     {
-        $this->whereCondition = 'OR';
+        if ($this->where !== null) {
+            $this->whereCondition = ' OR ';
+        }
+
         return $this;
     }
 
@@ -172,7 +175,10 @@ class Select extends Statement
      */
     public function _and()
     {
-        $this->whereCondition = 'AND';
+        if ($this->where !== null) {
+            $this->whereCondition = ' AND ';
+        }
+
         return $this;
     }
 

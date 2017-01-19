@@ -2,9 +2,10 @@
 
 namespace MVC\Controllers;
 
-use System\Config;
+use MVC\Models\User;
+use System\Auth\Session;
 use System\Controller;
-use System\Database\Connection;
+use System\ORM\Repository;
 
 /**
  * Class Users
@@ -19,33 +20,21 @@ class Users extends Controller
     {
         if (true === isset($_POST['email']) && true === isset($_POST['password'])) {
 
-            $connection = Connection::getInstance();
+            /** @var User $user */
+            $user = Repository::getInstance()
+                ->model(User::class)
+                ->findOneBy(
+                    [
+                        'email'    => $_POST['email'],
+                        'password' => User::passwordHash($_POST['password'])
+                    ]
+                );
 
-            if ($connection->getLink() === false) {
-                $this->getView()->assign('error', 'Maintenance mode');
+            if (null === $user) {
+                $this->getView()->assign('error', 'Invalid email or/and password');
             } else {
-                $login = $connection->secureString($_POST['email']);
-                $password =  $connection->secureString($_POST['password']);
-                $options = [
-                    'salt' => md5($password),
-                    //write your own code to generate a suitable salt
-                    'cost' => 12
-                    // the default cost is 10
-                ];
-
-                $hash = password_hash($password, PASSWORD_DEFAULT, $options);
-
-                $query = 'SELECT * FROM users WHERE email=\'' . $login . '\' AND password=\'' . $hash . '\';';
-                $result = $connection->getLink()->query($query);
-
-                if ($result->num_rows === 1) {
-                    $this->forward('home/index');
-                } else {
-                    $this->getView()->assign('error', 'Invalid email or/and password');
-                    mysqli_free_result($result);
-                }
-
-                $connection->getLink()->close();
+                Session::getInstance()->setIdentity($user->getId());
+                $this->forward('home/index');
             }
         }
 
@@ -57,70 +46,35 @@ class Users extends Controller
      */
     public function registerAction()
     {
-        /*register new user */
+        if (isset($_POST['email']) === true && isset($_POST['password']) === true) {
+            $email = $_POST['email'];
+            $password = User::passwordHash($_POST['password']);
 
-        if (!isset($_POST['email']) && !isset($_POST['password']) &&
-            !isset($_POST['name']) ) {
-            $this->getView()->view('users/register');
-        }
-        else {
-            $dbForConnect
-                = Config::getInstance()->get('database');
-            $link = mysqli_connect($dbForConnect['host'], $dbForConnect['username'],
-                $dbForConnect['password'], $dbForConnect['database']);
-            if ($link == FALSE) {
-                echo "Підключення до сервера MySQL неможливе.<br> Спробуйте пізніше";
-                $this->getView()->view('home/index');
-            }
-            $login = $_POST['email'];
-            $password = $_POST['password'];
-            $name = $_POST['name'];
-            $options = [
-                'salt' => md5($password),
-                //write your own code to generate a suitable salt
-                'cost' => 12
-                // the default cost is 10
-            ];
-            $hash = password_hash($password, PASSWORD_DEFAULT, $options);
-            $query_login =
-                "SELECT * FROM users WHERE email='$login';";
-            $result = mysqli_query($link, $query_login);
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            if (!$row){
-                $query =
-                    "INSERT INTO `users` ( `name` , `email` , `password` ) 
-           VALUES ('$name', '$login', '$hash');";
-                $result = mysqli_query($link, $query);
-                if ($result) {
-                    mysqli_free_result($result);
-                    mysqli_close($link);
-                    echo "Вітаємо з успішною реєстрацією". $name.'<br>'
-                        .'Авторизуйтесь, будь-ласка<br>';
-                    $this->getView()->view('users/login');
-                }
-            }
-            else {
-                $message = "Користувач $login вже існує.<br> Змініть email\n";
-                if ($link == FALSE){$message = '';}
-                echo $message;
-                mysqli_free_result($result);
-                mysqli_close($link);
-                $this->getView()->view('users/register');
+            $user = Repository::getInstance()
+                ->model(User::class)
+                ->findOneBy(['email' => $email]);
+
+            if (null === $user) {
+
+                $user = new User();
+                $user->setEmail($email);
+                $user->setName($email);
+                $user->setPassword($password);
+
+                Repository::getInstance()->save($user);
+                $this->forward('users/login');
             }
         }
+
+        $this->getView()->view('users/register');
     }
 
+    /**
+     * Action for controller testing
+     */
     public function testAction()
     {
-        $statement = Connection::getInstance()
-            ->select()
-            ->count()
-            ->from('users');
-
-
-        var_dump($statement->execute());
-
-//        $this->getView()->view('test');
+        $this->getView()->view('test');
     }
 
 }
