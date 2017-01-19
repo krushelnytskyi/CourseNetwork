@@ -20,6 +20,9 @@ class Dispatcher
             $url = trim($_SERVER['REQUEST_URI'], '/');
         }
 
+        $controller = null;
+        $action = null;
+
         // users/login
         $urlParts = explode('/', $url);
         
@@ -49,19 +52,35 @@ class Dispatcher
 
         $action = $action . 'Action';
 
-        if (class_exists($controller) === true && method_exists($controller, $action)) {
-            $controller = new $controller();
-            $controller->$action();
+        if (class_exists($controller) === true && method_exists($controller, $action) === true) {
+            Dispatcher::getInstance()->output($controller, $action);
         } else {
-            $this->handleNotFound();
+            echo ErrorHandler::notFound();
         }
     }
 
     /**
-     * Include 404.phtml view
+     * @param $controller
+     * @param $action
      */
-    public function handleNotFound()
+    public function output($controller, $action)
     {
-        View::getInstance()->view('404');
+        /** @var Controller $controller */
+        try {
+            $controller = new $controller();
+            $controller->init();
+            $result = $controller->$action();
+
+            if ($result instanceof View) {
+                if ($controller->getLayout() !== null) {
+                    $result->layout($controller->getLayout());
+                }
+
+                echo $result->getBody();
+            }
+        } catch (\Exception $exception) {
+            ErrorHandler::errorMessage($exception->getMessage());
+            ErrorHandler::exception();
+        }
     }
 }

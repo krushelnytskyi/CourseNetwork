@@ -26,31 +26,79 @@ class View
     private $variables = [];
 
     /**
-     * @param string $name View name
+     * @var string
      */
-    public function view($name)
-    {
-        $content = $this->getDocument($name, self::TYPE_VIEW);
+    private $innerBody;
 
-        if (($layout = Config::getInstance()->get('app', 'default_layout')) !== null) {
-            $this->assign('content', $content);
-            $this->layout($layout);
-        } else {
-            echo $content;
+    /**
+     * @var null|string
+     */
+    private $innerLayout;
+
+    /**
+     * View constructor.
+     * @param null $view
+     */
+    public function __construct($view = null)
+    {
+        if (null !== $view) {
+            $this->view($view);
         }
     }
 
     /**
-     * @param $name string Layout name
+     * @param $name
+     * @return string
+     */
+    public function view($name)
+    {
+        $this->innerBody = $name;
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return string
      */
     public function layout($name)
     {
-        echo $this->getDocument($name, self::TYPE_LAYOUT);
+        $this->innerLayout = $name;
+        return $this;
     }
 
-    public function assign($name, $value)
+    /**
+     * @return string
+     */
+    public function getBody()
     {
-        $this->variables[$name] = $value;
+        $body = '';
+
+        if ($this->innerBody !== null) {
+            $body = $this->getDocument($this->innerBody, static::TYPE_VIEW);
+        }
+
+        if ($this->innerLayout !== null) {
+            $this->assign('content', $body);
+            $body = $this->getDocument($this->innerLayout, static::TYPE_LAYOUT);
+        }
+
+        return $body;
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function assign($name, $value = null)
+    {
+        if (true === is_array($name)) {
+            $this->variables += $name;
+        } else {
+            $this->variables[$name] = $value;
+        }
+
+        return $this;
     }
 
     /**
@@ -81,9 +129,21 @@ class View
         return null;
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function __isset($name)
     {
         return isset($this->variables[$name]);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getBody();
     }
 
 }

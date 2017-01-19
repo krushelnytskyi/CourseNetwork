@@ -2,13 +2,13 @@
 
 namespace MVC\Controllers;
 
-use System\Controller;
+use System\View;
 
-class Home extends Controller
+class Home extends Abstraction\Front
 {
 
     public function indexAction()
     {
-        $this->getView()->view('home/index');
+        return new View('home/index');
     }
 }

@@ -4,20 +4,22 @@ namespace MVC\Controllers;
 
 use MVC\Models\User;
 use System\Auth\Session;
-use System\Controller;
 use System\ORM\Repository;
+use System\View;
 
 /**
  * Class Users
  * @package MVC\Controllers
  */
-class Users extends Controller
+class Users extends Abstraction\Front
 {
     /**
      * Login action
      */
     public function loginAction()
     {
+        $view = new View();
+
         if (true === isset($_POST['email']) && true === isset($_POST['password'])) {
 
             /** @var User $user */
@@ -31,14 +33,14 @@ class Users extends Controller
                 );
 
             if (null === $user) {
-                $this->getView()->assign('error', 'Invalid email or/and password');
+                $view->assign('error', 'Invalid email or/and password');
             } else {
                 Session::getInstance()->setIdentity($user->getId());
                 $this->forward('home/index');
             }
         }
 
-        $this->getView()->view('users/login');
+        return $view->view('users/login');
     }
 
     /**
@@ -66,15 +68,7 @@ class Users extends Controller
             }
         }
 
-        $this->getView()->view('users/register');
-    }
-
-    /**
-     * Action for controller testing
-     */
-    public function testAction()
-    {
-        $this->getView()->view('test');
+        return new View('users/register');
     }
 
 }
