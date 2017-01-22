@@ -3,9 +3,11 @@
 namespace System\Database;
 
 use System\Config;
+use System\Database\Statement\Update;
 use System\Database\Statement\Delete;
 use System\Database\Statement\Insert;
 use System\Database\Statement\Select;
+
 use System\Pattern\Singleton;
 
 /**
@@ -76,14 +78,22 @@ class Connection
         return new Insert();
     }
 
+    /**
+     *
+     * @return Delete
+     */
     public function delete()
     {
         return new Delete();
     }
 
+    /**
+     *
+     * @return Update
+     */
     public function update()
     {
-
+      return new Update();
     }
 
 }
