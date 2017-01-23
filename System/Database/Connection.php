@@ -3,6 +3,8 @@
 namespace System\Database;
 
 use System\Config;
+use System\Database\Statement\Delete;
+use System\Database\Statement\Insert;
 use System\Database\Statement\Select;
 use System\Pattern\Singleton;
 
@@ -58,14 +60,20 @@ class Connection
         return $data;
     }
 
+    /**
+     * @return Select
+     */
     public function select()
     {
         return new Select();
     }
 
+    /**
+     * @return Insert
+     */
     public function insert()
     {
-
+        return new Insert();
     }
 
     public function delete()

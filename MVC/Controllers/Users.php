@@ -5,7 +5,6 @@ namespace MVC\Controllers;
 use System\Config;
 use System\Controller;
 use System\Database\Connection;
-use System\Dispatcher;
 
 /**
  * Class Users
@@ -62,7 +61,7 @@ class Users extends Controller
 
         if (!isset($_POST['email']) && !isset($_POST['password']) &&
             !isset($_POST['name']) ) {
-            Dispatcher::getInstance()->display('users/register');
+            $this->getView()->view('users/register');
         }
         else {
             $dbForConnect
@@ -71,11 +70,11 @@ class Users extends Controller
                 $dbForConnect['password'], $dbForConnect['database']);
             if ($link == FALSE) {
                 echo "Підключення до сервера MySQL неможливе.<br> Спробуйте пізніше";
-                Dispatcher::getInstance()->display('home/index');
+                $this->getView()->view('home/index');
             }
-            $login = self::SQLSecurity($link, $_POST['email']);
-            $password = self::SQLSecurity($link, $_POST['password']);
-            $name = self::SQLSecurity($link, $_POST['name']);
+            $login = $_POST['email'];
+            $password = $_POST['password'];
+            $name = $_POST['name'];
             $options = [
                 'salt' => md5($password),
                 //write your own code to generate a suitable salt
@@ -97,7 +96,7 @@ class Users extends Controller
                     mysqli_close($link);
                     echo "Вітаємо з успішною реєстрацією". $name.'<br>'
                         .'Авторизуйтесь, будь-ласка<br>';
-                    Dispatcher::getInstance()->display('users/login');
+                    $this->getView()->view('users/login');
                 }
             }
             else {
@@ -106,14 +105,22 @@ class Users extends Controller
                 echo $message;
                 mysqli_free_result($result);
                 mysqli_close($link);
-                Dispatcher::getInstance()->display('users/register');
+                $this->getView()->view('users/register');
             }
         }
     }
 
     public function testAction()
     {
-        $this->getView()->view('test');
+        $statement = Connection::getInstance()
+            ->select()
+            ->count()
+            ->from('users');
+
+
+        var_dump($statement->execute());
+
+//        $this->getView()->view('test');
     }
 
 }
