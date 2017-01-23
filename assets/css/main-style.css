@@ -12,6 +12,8 @@ list of CSS styles for different parts of the site
         --top categories list
     =login, =register pages
     =404 page
+    =admin page
+    =admin menu
 
 To go to one of them use search by keyword (Ctrl+F) '=page_name' or '--section_name'
 */
@@ -196,7 +198,7 @@ body {
     left: 0;
     right: 0;
     height: 40%;
-    top: 55%;
+    top: 58%;
 }
 input#getStartedTitle {
     width: 100%;
@@ -261,6 +263,7 @@ input#getStartedTitle:-moz-placeholder {
 .home-categories-item {
     overflow: hidden;
     margin-bottom: 30px;
+    width: 255px;
 
 }
 .home-categories-item a{
@@ -288,7 +291,7 @@ figure.effect-sadie figcaption::before {
 
 figure.effect-sadie img {
     display: inline-block;
-    width: 255px;
+    width: 100%;
     height: auto;
 }
 
@@ -443,4 +446,63 @@ span.register-notice  {
 }
 .courseNetwork-not-found-copy {
 
+}
+
+/********************=admin page*******************/
+.flexListTable {
+    margin-right: 0;
+}
+.wrapListTable {
+    width: 83.333%;
+}
+.listTable {
+    border-bottom: 1px #e3e3e3 solid;
+}
+
+/********************=admin menu*******************/
+
+.verticalAdminMenu ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.verticalAdminMenu ul li{
+    list-style: none;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s ;
+    -ms-transition: all .4s ;
+    -o-transition: all .4s ;
+    transition: all .4s ;
+}
+.verticalAdminMenu ul li a{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 15px 25px;
+    color: #fff;
+    background-color: #494b71;
+    border-bottom: 1px #595b81 solid;
+
+}
+.verticalAdminMenu ul li a:hover {
+    text-decoration: none;
+}
+.verticalAdminMenu ul li a:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 12px;
+    height: 100%;
+    background-color: #7479ff;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s ;
+    -ms-transition: all .4s ;
+    -o-transition: all .4s ;
+    transition: all .4s ;
+    opacity: 0;
+}
+.verticalAdminMenu ul li:hover a:before {
+
+    opacity: 1;
 }
