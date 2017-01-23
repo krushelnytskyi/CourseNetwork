@@ -2,9 +2,12 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\User;
+use System\Auth\Session;
 use System\Config;
 use System\Controller;
 use System\Database\Connection;
+use System\ORM\Repository;
 
 /**
  * Class Users
@@ -112,15 +115,24 @@ class Users extends Controller
 
     public function testAction()
     {
-        $statement = Connection::getInstance()
-            ->select()
-            ->count()
-            ->from('users');
+        $email = '22@w22.com';
+        $password = '23453rt3w4t4';
 
+        $repo = new Repository(User::class);
 
-        var_dump($statement->execute());
+        /** @var User $user */
+        $user = $repo->findOneBy(
+            [
+                'email' => $email,
+                'password' => $password,
+            ]
+        );
 
-//        $this->getView()->view('test');
+        if ($user !== null) {
+            Session::getInstance()->setIdentity($user->getId());
+            $this->forward('home');
+        }
+
     }
 
 }

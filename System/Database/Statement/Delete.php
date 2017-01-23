@@ -1,6 +1,7 @@
 <?php
 
 namespace System\Database\Statement;
+
 use System\Database\Statement;
 
 /**
@@ -12,10 +13,21 @@ class Delete extends Statement
     /**
      * @var string
      */
+
     public $where = '';
 
-    public $orderbylimit = '';
+    /**
+     * @var string
+     */
+    public $orderByLimit = '';
 
+    /**
+     * @param $expression
+     * @param $variable
+     * @param $delimiter
+     * @param $value
+     * @return $this
+     */
     public function where($expression, $variable, $delimiter, $value)
     {
         if ($expression == 'WHERE' && $this->where === '') {
@@ -27,9 +39,13 @@ class Delete extends Statement
         return $this;
     }
 
-
-    public function orderByLimit ($orderBy, $limit)  {
-
+    /**
+     * @param $orderBy
+     * @param $limit
+     * @return $this
+     */
+    public function orderByLimit ($orderBy, $limit)
+    {
         if (($orderBy != '')&&($limit != 0)&&($orderBy != null)&&($limit != null)) {
             $this->orderByLimit = ' ORDER BY ' . $orderBy . ' LIMIT ' . $limit;
         } else {
@@ -48,7 +64,6 @@ class Delete extends Statement
      */
     public function execute()
     {
-
         $sql = 'DELETE FROM ' . $this->table;
 
         if ($this->where !== '') {
@@ -62,6 +77,6 @@ class Delete extends Statement
         }
 
         return false;
-
     }
+
 }
