@@ -197,7 +197,7 @@ abstract class Statement
      */
     public function _or()
     {
-        $this->whereCondition = ' OR ';
+        $this->whereCondition = ( $this->whereCondition ) ? ' OR ' : '';
         return $this;
     }
 
@@ -206,7 +206,7 @@ abstract class Statement
      */
     public function _and()
     {
-        $this->whereCondition = ' AND ';
+        $this->whereCondition = ( $this->whereCondition ) ? ' AND ' : '';
         return $this;
     }
 

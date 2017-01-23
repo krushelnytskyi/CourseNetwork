@@ -13,7 +13,7 @@ class Update extends Statement
     /**
      * @var array
      */
-    protected $set;
+    protected $set = [];
 
     /**
      * @var array
@@ -29,23 +29,8 @@ class Update extends Statement
 
       foreach ( $set as $key => $value )
       {
-        $this->set = '`' . $key . '`' . ' = ' . '\'' . $value . '\'';
+        $this->set[] = '`' . $key . '`' . ' = ' . '\'' . $value . '\'';
       }
-
-      return $this;
-    }
-
-    /**
-     *
-     * @param string $field
-     * @param string $delimiter
-     * @param string $value
-     * @return $this
-     */
-    public function where( $field, $delimiter, $value )
-    {
-
-      $this->where = '`' . $field . '`' . ' ' . $delimiter . ' ' .  '\'' . $value . '\'';
 
       return $this;
     }
