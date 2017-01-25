@@ -2,10 +2,10 @@
 
 namespace MVC\Controllers;
 
-use System\Config;
+use MVC\Models\User;
+use System\Auth\UserSession;
 use System\Controller;
 use System\Database\Connection;
-use System\Database\Statement\Select;
 
 /**
  * Class Admin
@@ -19,7 +19,12 @@ class Admin extends Controller
    */
   public function mainAction()
   {
-    $this->getView()->view('admin/main');
+    if (UserSession::getInstance()->getIdentity()->getStatus() !== User::STATUS_ADMIN) {
+        $this->getView()->view('404');
+    } else {
+        $this->getView()->view('admin/main');
+    }
+
   }
 
   /**

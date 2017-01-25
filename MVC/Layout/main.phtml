@@ -11,7 +11,12 @@
 </head>
 <body>
 <div class="wrapper">
-    <?php $this->layout('menu/guest'); ?>
+
+    <?php if (\System\Auth\UserSession::getInstance()->getIdentity() === null) : ?>
+        <?php $this->layout('menu/guest'); ?>
+    <? else : ?>
+        <?php $this->layout('menu/user'); ?>
+    <?php endif; ?>
 
     <?= $this->content; ?>
 

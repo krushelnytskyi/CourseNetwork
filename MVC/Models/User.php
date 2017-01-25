@@ -11,6 +11,12 @@ class User
 {
 
     /**
+     *
+     */
+    const STATUS_USER = 0;
+    const STATUS_ADMIN = 1;
+
+    /**
      * @var int
      * @column(id)
      */
@@ -33,6 +39,12 @@ class User
      * @column(password)
      */
     private $password;
+
+    /**
+     * @var int
+     * @column(status)
+     */
+    private $status;
 
     /**
      * @return int
@@ -67,6 +79,14 @@ class User
     }
 
     /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name)
@@ -88,6 +108,24 @@ class User
     public function setPassword(string $password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * @param $password
+     * @return bool|string
+     */
+    public static function hashPassword ($password)
+    {
+        $options = [
+            'salt' => md5($password),
+            //write your own code to generate a suitable salt
+            'cost' => 12
+            // the default cost is 10
+        ];
+
+        $hash = password_hash($password, PASSWORD_DEFAULT, $options);
+
+        return $hash;
     }
 
 }

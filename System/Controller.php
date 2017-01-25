@@ -5,6 +5,10 @@ namespace System;
 abstract class Controller
 {
 
+    public function methodName()
+    {
+    }
+
     /**
      * @return View
      */

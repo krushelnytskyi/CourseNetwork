@@ -66,7 +66,9 @@ class Repository
         }
 
         foreach ($criteria as $field => $value) {
-            $statement->where($this->properties[$field], '=', $value);
+            $statement
+                ->_and()
+                ->where($this->properties[$field], '=', $value);
         }
 
         $rows = $statement->execute();
@@ -106,17 +108,42 @@ class Repository
     }
 
     /**
-     * @param object $model
+     * @param $model
+     * @return bool|int
      */
-    public function save(object $model)
+    public function save($model)
     {
-        // TODO Insert from object
+        $statement = Connection::getInstance()->insert();
+
+        $columns = [];
+        $values = [];
+
+        foreach ($this->properties as $property => $column) {
+            $reflectionProperty = $this->reflection->getProperty($property);
+
+            $reflectionProperty->setAccessible(true);
+
+            $value = $reflectionProperty->getValue($model);
+
+            if ($value !== null) {
+                $columns[] = $this->properties[$reflectionProperty->getName()];
+                $values[] = $value;
+            }
+
+            $reflectionProperty->setAccessible(false);
+        }
+
+        return $statement
+            ->from($this->storage)
+            ->columns($columns)
+            ->values($values)
+            ->execute();
     }
 
     /**
-     * @param array $criteria
+     * @param object $model
      */
-    public function delete(array $criteria)
+    public function delete($model)
     {
     }
 

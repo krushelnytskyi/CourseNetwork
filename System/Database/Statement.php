@@ -197,16 +197,15 @@ abstract class Statement
      */
     public function _or()
     {
-        $this->whereCondition = ' OR ';
+        $this->whereCondition = ($this->where !== null) ? ' OR ' : '';
         return $this;
     }
-
     /**
      * @return $this
      */
     public function _and()
     {
-        $this->whereCondition = ' AND ';
+        $this->whereCondition = ($this->where !== null) ? ' AND ' : '';
         return $this;
     }
 
