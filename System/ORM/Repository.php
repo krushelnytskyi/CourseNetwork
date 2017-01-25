@@ -111,6 +111,26 @@ class Repository
     public function save(object $model)
     {
         // TODO Insert from object
+        
+        //$statement = Connection::getInstance()
+       // ->insert()
+       // ->from($this->storage)
+       // ->columns(...)
+       // ->values(...)
+       // ->execute();
+        
+        
+        
+        $obj = new Insert;
+        $a_name = $a_value = [];
+
+        foreach( $model as $name => $value )
+        {
+        $a_name[] = $name;
+        $a_value[] = $value;
+        }
+        $obj -> columns( $a_name ) -> values( $a_value )
+        return $obj -> execute()
     }
 
     /**
