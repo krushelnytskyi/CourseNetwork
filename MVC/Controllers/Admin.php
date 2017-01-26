@@ -19,12 +19,7 @@ class Admin extends Controller
    */
   public function mainAction()
   {
-    if (UserSession::getInstance()->getIdentity()->getStatus() !== User::STATUS_ADMIN) {
-        $this->getView()->view('404');
-    } else {
-        $this->getView()->view('admin/main');
-    }
-
+    parent::initial();
   }
 
   /**

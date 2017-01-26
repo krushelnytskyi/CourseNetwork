@@ -49,7 +49,7 @@ class User
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -57,7 +57,7 @@ class User
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -65,7 +65,7 @@ class User
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -73,7 +73,7 @@ class User
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -81,7 +81,7 @@ class User
     /**
      * @return int
      */
-    public function getStatus(): int
+    public function getStatus()
     {
         return $this->status;
     }
@@ -89,7 +89,7 @@ class User
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName($name) //string
     {
         $this->name = $name;
     }
@@ -97,7 +97,7 @@ class User
     /**
      * @param string $email
      */
-    public function setEmail(string $email)
+    public function setEmail($email)
     {
         $this->email = $email;
     }
@@ -105,11 +105,17 @@ class User
     /**
      * @param string $password
      */
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
-
+  /**
+   * @param string $password
+   */
+   public function setStatus($status)
+   {
+      $this->status = $status;
+   }
     /**
      * @param $password
      * @return bool|string

@@ -41,8 +41,7 @@ class Users extends Controller
             } else {
                 UserSession::getInstance()
                     ->setIdentity($user->getId());
-
-                $this->forward('home/index');
+                $this->initial();
             }
         }
 
@@ -95,10 +94,17 @@ class Users extends Controller
 
     public function testAction()
     {
-        var_dump(
-            UserSession::getInstance()->
-                getIdentity()
-        );
+      $name = 'yonuferko';
+      $email = 'yonuferko@gmail.com';
+      $password = 'qqq';
+      $repo = new Repository(User::class);
+      $user = new User();
+      $user->setEmail($email);
+      $user->setName($name);
+      $user->setPassword(User::hashPassword($password));
+      $user->setStatus(1);
+      $repo->save($user);
+
 
     }
 

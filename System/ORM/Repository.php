@@ -120,9 +120,7 @@ class Repository
 
         foreach ($this->properties as $property => $column) {
             $reflectionProperty = $this->reflection->getProperty($property);
-
             $reflectionProperty->setAccessible(true);
-
             $value = $reflectionProperty->getValue($model);
 
             if ($value !== null) {
