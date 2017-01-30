@@ -15,6 +15,7 @@ class User
      */
     const STATUS_USER = 0;
     const STATUS_ADMIN = 1;
+    const STATUS_SUPER_ADMIN = 2;
 
     /**
      * @var int
@@ -108,6 +109,14 @@ class User
     public function setPassword(string $password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     /**
