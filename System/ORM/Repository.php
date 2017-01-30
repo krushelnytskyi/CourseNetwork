@@ -110,71 +110,48 @@ class Repository
     /**
      * @param object $model
      */
-    public function save(object $model)
-	//public function save()
+     public function save($model)
     {
-        // TODO Insert from object
-	
-		}
+        $statement = Connection::getInstance()->insert();
+
+        $columns = [];
+        $values = [];
+
+        foreach ($this->properties as $property => $column) {
+            $reflectionProperty = $this->reflection->getProperty($property);
+            $reflectionProperty->setAccessible(true);
+            $value = $reflectionProperty->getValue($model);
+
+            if ($value !== null) {
+                $columns[] = $this->properties[$reflectionProperty->getName()];
+                $values[] = $value;
+            }
+
+            $reflectionProperty->setAccessible(false);
+        }
+
+        return $statement
+            ->from($this->storage)
+            ->columns($columns)
+            ->values($values)
+            ->execute();
+    }
 
     /**
-     * @param array $criteria
+     * @param object $model
      */
-    public function delete(array $criteria, $orderByLimit = null)
+    public function delete($model, $id)
     {
 		
-	$statement = Connection::getInstance()
+		$statement = Connection::getInstance()
 	
             ->delete()
             ->from($this->storage);
+			$statement->where($this->properties['id'], '=', $id);
+			$result = $statement->execute();	
 			
-        foreach ($criteria as $field => $value) {
-            $statement->where($this->properties[$field], '=', $value);
-        }
-		
-		if (null !== $this->orderByLimit) {
-            $statement .= $this->orderByLimit;
-        }
-		
-		$del = $statement->execute();	
+			return $result === false ? 0 : 'видалило '.$id;
 		
 }
-
-public function deleteV2(array $criteria, $orderByLimit = null)
-    {
-		
-	$statement = Connection::getInstance()
 	
-            ->delete()
-            ->from($this->storage);
-			
-			foreach ($criteria as $key => $field) {
-				
-        foreach ($criteria[$key] as $field => $value) {
-			
-			if ($key == 'WHERE') {
-            $statement->where($this->properties[$field], '=', $value);
-			}
-			
-			if ($key == 'OR') {
-            $statement->_or();
-			$statement->where($this->properties[$field], '=', $value);
-			}
-			
-			if ($key == 'AND') {
-            $statement->_and();
-			$statement->where($this->properties[$field], '=', $value);
-			}
-			
-        }
-			}
-		
-		if (null !== $this->orderByLimit) {
-            $statement .= $this->orderByLimit;
-        }
-		
-		$del = $statement->execute();	
-		
-}
-
 }
