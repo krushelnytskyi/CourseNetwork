@@ -2,10 +2,12 @@
 
 namespace MVC\Controllers;
 
-use MVC\Models\Freelancer;
 use MVC\Models\User;
+use System\Auth\Session;
 use System\Auth\UserSession;
+use System\Config;
 use System\Controller;
+use System\Database\Connection;
 use System\ORM\Repository;
 
 /**
@@ -28,7 +30,7 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email' => $email,
+                    'email'    => $email,
                     'password' => User::hashPassword($password)
                 ]
             );
@@ -39,7 +41,8 @@ class Users extends Controller
             } else {
                 UserSession::getInstance()
                     ->setIdentity($user->getId());
-                $this->initial();
+
+                $this->forward('home/index');
             }
         }
 
@@ -61,12 +64,17 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email' => $email,
+                    'email'    => $email,
                 ]
             );
 
             if ($user === null) {
                 $user = new User();
+
+                if ($repo->findBy() == null){
+                    $user->setStatus(User::STATUS_SUPER_ADMIN);
+                }
+
                 $user->setEmail($email);
                 $user->setName($name);
                 $user->setPassword(User::hashPassword($password));
@@ -92,9 +100,10 @@ class Users extends Controller
 
     public function testAction()
     {
-        $repo = new Repository(Freelancer::class);
-        $freelancer = $repo->findOneBy();
-        var_dump($freelancer->getUser());
+        var_dump(
+            UserSession::getInstance()->
+                getIdentity()
+        );
     }
 
 }
