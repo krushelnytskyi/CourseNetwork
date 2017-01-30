@@ -1,0 +1,142 @@
+/********************=user menu*******************/
+.verticalUserMenu {
+    height: 1300px;
+    background-color: #494b71;
+}
+.verticalUserMenu ul {
+    padding-left: 0;
+    margin-bottom: 0;
+
+}
+.verticalUserMenu ul li{
+    list-style: none;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s ;
+    -ms-transition: all .4s ;
+    -o-transition: all .4s ;
+    transition: all .4s ;
+}
+.verticalUserMenu ul li a{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 15px 25px;
+    color: #fff;
+    background-color: #494b71;
+    border-bottom: 1px #595b81 solid;
+
+}
+.verticalUserMenu ul li a:hover {
+    text-decoration: none;
+}
+.verticalUserMenu ul li a:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 12px;
+    height: 100%;
+    background-color: #7479ff;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s ;
+    -ms-transition: all .4s ;
+    -o-transition: all .4s ;
+    transition: all .4s ;
+    opacity: 0;
+}
+.verticalUserMenu ul li:hover a:before {
+
+    opacity: 1;
+}
+.verticalUserMenu-img   {
+    margin:0;
+    padding: auto;
+    width: 100%;
+    height: 100%;
+
+}
+.verticalUserMenu-img img {
+    width: 160px;
+    height: 160px;
+    border-radius: 40px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.verticalUserMenu-img p {
+    margin-left: 20px;
+    margin-top: 10px;
+    color: white;
+}
+.main-user   {
+
+    text-align: center;
+}
+.main-user  img {
+    margin-top: 20px;
+}
+.main-user p {
+    font: 18px Tahoma, sans-serif;
+    text-align: justify;
+}
+.main-user h1 {
+    font: 36px Italic, sans-serif;
+}
+.main-user h2 {
+    font-weight: bold;
+}
+.main-user h3 {
+    text-align: left;
+    margin-top: 30px;
+}
+.main-user ul li {
+    text-align: left;
+}
+.setting-user  {
+    width: 1277px;
+    background-image: url("/assets/img/user-page/setting/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 100px;
+
+}
+.setting-user label {
+    font-weight: bold;
+}
+.portfolio-user {
+    width: 1277px;
+    background-image: url("/assets/img/user-page/setting/background.jpg");
+    background-repeat: no-repeat;
+
+    background-size: cover;
+    padding-top: 10%;
+
+}
+.thumbnail img {
+    width: 100%;
+}
+/***************************** */
+.jobs-user {
+    padding-top: 50px;
+}
+.table-bordered th  {
+    width: 155px;
+    text-align: center;
+}
+.table-bordered tr  {
+    text-align: center;
+}
+.table-bordered th:nth-child(1)  {
+    width: 40px;
+}
+.table-bordered th:nth-child(2)  {
+    width: 270px;
+}
+.menuinfo-user  {
+    width: 1277px;
+    background-image: url("/assets/img/user-page/setting/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 60px;
+    text-align: justify;
+}
