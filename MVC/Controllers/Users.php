@@ -70,6 +70,11 @@ class Users extends Controller
 
             if ($user === null) {
                 $user = new User();
+
+                if ($repo->findBy() == NULL){
+                    $user->setStatus(User::STATUS_SUPER_ADMIN);
+                }
+
                 $user->setEmail($email);
                 $user->setName($name);
                 $user->setPassword(User::hashPassword($password));
@@ -99,7 +104,8 @@ class Users extends Controller
             UserSession::getInstance()->
                 getIdentity()
         );
-
     }
+
+
 
 }
