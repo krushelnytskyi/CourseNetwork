@@ -13,17 +13,19 @@ use System\Database\Connection;
  */
 class Projects extends Controller
 {
-  /**
-   * Search Projects Action
-   */
-  public function searchAction() {
-    $this->getView()->view('projects/search');
-  }
+    /**
+     * Search Projects Action
+     */
+    public function searchAction()
+    {
+        $this->getView()->view('projects/search');
+    }
 
-  /**
-   * Create Project Action
-   */
-  public function createAction() {
-    $this->getView()->view('projects/create');
-  }
+    /**
+     * Create Project Action
+     */
+    public function createAction()
+    {
+        $this->getView()->view('projects/create');
+    }
 }

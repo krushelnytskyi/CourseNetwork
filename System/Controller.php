@@ -8,20 +8,6 @@ abstract class Controller
 
     public function initial()
     {
-        $hasIdentity = UserSession::getInstance()->hasIdentity();
-        if(false === $hasIdentity ){
-          $this->getView()->view('404');
-        }  else {
-              $status = UserSession::getInstance()->getIdentity()->getStatus();
-              if ($status === (string) User::STATUS_ADMIN) {
-                  $this->getView()->view('admin/users');
-              };
-              if ($status === (string) User::STATUS_USER) {
-                  $this->getView()->view('home/index');
-              };
-        }
-
-
     }
 
     /**

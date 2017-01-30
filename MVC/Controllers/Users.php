@@ -2,12 +2,10 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Freelancer;
 use MVC\Models\User;
-use System\Auth\Session;
 use System\Auth\UserSession;
-use System\Config;
 use System\Controller;
-use System\Database\Connection;
 use System\ORM\Repository;
 
 /**
@@ -30,7 +28,7 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email'    => $email,
+                    'email' => $email,
                     'password' => User::hashPassword($password)
                 ]
             );
@@ -63,7 +61,7 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email'    => $email,
+                    'email' => $email,
                 ]
             );
 
@@ -94,18 +92,9 @@ class Users extends Controller
 
     public function testAction()
     {
-      $name = 'yonuferko';
-      $email = 'yonuferko@gmail.com';
-      $password = 'qqq';
-      $repo = new Repository(User::class);
-      $user = new User();
-      $user->setEmail($email);
-      $user->setName($name);
-      $user->setPassword(User::hashPassword($password));
-      $user->setStatus(1);
-      $repo->save($user);
-
-
+        $repo = new Repository(Freelancer::class);
+        $freelancer = $repo->findOneBy();
+        var_dump($freelancer->getUser());
     }
 
 }

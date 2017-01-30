@@ -116,6 +116,12 @@ class User
    {
       $this->status = $status;
    }
+
+    public function getPlan()
+    {
+        // @todo return Plan Model class
+    }
+
     /**
      * @param $password
      * @return bool|string

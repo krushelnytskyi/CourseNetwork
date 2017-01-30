@@ -14,36 +14,49 @@ use System\Database\Connection;
 class Admin extends Controller
 {
 
-  /**
-   * Main admin-page Action
-   */
-  public function mainAction()
-  {
-    parent::initial();
-  }
-
-  /**
-   * List of users Action
-   */
-  public function usersAction()
-  {
-    $dbConnect = Connection::getInstance();
-    
-    if ($dbConnect->getLink() === false)
+    /**
+     * @inheritdoc
+     */
+    public function initial()
     {
-      $this->getView()->assign('error', 'Boss, we have problems with database connection');
+        $hasIdentity = UserSession::getInstance()->hasIdentity();
+
+        if (false === $hasIdentity || UserSession::getInstance()->getIdentity()->getStatus() === User::STATUS_USER) {
+            $this->getView()->view('404');
+            exit(0);
+        }
     }
-    
-    $usersList = $dbConnect->select()
-                           ->from('users')
-                           ->execute();
-    
-    /* Uncomment for $usersList reverse sort */
-    //$usersList = array_reverse($usersList);
 
-    $this->getView()->assign('list', $usersList);
 
-    $this->getView()->view('admin/users');
-  }
+    /**
+     * Main admin-page Action
+     */
+    public function mainAction()
+    {
+        $this->getView()->view('admin/main');
+    }
+
+    /**
+     * List of users Action
+     */
+    public function usersAction()
+    {
+        $dbConnect = Connection::getInstance();
+
+        if ($dbConnect->getLink() === false) {
+            $this->getView()->assign('error', 'Boss, we have problems with database connection');
+        }
+
+        $usersList = $dbConnect->select()
+            ->from('users')
+            ->execute();
+
+        /* Uncomment for $usersList reverse sort */
+        //$usersList = array_reverse($usersList);
+
+        $this->getView()->assign('list', $usersList);
+
+        $this->getView()->view('admin/users');
+    }
 
 }
