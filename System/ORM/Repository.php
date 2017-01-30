@@ -66,7 +66,9 @@ class Repository
         }
 
         foreach ($criteria as $field => $value) {
-            $statement->where($this->properties[$field], '=', $value);
+            $statement
+                ->_and()
+                ->where($this->properties[$field], '=', $value);
         }
 
         $rows = $statement->execute();
@@ -88,7 +90,6 @@ class Repository
         }
 
         return $models;
-		
     }
 
     /**
@@ -98,9 +99,8 @@ class Repository
     public function findOneBy(array $criteria = [])
     {
         $models = $this->findBy($criteria, 1);
-        
+
         if (isset($models[0]) === true) {
-			
             return $models[0];
         }
 
@@ -108,9 +108,10 @@ class Repository
     }
 
     /**
-     * @param object $model
+     * @param $model
+     * @return bool|int
      */
-     public function save($model)
+    public function save($model)
     {
         $statement = Connection::getInstance()->insert();
 
@@ -140,18 +141,9 @@ class Repository
     /**
      * @param object $model
      */
-    public function delete($model, $id)
+    public function delete($model)
     {
-		
-		$statement = Connection::getInstance()
 	
-            ->delete()
-            ->from($this->storage);
-			$statement->where($this->properties['id'], '=', $id);
-			$result = $statement->execute();	
-			
-			return $result === false ? 0 : 'видалило '.$id;
-		
 }
-	
+		
 }

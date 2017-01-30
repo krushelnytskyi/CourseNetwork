@@ -10,12 +10,12 @@ use System\Database\Statement;
  */
 class Delete extends Statement
 {
-    
+
     /**
      * @var string
      */
     public $orderByLimit = '';
-	
+
 
     /**
      * @param $orderBy
@@ -26,7 +26,7 @@ class Delete extends Statement
     {
         if (($orderBy != '')&&($limit != 0)&&($orderBy != null)&&($limit != null)) {
             $this->orderByLimit = ' ORDER BY ' . $orderBy . ' LIMIT ' . $limit;
-			
+
         } else {
             $this->orderByLimit = null;
         }
@@ -40,7 +40,7 @@ class Delete extends Statement
      * DELETE
      * @return int
      */
-	public function execute()
+    public function execute()
     {
         if (false == $this->connection->getLink()) {
             return null;
@@ -57,7 +57,8 @@ class Delete extends Statement
         }
 
         $result = $this->connection->getLink()->query($sql);
-        
+
+        return $result === false ? 0 : $this->connection->getLink()->affected_rows;
     }
-	
+
 }

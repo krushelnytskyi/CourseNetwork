@@ -7,9 +7,16 @@ use System\Pattern\Singleton;
 /**
  * Class Session
  * @package System\Auth
+ *
+ * @method static Session getInstance()
  */
 class Session
 {
+
+    /**
+     * $_SESSION key constant
+     */
+    const IDENTITY = 'IDENTITY';
 
     use Singleton;
 
@@ -21,109 +28,36 @@ class Session
         session_start();
     }
 
-	
     /**
      * @return bool $_SESSION['identity']
      */
-    public function hasIdentity($login)
+    public function hasIdentity()
     {
-		
-		$hasIdentity = false;
-		
-		
-		foreach ($_SESSION as $key => $value) {
-			
-			
-			if ($value['login'] === $login) {
-				
-				$hasIdentity = true;
-			}
-			
-			
-		}
-		return $hasIdentity;
-		
-    }
-	
-	
-	
-    /**
-     * Set identity of session array into $_SESSION
-	 * for a one user who entered
-     */
-    public function setIdentity($identity, $sessArr)
-    {
-		
-		if ( ($identity !== null)&&($identity !== '')&&(is_array($sessArr)) ) {
-			
-		
-		$_SESSION[$identity] = $sessArr;
-		
-     }
-	 
-    }
-	
-	
-	
-    /**
-     * Return identity of session array
-	 * for a one user with login $login 
-     */
-    public function getIdentity($login)
-    {
-		
-		
-		foreach ($_SESSION as $key => $value) {
-			
-			
-			if ($value['login'] === $login) {
-				
-				return $key;
-			}
-			
-			
-		}
-		
+        return isset($_SESSION[static::IDENTITY]);
     }
 
-	
-	
-	/**
-     * Delete session for a one user with login $login 
-	 * from superglobal array $_SESSION
+    /**
+     * @param $identity
      */
-    public function clearIdentity($login)
+    public function setIdentity($identity)
     {
-		
-		$clearIdentity = false;
-		
-		
-		foreach ($_SESSION as $key => $value) {
-			
-			
-			if ($value['login'] === $login) {
-				
-		
-				unset ($_SESSION[$key]);
-				
-				
-				//if (count($_SESSION) == 0) { 
-				
-		        //session_destroy();
-				
-			     //}
-				
-				
-				$clearIdentity = true;
-				
-			}
-			
-			
-		}
-	
-		
-		return $clearIdentity;
+        $_SESSION[static::IDENTITY] = $identity;
     }
-	
-	
+
+    /**
+     * @return null|string
+     */
+    public function getIdentity()
+    {
+        return $_SESSION[static::IDENTITY];
+    }
+
+    /**
+     * Clear identity
+     */
+    public function clearIdentity()
+    {
+        session_unset();
+    }
 }
+
