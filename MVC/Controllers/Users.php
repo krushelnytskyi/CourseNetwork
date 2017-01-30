@@ -71,7 +71,7 @@ class Users extends Controller
             if ($user === null) {
                 $user = new User();
 
-                if ($repo->findBy() == NULL){
+                if ($repo->findBy() == null){
                     $user->setStatus(User::STATUS_SUPER_ADMIN);
                 }
 
