@@ -110,13 +110,6 @@ class User
     {
         $this->password = $password;
     }
-  /**
-   * @param string $password
-   */
-   public function setStatus($status)
-   {
-      $this->status = $status;
-   }
 
     public function getPlan()
     {
