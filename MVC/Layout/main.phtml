@@ -1,8 +1,26 @@
 <html>
 <head>
     <title>Course Network</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="/assets/css/main-style.css">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/application.js"></script>
 </head>
 <body>
-    <?= $viewContent; ?>
+<div class="wrapper">
+
+    <?php if (\System\Auth\UserSession::getInstance()->getIdentity() === null) : ?>
+        <?php $this->layout('menu/guest'); ?>
+    <? else : ?>
+        <?php $this->layout('menu/user'); ?>
+    <?php endif; ?>
+
+    <?= $this->content; ?>
+
+    <?php $this->layout('footer'); ?>
+</div>
 </body>
 </html>
