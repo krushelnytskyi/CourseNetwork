@@ -143,8 +143,19 @@ class Repository
     /**
      * @param object $model
      */
-    public function delete($model)
+    public function delete($model, $id)
     {
-    }
+
+            $statement = Connection::getInstance()
+	
+            ->delete()
+            ->from($this->storage);
+			
+			$statement->where($this->properties['id'], '=', $id);
+			$result = $statement->execute();	
+			
+			return $result === false ? 0 : 'видалило '.$id;
+		
+}
 
 }
