@@ -59,7 +59,6 @@ class Insert extends Statement
         }
 
         $sql .= ' VALUES ' . '(' . $this->encodeValues($this->values) . ')';
-
         $result = $this->connection->getLink()->query($sql);
 
         return (false === $result) ? false : $this->connection->getLink()->insert_id;
