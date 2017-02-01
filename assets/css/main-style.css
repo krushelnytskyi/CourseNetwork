@@ -45,6 +45,9 @@ body {
     padding-left: 0;
     padding-right: 0;
 }
+.no-mg-rt {
+    margin-right: 0;
+}
 .mg-bt {
     margin-bottom: 80px;
 }
@@ -474,64 +477,121 @@ span.register-notice  {
 }
 
 /********************=admin page*******************/
+
+.admin-panel__title {
+    color: #555555;
+    font-size: 32px;
+    font-weight: normal;
+    float: none;
+    text-shadow: 0 1px 0 #ffffff;
+    margin: 20px 10px 10px 20px;
+    position: relative;
+}
+
 .flexListTable {
     margin-right: 0;
 }
-.wrapListTable {
-    width: 83.333%;
-}
-.listTable {
-    border-bottom: 1px #e3e3e3 solid;
-}
 
+.listTable {
+    border: 1px #e3e3e3 solid;
+}
+.listTable td {
+    background-color: #fcfcfc;
+}
 /********************=admin menu*******************/
 
+.verticalAdminMenu .admin-label {
+    background-color: #1F262D;
+    font-size: 20px;
+    font-weight: 600;
+    color: #efefef;
+    padding: 15px 25px;
+    text-shadow: 0 1px 0 rgba(235, 235, 235, 0.61);
+}
+
+.verticalAdminMenu .admin-label span {
+    color: #5975ff;
+}
+
 .verticalAdminMenu ul {
+    min-height: 900px;
     padding-left: 0;
     margin-bottom: 0;
+    background-color: #2E363F;
 }
 .verticalAdminMenu ul li{
     list-style: none;
-    -webkit-transition: all .4s;
-    -moz-transition: all .4s ;
-    -ms-transition: all .4s ;
-    -o-transition: all .4s ;
-    transition: all .4s ;
+
 }
 .verticalAdminMenu ul li a{
     position: relative;
     display: inline-block;
     width: 100%;
-    padding: 15px 25px;
-    color: #fff;
-    background-color: #494b71;
-    border-bottom: 1px #595b81 solid;
-
+    padding: 10px 25px;
+    color: #939da8;
+    font-size: 14px;
+    border-top: 1px solid #37414b;
+    border-bottom: 1px solid #1f262d;
 }
+
+.verticalAdminMenu ul li a.active {
+    background-color: #7479ff;
+    border-bottom: 1px solid #27a9e3;
+    border-top: 1px solid #27a9e3;
+    color: #fff;
+}
+
 .verticalAdminMenu ul li a:hover {
     text-decoration: none;
+    background-color: #7479ff;
+    color: #fff;
+
+
 }
-.verticalAdminMenu ul li a:before{
+
+.verticalAdminMenu ul li a.active:before{
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 12px;
-    height: 100%;
-    background-color: #7479ff;
-    -webkit-transition: all .4s;
-    -moz-transition: all .4s ;
-    -ms-transition: all .4s ;
-    -o-transition: all .4s ;
-    transition: all .4s ;
-    opacity: 0;
-}
-.verticalAdminMenu ul li:hover a:before {
-
-    opacity: 1;
+    top: 50%;
+    margin-top: -7px;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 7px solid #f8f8f8;
+    border-bottom: 7px solid transparent;
 }
 
+.verticalAdminMenu li a i {
+    margin-right: 10px;
+    opacity: .6;
+}
+/********************=admin breadcrumbs*******************/
+
+.admin-panel-wrap {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.admin-panel-wrap #breadcrumbs {
+    background-color: #fff;
+    border-bottom: 1px solid #e3ebed;
+}
+
+.admin-panel-wrap #breadcrumbs a {
+    padding: 8px 20px 8px 10px;
+    display: inline-block;
+    background-image: url(/assets/img/icons/breadcrumb.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    font-size: 11px;
+    color: #666666;
+}
+
+.admin-panel-wrap #breadcrumbs a i {
+    margin-right: 5px;
+    opacity: .6;
+}
 /********************=projects page*******************/
 .project-search-wrap {
     position: relative;
