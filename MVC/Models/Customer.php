@@ -1,17 +1,15 @@
 <?php
 
 namespace MVC\Models;
-
 use System\ORM\Repository;
 
 /**
- * Class Freelancer
+ * Class Customer
  * @package MVC\Models
- * @table(freelancers)
+ * @table(customers)
  */
-class Freelancer
+class Customer
 {
-
     /**
      * @var int
      * @column(id)
@@ -20,9 +18,9 @@ class Freelancer
 
     /**
      * @var float
-     * @column(rate)
+     * @column(rating)
      */
-    private $rate;
+    private $rating;
 
     /**
      * @var int
@@ -34,22 +32,30 @@ class Freelancer
      * @var int
      * @column(user_id)
      */
-    private $user;
+    private $user_id;
 
     /**
-     * @return int
+     * @return int id | null
      */
-    public function getId()//: int
+    public function getId()
     {
+        $repo = new Repository(Customer::class);
+        $this->id = (int) $repo->findOneBy([
+        'user_id'=>$this->user_id
+        ])->id;
         return $this->id;
     }
 
     /**
      * @return float
      */
-    public function getRate()//: float
+    public function getRating()
     {
-        return $this->rate;
+      $repo = new Repository(Customer::class);
+      $this->rating = (float) $repo->findOneBy([
+        'user_id'=>$this->user_id
+      ])->rating;
+        return $this->rating;
     }
 
     /**
@@ -65,40 +71,40 @@ class Freelancer
             ]
         );
     }
-
     /**
      * @return User|null
      */
     public function getUser()
     {
         $repo = new Repository(User::class);
-
         return $repo->findOneBy([
-            'id' => $this->user
+            'id' => $this->user_id
         ]);
     }
 
-    /**
-     * @param float $rate
-     */
-    public function setRate($rate) //float $rate
-    {
-        $this->rate = $rate;
-    }
+
 
     /**
      * @param int $plan
      */
-    public function setPlan($plan) //int $plan
+    public function setPlan($plan)
     {
         $this->plan = $plan;
     }
 
     /**
-     * @param int $user
+     * @param int $user_id
      */
-    public function setUser($user) //int $user
+    public function setUser($user_id)
     {
-        $this->user = $user;
+        $this->user_id = $user_id;
+    }
+
+  /**
+   * @param decimal $rating
+   */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
     }
 }

@@ -130,8 +130,7 @@ class Repository
 
             $reflectionProperty->setAccessible(false);
         }
-
-        return $statement
+         return $statement
             ->from($this->storage)
             ->columns($columns)
             ->values($values)

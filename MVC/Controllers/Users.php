@@ -2,6 +2,9 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Customer;
+use MVC\Models\Freelancer;
+use MVC\Models\Project;
 use MVC\Models\User;
 use System\Auth\Session;
 use System\Auth\UserSession;
@@ -100,10 +103,7 @@ class Users extends Controller
 
     public function testAction()
     {
-        var_dump(
-            UserSession::getInstance()->
-                getIdentity()
-        );
+
     }
 
 }
