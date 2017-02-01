@@ -143,7 +143,27 @@ class Repository
      */
     public function delete($model)
     {
-	
+		$statement = Connection::getInstance()
+        ->delete()
+        ->from($this->storage);
+		 
+		foreach ($this->properties as $property => $key) {
+			
+		$reflectionProperty = $this->reflection->getProperty($this->properties[$key]);
+        $reflectionProperty->setAccessible(true);
+        $value = $reflectionProperty->getValue($model);
+	    $reflectionProperty->setAccessible(false);
+			
+		$statement
+                ->_and()
+                ->where($this->properties[$key], '=', $value);
+       	
+		}
+			
+		$result = $statement->execute();
+			
+		return $result === false ? 0 : 'видалило нарешті';
+		
 }
 		
 }
