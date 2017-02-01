@@ -162,7 +162,7 @@ class Repository
 			
 		$result = $statement->execute();
 			
-		return $result === false ? 0 : 'видалило нарешті';
+		return $result === false ? 0 : 1;
 		
 }
 		
