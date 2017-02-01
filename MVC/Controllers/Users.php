@@ -45,7 +45,7 @@ class Users extends Controller
                 UserSession::getInstance()
                     ->setIdentity($user->getId());
 
-                $this->forward('home/index');
+                $this->forward('user/main');
             }
         }
 
@@ -61,6 +61,7 @@ class Users extends Controller
             $name = $_POST['name'];
             $email = $_POST['email'];
             $password = $_POST['password'];
+            $role = $_POST['role'];
 
             $repo = new Repository(User::class);
 
@@ -74,17 +75,39 @@ class Users extends Controller
             if ($user === null) {
                 $user = new User();
 
-                if ($repo->findBy() == null){
-                    $user->setStatus(User::STATUS_SUPER_ADMIN);
+                if ($repo->findAll() == null){
+                    $user->setRole(User::ROLE_SUPER_ADMIN);
                 }
 
                 $user->setEmail($email);
                 $user->setName($name);
                 $user->setPassword(User::hashPassword($password));
 
-                $repo->save($user);
+                if ($role === User::ROLE_CUSTOMER
+                    || $role === User::ROLE_FREELANCER
+                ) {
+                    if ($role === User::ROLE_CUSTOMER) {
+                        $subRepository = new Repository(Customer::class);
+                        $subUser = new Customer();
+                        $subUser->setUser($user->getId());
+                    } else {
+                        $subRepository = new Repository(Freelancer::class);
+                        $subUser = new Freelancer();
 
-                $this->forward('users/login');
+                    }
+
+                    $user->setRole($role);
+
+                    $userId = $repo->save($user);
+
+                    $subUser->setUser($userId);
+                    $subRepository->save($subUser);
+
+                    $this->forward('users/login');
+                } else {
+                    $this->getView()
+                        ->assign('error', 'Select your website role');
+                }
 
             } else {
                 $this->getView()
@@ -99,11 +122,6 @@ class Users extends Controller
     {
         UserSession::getInstance()->clearIdentity();
         $this->forward('users/login');
-    }
-
-    public function testAction()
-    {
-
     }
 
 }

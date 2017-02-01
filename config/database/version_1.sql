@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `rating` decimal(4,2) DEFAULT NULL,
-  `plan_id` int(11) NOT NULL,
+  `plan_id` int(11) DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -31,20 +31,29 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `status` int(1) DEFAULT '0',
+  `role` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
-  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `finish` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `start` TIMESTAMP,
+  `finish` TIMESTAMP,
   `status` int(1) DEFAULT '0',
   `cost` int(7) DEFAULT '0',
   `paid` int(1) DEFAULT '0',
   `freelancer` int(11) ,
   `customer` int(11) ,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL UNIQUE,
+  `description` TEXT,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -2,10 +2,12 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Category;
 use MVC\Models\User;
 use System\Auth\UserSession;
 use System\Controller;
 use System\Database\Connection;
+use System\ORM\Repository;
 
 /**
  * Class Admin
@@ -21,10 +23,10 @@ class Admin extends Controller
     {
         $hasIdentity = UserSession::getInstance()->hasIdentity();
 
-        if (false === $hasIdentity || UserSession::getInstance()->getIdentity()->getStatus() === User::STATUS_USER) {
-            $this->getView()->view('404');
-            exit(0);
-        }
+//        if (false === $hasIdentity || UserSession::getInstance()->getIdentity()->getRole() !== User::STATUS_USER) {
+//            $this->getView()->view('404');
+//            exit(0);
+//        }
     }
 
 
@@ -57,6 +59,34 @@ class Admin extends Controller
         $this->getView()->assign('list', $usersList);
 
         $this->getView()->view('admin/users');
+    }
+
+    /**
+     *
+     */
+    public function categoriesAction()
+    {
+        $repo = new Repository(Category::class);
+        $categories = $repo->findBy();
+
+        $this->getView()->assign('categories', $categories);
+        $this->getView()->view('admin/categories');
+    }
+
+    public function createCategoryAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+
+            $repo = new Repository(Category::class);
+            $category = new Category();
+            $category->setName($name);
+            $category->setDescription($description);
+
+            $repo->save($category);
+            $this->forward('admin/categories');
+        }
     }
 
 }

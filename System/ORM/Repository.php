@@ -55,7 +55,7 @@ class Repository
      * @param $order
      * @return array
      */
-    public function findBy(array $criteria = [], $limit = null, $offset = null, $order = null)
+    public function findBy(array $criteria, $limit = null, $offset = null, $order = null)
     {
         $statement = Connection::getInstance()
             ->select()
@@ -105,6 +105,14 @@ class Repository
         }
 
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->findBy([]);
     }
 
     /**

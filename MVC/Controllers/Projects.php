@@ -2,10 +2,12 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Category;
 use MVC\Models\User;
 use System\Auth\UserSession;
 use System\Controller;
 use System\Database\Connection;
+use System\ORM\Repository;
 
 /**
  * Class Projects
@@ -26,6 +28,8 @@ class Projects extends Controller
      */
     public function createAction()
     {
+        $repo = new Repository(Category::class);
+        $this->getView()->assign('categories', $repo->findAll());
         $this->getView()->view('projects/create');
     }
 }

@@ -5,6 +5,10 @@ return [
         '' => [
             'controller' => \MVC\Controllers\Home::class,
             'action'     => 'index'
+        ],
+        'admin/create-category' => [
+            'controller' => \MVC\Controllers\Admin::class,
+            'action' => 'createCategory'
         ]
     ],
     'patterns' => [

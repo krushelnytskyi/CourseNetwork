@@ -1,0 +1,38 @@
+<div class="row flexListTable">
+    <?php $this->layout('admin/menu'); ?>
+    <div class="col-10 admin-panel-wrap light-gray-wrap">
+        <?php $this->layout('admin/breadcrumbs'); ?>
+
+        <div class="container-fluid admin-panel-content">
+            <?= $this->layout('admin/category') ?>
+            <div class="wrapListTable">
+                <h1 class="admin-panel__title">User list</h1>
+                <hr>
+                <table class="table listTable">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+
+                    <?php foreach ($this->categories as $category) : ?>
+                        <?php /** @var \MVC\Models\Category $category */ ?>
+                        <tr>
+                            <td><?= $category->getId() ?></td>
+                            <td><?= $category->getName() ?></td>
+                            <td><?= $category->getDescription() ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                </table>
+            </div>
+
+            <?php if (isset($this->error) === true) : ?>
+                <div class="alert alert-danger">
+                    <?= $this->error ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+    </div>
+</div>

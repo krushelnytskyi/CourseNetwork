@@ -11,11 +11,12 @@ class User
 {
 
     /**
-     *
+     * User roles
      */
-    const STATUS_USER = 0;
-    const STATUS_ADMIN = 1;
-    const STATUS_SUPER_ADMIN = 2;
+    const ROLE_ADMIN       = 'admin';
+    const ROLE_FREELANCER  = 'freelancer';
+    const ROLE_CUSTOMER    = 'customer';
+    const ROLE_SUPER_ADMIN = 'super_admin';
 
     /**
      * @var int
@@ -43,9 +44,9 @@ class User
 
     /**
      * @var int
-     * @column(status)
+     * @column(role)
      */
-    private $status;
+    private $role;
 
     /**
      * @return int
@@ -82,9 +83,9 @@ class User
     /**
      * @return int
      */
-    public function getStatus()
+    public function getRole()
     {
-        return $this->status;
+        return $this->role;
     }
 
     /**
@@ -117,11 +118,11 @@ class User
     }
 
     /**
-     * @param int $status
+     * @param int $role
      */
-    public function setStatus($status)
+    public function setRole($role)
     {
-        $this->status = $status;
+        $this->role = $role;
     }
 
     /**

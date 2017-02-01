@@ -1,7 +1,6 @@
 <?php
 
 namespace MVC\Models;
-use System\ORM\Repository;
 
 /**
  * Class Customer
@@ -23,120 +22,131 @@ class Project
     private $name;
 
     /**
-     * @var timestamp
+     * @var string
+     * @column(created)
+     */
+    private $created;
+
+    /**
+     * @var int
+     * @column(category_id)
+     */
+    private $category;
+
+    /**
+     * @var string
      * @column(start)
      */
     private $start;
 
     /**
-     * @var timestamp
+     * @var string
      * @column(finish)
      */
     private $finish;
 
     /**
-    * @var int
-    * @column(status)
-    */
+     * @var int
+     * @column(status)
+     */
     private $status;
     /**
-    * @var int
-    * @column(cost)
-    */
+     * @var int
+     * @column(cost)
+     */
     private $cost;
     /**
-    * @var int
-    * @column(paid)
-    */
+     * @var int
+     * @column(paid)
+     */
     private $paid;
     /**
-    * @var int
-    * @column(freelancer)
-    */
+     * @var int
+     * @column(freelancer)
+     */
     private $freelancer;
     /**
-    * @var int
-    * @column(customer)
-    */
+     * @var int
+     * @column(customer)
+     */
     private $customer;
+
     /**
      * @return int id | null
      */
 
     public function getId()
     {
-        $repo = new Repository(Project::class);
-        $this->id = (int) $repo->findOneBy([
-            'freelancer'=>$this->freelancer,
-            'customer' => $this->customer,
-            'name' => $this->name
-        ])->id;
         return $this->id;
     }
+
     /**
-    * @return string name | null
-    */
-    public function getName($id)  // id project
+     * @return string
+     */
+    public function getName()
     {
-        $repo = new Repository(Project::class);
-        $this->name = $repo->findOneBy([
-        'id'=>$id
-        ])->name;
         return $this->name;
-  }
+    }
+
     /**
-     * @param int $freelancer
+     * @param int
      */
     public function setFreelancer($freelancer)
     {
         $this->freelancer = $freelancer;
     }
+
     /**
-    * @param int $customer
-    */
+     * @param int
+     */
     public function setCustomer($customer)
     {
         $this->customer = $customer;
     }
+
     /**
-    * @param string $name
-    */
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
+
     /**
-    * @param timestamp $start
-    */
+     * @param string $start
+     */
     public function setStart($start)
     {
         $this->start = $start;
     }
+
     /**
-    * @param timestamp $finish
-    */
+     * @param string $finish
+     */
     public function setFinish($finish)
     {
         $this->finish = $finish;
     }
 
     /**
-    * @param int $status
-    */
+     * @param int $status
+     */
     public function setStatus($status)
     {
         $this->status = $status;
     }
+
     /**
-    * @param int $cost
-    */
+     * @param int $cost
+     */
     public function setCost($cost)
     {
         $this->cost = $cost;
     }
+
     /**
-    * @param int $paid
-    */
+     * @param int $paid
+     */
     public function setPaid($paid)
     {
         $this->paid = $paid;

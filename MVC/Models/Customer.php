@@ -32,17 +32,13 @@ class Customer
      * @var int
      * @column(user_id)
      */
-    private $user_id;
+    private $user;
 
     /**
      * @return int id | null
      */
     public function getId()
     {
-        $repo = new Repository(Customer::class);
-        $this->id = (int) $repo->findOneBy([
-        'user_id'=>$this->user_id
-        ])->id;
         return $this->id;
     }
 
@@ -51,15 +47,11 @@ class Customer
      */
     public function getRating()
     {
-      $repo = new Repository(Customer::class);
-      $this->rating = (float) $repo->findOneBy([
-        'user_id'=>$this->user_id
-      ])->rating;
         return $this->rating;
     }
 
     /**
-     * @return Plan|null
+     * @return Plan
      */
     public function getPlan()
     {
@@ -77,8 +69,9 @@ class Customer
     public function getUser()
     {
         $repo = new Repository(User::class);
+
         return $repo->findOneBy([
-            'id' => $this->user_id
+            'id' => $this->user
         ]);
     }
 
@@ -97,7 +90,7 @@ class Customer
      */
     public function setUser($user_id)
     {
-        $this->user_id = $user_id;
+        $this->user = $user_id;
     }
 
   /**

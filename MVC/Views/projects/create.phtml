@@ -3,7 +3,7 @@
     <div class="col-8 createProjectWrap  pd-20">
       <h1>Get your Job Done!</h1>
       <hr>
-      <form action="" method="" id="formJob">
+      <form action="/projects/create" method="post" id="formJob">
         <div class="createJobForm">
           <div class="form-group">
             <label for="createFormTitle">What you need to get done?</label>
@@ -11,35 +11,14 @@
           </div>
         </div>
         <div class="createJobForm">
-          <div class="row">
-            <div class="form-group col-6">
-              <label for="createFormCategory">Pick Category</label>
-              <select class="form-control" id="createFormCategory">
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-              </select>
+            <div class="form-group">
+                <label for="createFormCategory">Pick Category</label>
+                <select class="form-control" id="createFormCategory">
+                    <?php foreach ($this->categories as $category) : ?>
+                        <option value="<?= $category->getName(); ?>"><?= $category->getName(); ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
-
-            <div class="form-group col-6">
-              <label for="createFormSubCategory">Pick Sub-Category</label>
-              <select class="form-control" id="createFormSubCategory">
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-                <option>Default select</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
         <div class="createJobForm">
           <div class="form-group">
             <label for="createFormDescription">Description</label>
