@@ -24,4 +24,10 @@ abstract class Controller
         exit(0);
     }
 
+    public function redirect($url)
+    {
+        header('Location: /' . $url);
+        exit(0);
+    }
+
 }

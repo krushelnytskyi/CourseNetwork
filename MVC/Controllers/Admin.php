@@ -67,7 +67,7 @@ class Admin extends Controller
     public function categoriesAction()
     {
         $repo = new Repository(Category::class);
-        $categories = $repo->findBy();
+        $categories = $repo->findAll();
 
         $this->getView()->assign('categories', $categories);
         $this->getView()->view('admin/categories');
@@ -85,7 +85,7 @@ class Admin extends Controller
             $category->setDescription($description);
 
             $repo->save($category);
-            $this->forward('admin/categories');
+            $this->redirect('admin/categories');
         }
     }
 
