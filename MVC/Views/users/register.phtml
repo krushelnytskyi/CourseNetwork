@@ -26,6 +26,16 @@
                                 <input type="password" class="form-control" name="password" id="password">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="role_freelancer">Freelancer</label>
+                            <div class="col-xl-9 col-lg-9 no-padding-right">
+                                <input type="radio" class="form-control" name="role" id="role_freelancer" value="<?= \MVC\Models\User::ROLE_FREELANCER ?>">
+                            </div>
+                            <label for="role_customer">Customer</label>
+                            <div class="col-xl-9 col-lg-9 no-padding-right">
+                                <input type="radio" class="form-control" name="role" id="role_customer" value="<?= \MVC\Models\User::ROLE_CUSTOMER ?>">
+                            </div>
+                        </div>
 
                         <div class="text-right">
                             <span class="register-notice">

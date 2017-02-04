@@ -51,6 +51,7 @@ class Dispatcher
 
         if (class_exists($controller) === true && method_exists($controller, $action)) {
             $controller = new $controller();
+            $controller->initial();
             $controller->$action();
         } else {
             $this->handleNotFound();

@@ -24,6 +24,7 @@ class Update extends Statement
      * @param string|array $set
      * @return $this
      */
+<<<<<<< HEAD
     public function set( array $set )
     {
 
@@ -48,6 +49,31 @@ class Update extends Statement
       $result = $this->connection->getLink()->query( $sql );
 
       return ( false === $result ) ? false : $this->connection->getLink()->insert_id;
+=======
+    public function set(array $set)
+    {
+
+        foreach ( $set as $key => $value )
+        {
+            $this->set[] = '`' . $key . '`' . ' = ' . '\'' . $value . '\'';
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return int|bool Last inserted ID
+     */
+    public function execute()
+    {
+        $sql = 'UPDATE `' . $this->table . '` SET ' . implode( ', ', $this ->set );
+        $sql .= ($this->where !== null) ? ' WHERE ' . $this->where : '';
+        $sql .= ($this->limit !== 0) ? ' LIMIT ' . $this->limit : '';
+
+        $result = $this->connection->getLink()->query( $sql );
+
+        return ( false === $result ) ? false : $this->connection->getLink()->insert_id;
+>>>>>>> origin/master
 
     }
 

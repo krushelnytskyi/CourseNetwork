@@ -1,49 +1,53 @@
 <div class="row flexListTable">
   <?php $this->layout('admin/menu'); ?>
-  <div class="wrapListTable">
-    <h1>User list</h1>
-    <table class="table listTable">
-      <tr>
-        <thead class="thead-inverse">
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Status</th>
-          <th>Created</th>
-        </thead>
-      </tr>
-      <tbody>
-      <?php
-      $n = count($this->list);
+  <div class="col-10 admin-panel-wrap light-gray-wrap">
+    <?php $this->layout('admin/breadcrumbs'); ?>
 
-      if ($n == 0)
-      {
-        echo '<p>Sorry, we don\'t have any users</p>';
-      } else {
+    <div class="container-fluid admin-panel-content">
+      <div class="wrapListTable">
+        <h1 class="admin-panel__title">User list</h1>
+        <hr>
+        <table class="table listTable">
+          <tr>
+            <thead class="thead-default">
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Created</th>
+            </thead>
+          </tr>
+          <tbody>
+          <?php
+          $n = count($this->list);
 
-        for ($i = 0; $i < $n; $i++) {
-          echo '<tr>';
-          echo '<td>' . $this->list[$i]['id'] . '</td>';
-          echo '<td>' . $this->list[$i]['name'] . '</td>';
-          echo '<td>' . $this->list[$i]['email'] . '</td>';
-          echo '<td>' . $this->list[$i]['password'] . '</td>';
-          echo '<td>' . $this->list[$i]['status'] . '</td>';
-          echo '<td>' . $this->list[$i]['created'] . '</td>';
-          echo '</tr>';
-        }
-      }
-      unset($n);
-      ?>
-      </tbody>
-    </table>
-  </div>
-  
-  <?php if (isset($this->error) === true) : ?>
-    <div class="alert alert-danger">
-      <?= $this->error ?>
+          if ($n == 0)
+          {
+            echo '<p>Sorry, we don\'t have any users</p>';
+          } else {
+
+            for ($i = 0; $i < $n; $i++) {
+              echo '<tr>';
+              echo '<td>' . $this->list[$i]['id'] . '</td>';
+              echo '<td>' . $this->list[$i]['name'] . '</td>';
+              echo '<td>' . $this->list[$i]['email'] . '</td>';
+              echo '<td>' . $this->list[$i]['status'] . '</td>';
+              echo '<td>' . $this->list[$i]['created'] . '</td>';
+              echo '</tr>';
+            }
+          }
+          unset($n);
+          ?>
+          </tbody>
+        </table>
+      </div>
+
+      <?php if (isset($this->error) === true) : ?>
+        <div class="alert alert-danger">
+          <?= $this->error ?>
+        </div>
+      <?php endif; ?>
     </div>
-  <?php endif; ?>
 
-
+  </div>
 </div>
