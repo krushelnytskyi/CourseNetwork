@@ -1,0 +1,80 @@
+<div class="container" id="verify-container">
+	<menu id="verify-menu">
+		<a class="verify-menu-a" href="/payments/verify"><li>Verify Payment Method</li></a>
+	    <a href="/payments/transactions"><li>Transaction History</li></a>
+	    <a href="/payments/deposit"><li>Deposit Funds</li></a>
+		<a href="/payments/withdraw"><li>Withdraw Money</li></a>
+	</menu>
+	<div class="row" >
+		<div id="verify-title">
+			<h1>Add a Verified Payment Method</h1>
+		</div>
+	</div>  
+	<div class="row">
+		<div class="col-md-4">
+			<p>
+				<img src="/assets/img/payments-page/2.png" class="" alt="">
+			</p>
+				<p class="verify-p">Add a verified payment method</p>
+			<p>Appear more professional with a payment verified badge.</p>
+		</div>   
+		<div class="col-md-4">
+			<p>
+				<img src="/assets/img/payments-page/1.png" class="" alt="">
+			</p>
+				<p class="verify-p">Professional membership trial</p>
+			<p>Get tools to succeed. Freelancers on a Professional membership are 446% more likely to be awarded a project*.</p>
+		</div>   
+		<div class="col-md-4">
+			<p>
+				<img src="/assets/img/payments-page/3.png" class="" alt="">
+			<p>
+				<p class="verify-p">Concentrate on success!</p>
+			<p>Bid, post projects, pay easier and get stuff done faster. </p>
+		</div>
+	</div>
+	<div class="row"> 		
+		<div class="col-md-4">
+			<div class="verify-methods-con">
+				<img src="/assets/img/payments-page/6.png" class="verify-methods-img1" alt="">
+				<img src="/assets/img/payments-page/7.png" class="verify-methods-img2" alt="">
+				<div class="b-container">
+					<button class="verify-methods-button" id="verify-methods-button1" onclick="javascript:PopUpShow()">Add credit card</button>
+				</div>
+				<div class="popup-container">
+					<div class="b-popup" id="popup1">
+						<div class="b-popup-content">
+							<h1>Credit Card details</h1>
+							<form action="/payments/verify">
+								<p>Card number</p>
+								<input type="text" size="25">
+								<p>Expiry date</p>
+								<input type="text" size="15" placeholder="MM/YY">
+								<p>Security code</p>
+								<input type="text" size="15"><span id="input-form-info">The last 3 digits displayed on the back of your card</span> 
+								<p>You agree to authorize the use of your credit card for this deposit and future payments.</p>
+								<input type="submit" value="Continue">
+							</form>
+							<button id="close-popup-button" onclick="javascript:PopUpHide()"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>				
+		<div class="col-md-4">
+			<div class="verify-methods-con">
+				<img src="/assets/img/payments-page/5.png" class="verify-methods-img" alt="">
+				<button class="verify-methods-button" onclick="javascript:window.location='https://www.paypal.com/'">Add PayPal Account</button>
+			</div>		
+		</div>		
+		<div class="col-md-4">
+			<div class="verify-methods-con">
+				<img src="/assets/img/payments-page/4.png" class="verify-methods-img" alt="">
+				<button class="verify-methods-button" onclick="javascript:window.location='https://webmoney.ua/'">Add WM Accaunt</button>
+			</div>
+		</div> 
+	</div>	
+</div>
+
+
+
