@@ -1,4 +1,5 @@
 <?php
+
 namespace System\ORM;
 
 use System\Database\Connection;
@@ -9,14 +10,17 @@ use System\Database\Connection;
  */
 class Repository
 {
+
     /**
      * @var \ReflectionClass
      */
     protected $reflection;
+
     /**
      * @var string
      */
     protected $storage;
+
     /**
      * @var array
      */
@@ -30,12 +34,15 @@ class Repository
     {
         $this->reflection = new \ReflectionClass($modelName);
         $properties = $this->reflection->getProperties();
+
         foreach ($properties as $property) {
             $docBlock = $property->getDocComment();
+
             if (preg_match('/@column\((.+)\)/', $docBlock, $matches) === 1) {
                 $this->properties[$property->getName()] = $matches[1];
             }
         }
+
         if (preg_match('/@table\((.+)\)/', $this->reflection->getDocComment(), $matches)) {
             $this->storage = $matches[1];
         }
@@ -53,18 +60,24 @@ class Repository
         $statement = Connection::getInstance()
             ->select()
             ->from($this->storage);
+
         if ($limit !== null) {
             $statement->limit($limit);
         }
+
         foreach ($criteria as $field => $value) {
             $statement
                 ->_and()
                 ->where($this->properties[$field], '=', $value);
         }
+
         $rows = $statement->execute();
         $models = [];
+
         foreach ($rows as $row) {
+
             $model = $this->reflection->newInstance();
+
             foreach ($this->properties as $property => $key) {
                 $reflectionProperty =
                     $this->reflection->getProperty($property);
@@ -72,8 +85,10 @@ class Repository
                 $reflectionProperty->setValue($model, $row[$key]);
                 $reflectionProperty->setAccessible(false);
             }
+
             $models[] = $model;
         }
+
         return $models;
     }
 
@@ -84,9 +99,11 @@ class Repository
     public function findOneBy(array $criteria = [])
     {
         $models = $this->findBy($criteria, 1);
+
         if (isset($models[0]) === true) {
             return $models[0];
         }
+
         return null;
     }
 
@@ -105,19 +122,23 @@ class Repository
     public function save($model)
     {
         $statement = Connection::getInstance()->insert();
+
         $columns = [];
         $values = [];
+
         foreach ($this->properties as $property => $column) {
             $reflectionProperty = $this->reflection->getProperty($property);
             $reflectionProperty->setAccessible(true);
             $value = $reflectionProperty->getValue($model);
+
             if ($value !== null) {
                 $columns[] = $this->properties[$reflectionProperty->getName()];
                 $values[] = $value;
             }
+
             $reflectionProperty->setAccessible(false);
         }
-        return $statement
+         return $statement
             ->from($this->storage)
             ->columns($columns)
             ->values($values)
@@ -129,9 +150,44 @@ class Repository
      */
     public function delete($model)
     {
-        $statement = Connection::getInstance()
+
+            $statement = Connection::getInstance()
+	
             ->delete()
             ->from($this->storage);
+			
+			$statement->where($this->properties['id'], '=', $id);
+			$result = $statement->execute();	
+			
+			return $result === false ? 0 : 'видалило '.$id;
+		
+}
+  /**
+   * @param object $model
+   */
+  public function update($model, $id)
+  {
+    $result = array();
+    foreach ($this->properties as $property => $column) {
+      $reflectionProperty = $this->reflection->getProperty($property);
+      $reflectionProperty->setAccessible(true);
+      $value = $reflectionProperty->getValue($model);
+
+      if ($value !== null && $this->properties[$reflectionProperty->getName()] !== 'id' ) {
+        $result[$this->properties[$reflectionProperty->getName()]] = $value;
+
+      }
+    $reflectionProperty->setAccessible(false);
+    }
+      $statement = Connection::getInstance()->update()
+     ->from($this->storage)
+      ->set($result)
+      ->where('id','=',$id)
+      ->execute();
+       return $statement;
+  }
+
+
 
         foreach ($this->properties as $property => $key) {
 

@@ -47,6 +47,32 @@ class User
      * @column(role)
      */
     private $role;
+    /**
+    * @var float
+    * @column(balance)
+    */
+    private $balance;
+    /**
+    * @var string
+    * @column(site)
+    */
+    private $site;
+    /**
+    * @var string
+    * @column(phone)
+    */
+    private $phone;
+
+    /**
+    * @var string
+    * @column(skype)
+    */
+    private $skype;
+    /**
+    * @var string
+    * @column(avatar)
+    */
+    private $avatar;
 
     /**
      * @return int
@@ -89,6 +115,43 @@ class User
     }
 
     /**
+    * @return float
+    */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+    /**
+    * @return string
+    */
+    public function getSite()
+    {
+        return $this->site;
+    }
+    /**
+    * @return string
+    */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+    /**
+    * @return string
+    */
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+
+    /**
+    * @return string
+    */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
      * @param string $name
      */
     public function setName($name) //string
@@ -124,7 +187,42 @@ class User
     {
         $this->role = $role;
     }
+    /**
+    * @param float $balance
+    */
+    public function setBalance($balance)
+    {
+        $this->balance = $balance;
+    }
 
+    /**
+    * @param string $site
+    */
+    public function setSite($site)
+    {
+        $this->site = $site;
+    }
+    /**
+    * @param string $phone
+    */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+    /**
+    * @param string $skype
+    */
+    public function setSkype($skype)
+    {
+        $this->skype = $skype;
+    }
+    /**
+    * @param string $avatar
+    */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
     /**
      * @param $password
      * @return bool|string
