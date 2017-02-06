@@ -60,3 +60,4 @@ class Session
         session_unset();
     }
 }
+

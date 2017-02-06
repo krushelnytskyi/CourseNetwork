@@ -9,6 +9,7 @@ class Home extends Controller
 
     public function indexAction()
     {
+      
         $this->getView()->view('home/index');
     }
 }

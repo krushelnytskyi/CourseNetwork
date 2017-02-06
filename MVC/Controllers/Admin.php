@@ -53,12 +53,49 @@ class Admin extends Controller
             ->from('users')
             ->execute();
 
-        /* Uncomment for $usersList reverse sort */
-        //$usersList = array_reverse($usersList);
-
         $this->getView()->assign('list', $usersList);
 
         $this->getView()->view('admin/users');
+    }
+
+    /**
+     * List of freelancers Action
+     */
+    public function freelancersAction()
+    {
+        $dbConnect = Connection::getInstance();
+
+        if ($dbConnect->getLink() === false) {
+            $this->getView()->assign('error', 'Boss, we have problems with database connection');
+        }
+
+        $freelancersList = $dbConnect->select()
+            ->from('freelancers')
+            ->execute();
+
+        $this->getView()->assign('list', $freelancersList);
+
+        $this->getView()->view('admin/freelancers');
+    }
+
+    /**
+     * List of customers Action
+     */
+    public function customersAction()
+    {
+        $dbConnect = Connection::getInstance();
+
+        if ($dbConnect->getLink() === false) {
+            $this->getView()->assign('error', 'Boss, we have problems with database connection');
+        }
+
+        $customersList = $dbConnect->select()
+            ->from('customers')
+            ->execute();
+
+        $this->getView()->assign('list', $customersList);
+
+        $this->getView()->view('admin/customers');
     }
 
     /**

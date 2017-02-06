@@ -1,0 +1,51 @@
+<div class="row flexListTable">
+    <?php $this->layout('admin/menu'); ?>
+    <div class="col-10 admin-panel-wrap light-gray-wrap">
+        <?php $this->layout('admin/breadcrumbs'); ?>
+
+        <div class="container-fluid admin-panel-content">
+            <div class="wrapListTable">
+                <h1 class="admin-panel__title">Customer list</h1>
+                <hr>
+                <table class="table listTable">
+                    <tr>
+                        <thead class="thead-default">
+                        <th>ID</th>
+                        <th>userID</th>
+                        <th>rating</th>
+                        <th>planID</th>
+                        </thead>
+                    </tr>
+                    <tbody>
+                    <?php
+                    $n = count($this->list);
+                    if ($n == 0) {
+                        echo '<p>Sorry, we don\'t have any freelancers</p>';
+
+                    } else {
+                        for ($i = 0; $i < $n; $i++) { ?>
+
+                            <tr>
+                                <td><?= $this->list[$i]['id'] ?></td>
+                                <td><?= $this->list[$i]['user_id'] ?></td>
+                                <td><?= $this->list[$i]['rating'] ?></td>
+                                <td><?= $this->list[$i]['plan_id'] ?></td>
+                            </tr>
+
+                        <?php }
+                    }
+                    unset($n);
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <?php if (isset($this->error) === true) : ?>
+                <div class="alert alert-danger">
+                    <?= $this->error ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+    </div>
+</div>
