@@ -11,6 +11,7 @@ use System\Auth\UserSession;
 use System\Config;
 use System\Controller;
 use System\Database\Connection;
+use System\Form\Login;
 use System\ORM\Repository;
 
 /**
@@ -25,6 +26,9 @@ class Users extends Controller
     public function loginAction()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $form = new Login($_POST);
+
             $email = $_POST['email'];
             $password = $_POST['password'];
 

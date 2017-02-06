@@ -69,13 +69,7 @@ class Plan
      * @var boolean
      * @column(for_freelancer)
      */
-    private $forFreelancer;
-
-    /**
-     * @var boolean
-     * @column(for_customer)
-     */
-    private $forCustomer;
+    private $type; // = freelancer, customer    ;
 
     /**
      * @return int

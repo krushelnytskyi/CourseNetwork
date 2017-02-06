@@ -78,6 +78,11 @@ class Using extends Controller
       $user = \System\Auth\UserSession::getInstance()->getIdentity();
       $repo = new Repository(Portfolio::class);
       $portfolio = new Portfolio();
+
+      // Add variable to view
+      // $this->getView()->assign('portfolio', $portfolio);
+
+
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['addButton'] === 'addButton') {
           $this->getView()->view('using/add');
 
@@ -95,8 +100,9 @@ class Using extends Controller
 
       else {
           $portfolio = $repo->findOneBy([
-          'user'=> $user->getId()
+              'user' => $user->getId()
           ]);
+
           $this->getView()->view('using/portfolio');
       }
     }
