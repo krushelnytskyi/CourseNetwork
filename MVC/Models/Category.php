@@ -10,62 +10,106 @@ namespace MVC\Models;
 class Category
 {
 
-    /**
-     * @var int
-     * @column(id)
-     */
-    private $id;
+  /**
+   * @var int
+   * @column(id)
+   */
+  private $id;
 
-    /**
-     * @var string
-     * @column(name)
-     */
-    private $name;
+  /**
+   * @var string
+   * @column(name)
+   */
+  private $name;
 
-    /**
-     * @var string
-     * @column(description)
-     */
-    private $description;
+  /**
+   * @var string
+   * @column(description)
+   */
+  private $description;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
+  /**
+   * @var int
+   * @column(count)
+   */
+  private $count;
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
+  /**
+   * @var string
+   * @column(slug)
+   */
+  private $slug;
 
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
+  /**
+   * @return int
+   */
+  public function getId(): int
+  {
+    return $this -> id;
+  }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
+  /**
+   * @return string
+   */
+  public function getName(): string
+  {
+    return $this -> name;
+  }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description)
-    {
-        $this->description = $description;
-    }
+  /**
+   * @return string
+   */
+  public function getDescription(): string
+  {
+    return $this -> description;
+  }
+
+  /**
+   * @return int
+   */
+  function getCount(): int
+  {
+    return $this -> count;
+  }
+
+  /**
+   * @return string
+   */
+  function getSlug(): string
+  {
+    return $this -> slug;
+  }
+
+  /**
+   * @param string $name
+   */
+  public function setName( string $name )
+  {
+    $this -> name = $name;
+  }
+
+  /**
+   * @param string $description
+   */
+  public function setDescription( string $description )
+  {
+    $this -> description = $description;
+  }
+
+  /**
+   * @param int $count
+   */
+  function setCount( int $count )
+  {
+    $this -> count = $count;
+  }
+
+  /**
+   * @param string $slug
+   */
+  function setSlug( string $slug )
+  {
+    $this -> slug = $slug;
+  }
 
 }

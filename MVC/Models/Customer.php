@@ -1,6 +1,7 @@
 <?php
 
 namespace MVC\Models;
+
 use System\ORM\Repository;
 
 /**
@@ -10,94 +11,95 @@ use System\ORM\Repository;
  */
 class Customer
 {
-    /**
-     * @var int
-     * @column(id)
-     */
-    private $id;
 
-    /**
-     * @var float
-     * @column(rating)
-     */
-    private $rating;
+  /**
+   * @var int
+   * @column(id)
+   */
+  private $id;
 
-    /**
-     * @var int
-     * @column(plan_id)
-     */
-    private $plan;
+  /**
+   * @var float
+   * @column(rating)
+   */
+  private $rating;
 
-    /**
-     * @var int
-     * @column(user_id)
-     */
-    private $user;
+  /**
+   * @var int
+   * @column(plan_id)
+   */
+  private $plan;
 
-    /**
-     * @return int id | null
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+  /**
+   * @var int
+   * @column(user_id)
+   */
+  private $user;
 
-    /**
-     * @return float
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
+  /**
+   * @return int id | null
+   */
+  public function getId(): int
+  {
+    return $this -> id;
+  }
 
-    /**
-     * @return Plan
-     */
-    public function getPlan()
-    {
-        $repo = new Repository('\MVC\Models\Plan');
+  /**
+   * @return float
+   */
+  public function getRating(): float
+  {
+    return $this -> rating;
+  }
 
-        return $repo->findOneBy(
-            [
-                'id' => $this->plan
-            ]
-        );
-    }
-    /**
-     * @return User|null
-     */
-    public function getUser()
-    {
-        $repo = new Repository(User::class);
+  /**
+   * @return Plan
+   */
+  public function getPlan(): Plan
+  {
+    $repo = new Repository( Plan::class );
 
-        return $repo->findOneBy([
-            'id' => $this->user
-        ]);
-    }
+    return $repo -> findOneBy(
+        [
+          'id' => $this -> plan
+        ]
+    );
+  }
 
+  /**
+   * @return User|null
+   */
+  public function getUser(): User
+  {
+    $repo = new Repository( User::class );
 
+    return $repo -> findOneBy( [
+        'id' => $this -> user
+      ] );
+  }
 
-    /**
-     * @param int $plan
-     */
-    public function setPlan($plan)
-    {
-        $this->plan = $plan;
-    }
+  /**
+   * @param int $plan
+   */
+  public function setPlan( int $plan )
+  {
+    $this -> plan = $plan;
+  }
 
-    /**
-     * @param int $user_id
-     */
-    public function setUser($user_id)
-    {
-        $this->user = $user_id;
-    }
+  /**
+   * @param int $user_id
+   */
+  public function setUser( int $user_id )
+  {
+    $this -> user = $user_id;
+  }
 
   /**
    * @param decimal $rating
    */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
+  public function setRating( float $rating )
+  {
+    $this -> rating = $rating;
+  }
+
 }
