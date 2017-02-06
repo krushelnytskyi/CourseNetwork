@@ -9,6 +9,10 @@ return [
         'admin/create-category' => [
             'controller' => \MVC\Controllers\Admin::class,
             'action' => 'createCategory'
+        ],
+        'projects/create-project' => [
+            'controller' => \MVC\Controllers\Projects::class,
+            'action' => 'createProject'
         ]
     ],
     'patterns' => [

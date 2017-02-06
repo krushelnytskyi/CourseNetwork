@@ -231,6 +231,44 @@
 
           <!-- Project-item -->
 
+          <?php foreach($this->projects as $project):?>
+
+              <?php /** @var \MVC\Models\Project $project */?>
+              <div class="project-item">
+                <div class="project-item__header clearfix">
+                  <h2 class="title float-left"><a href="#"><?= $project->getName() ?></a></h2>
+                  <a href="" class="project-item__bookmark float-right"></a>
+                </div>
+                <div class="project-item-meta">
+                  <ul class="project-item-attributes">
+                    <li><?= $project->getWorkType() ?></li>
+                    <li><?= $project->getBudget() ?>$</li>
+                    <li>Posted <?= $project->getCreated() ?></li>
+                    <li><?= $project->getRequestsCount() ?> Proposals</li>
+                  </ul>
+                  <p class="desc"><?= $project->getDescription() ?>
+                  </p>
+                  <ul class="tags">
+                    <li><a href="#"><?= $project->getCategory()->getName() ?></a></li>
+                  </ul>
+                </div>
+                <div class="project-item-footer clearfix">
+                  <div class="float-left client clearfix">
+                    <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
+                    <div class="float-left">
+                      <h4 class="client-name">
+                        <a href="#"><?= $project->getCustomer() ?></a>
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="float-right send">
+                    <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
+                  </div>
+                </div>
+              </div>
+          <?php endforeach;?>
+          <!-- Project-item -->
+
           <div class="project-item">
             <div class="project-item__header clearfix">
               <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>

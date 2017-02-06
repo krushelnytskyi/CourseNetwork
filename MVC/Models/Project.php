@@ -2,8 +2,16 @@
 
 namespace MVC\Models;
 
+use MVC\Models\Category;
+use MVC\Models\Customer;
+use MVC\Models\Freelancer;
+use System\Controller;
+use System\Database\Connection;
+use System\ORM\Repository;
+
+
 /**
- * Class Customer
+ * Class Projects
  * @package MVC\Models
  * @table(projects)
  */
@@ -23,13 +31,37 @@ class Project
 
     /**
      * @var string
+     * @column(description)
+     */
+    private $description;
+
+    /**
+     * @var string
+     * @column(work_type)
+     */
+    private $workType;
+
+    /**
+     * @var float
+     * @column(budget)
+     */
+    private $budget;
+
+    /**
+     * @var int
+     * @column(requests_count)
+     */
+    private $requestsCount;
+
+    /**
+     * @var string
      * @column(created)
      */
     private $created;
 
     /**
      * @var int
-     * @column(category_id)
+     * @column(category)
      */
     private $category;
 
@@ -50,21 +82,19 @@ class Project
      * @column(status)
      */
     private $status;
-    /**
-     * @var int
-     * @column(cost)
-     */
-    private $cost;
+
     /**
      * @var int
      * @column(paid)
      */
     private $paid;
+
     /**
      * @var int
      * @column(freelancer)
      */
     private $freelancer;
+
     /**
      * @var int
      * @column(customer)
@@ -72,10 +102,9 @@ class Project
     private $customer;
 
     /**
-     * @return int id | null
+     * @return int
      */
-
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -83,33 +112,175 @@ class Project
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param int
+     * @return string
      */
-    public function setFreelancer($freelancer)
+    public function getDescription(): string
     {
-        $this->freelancer = $freelancer;
+        return $this->description;
     }
 
     /**
-     * @param int
+     * @return string
      */
-    public function setCustomer($customer)
+    public function getWorkType(): string
     {
-        $this->customer = $customer;
+        return $this->workType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRequestsCount(): int
+    {
+        return $this->requestsCount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBudget(): float
+    {
+        return $this->budget;
+    }
+
+    /**
+     * @return object|array
+     */
+    public function getCategory()
+    {
+        $repo = new Repository(Category::class);
+        $category = $repo->findOneBy(['id'=>$this->category]);
+
+        return $category;
+
+        //return $this->category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreated(): string
+    {
+        return $this->created;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomer(): int
+    {
+        /*$repo = new Repository(Customer::class);
+        $customer = $repo->findOneBy(['id'=>$this->customer]);
+
+        return $customer;*/
+        return $this->customer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFreelancer(): int
+    {
+        /* $repo = new Repository(Freelancer::class);
+           $freelancer = $repo->findOneBy(['id'=>$this->freelancer]);
+
+       return $freelancer;*/
+
+        return $this->freelancer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFinish(): string
+    {
+        return $this->finish;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaid(): int
+    {
+        return $this->paid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStart(): string
+    {
+        return $this->start;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
     }
 
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param int $category
+     */
+    public function setCategory(int $category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @param int $requestsCount
+     */
+    public function setRequestsCount(int $requestsCount)
+    {
+        $this->requestsCount = $requestsCount;
+    }
+
+    /**
+     * @param string $workType
+     */
+    public function setWorkType(string $workType)
+    {
+        $this->workType = $workType;
+    }
+
+    /**
+     * @param int $freelancer
+     */
+    public function setFreelancer(int $freelancer)
+    {
+        $this->freelancer = $freelancer;
+    }
+
+    /**
+     * @param int $customer
+     */
+    public function setCustomer(int $customer)
+    {
+        $this->customer = $customer;
     }
 
     /**
@@ -137,11 +308,11 @@ class Project
     }
 
     /**
-     * @param int $cost
+     * @param int $budget
      */
-    public function setCost($cost)
+    public function setBudget($budget)
     {
-        $this->cost = $cost;
+        $this->budget = $budget;
     }
 
     /**

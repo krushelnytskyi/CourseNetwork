@@ -36,19 +36,24 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `projects` (
+CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
-  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `start` TIMESTAMP,
-  `finish` TIMESTAMP,
+  `description` varchar(255) NOT NULL UNIQUE,
+  `category` INT(3) NOT NULL,
+  `work_type` varchar(124) DEFAULT NULL,
+  `requests_count` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `start` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `finish` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `status` int(1) DEFAULT '0',
-  `cost` int(7) DEFAULT '0',
+  `budget` int(7) DEFAULT '0',
   `paid` int(1) DEFAULT '0',
-  `freelancer` int(11) ,
-  `customer` int(11) ,
-   PRIMARY KEY (`id`)
+  `freelancer` int(11) DEFAULT NULL,
+  `customer` int(11) DEFAULT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
