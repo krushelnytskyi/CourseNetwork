@@ -6,8 +6,13 @@
                     <form action="/users/register" method="post">
                         <h1>Join CourseNetwork</h1>
                         <hr>
+                        <?php if (isset($this->error) === true) : ?>
+                            <div class="alert alert-danger">
+                                <?= $this->error ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="form-group d-flex justify-content-end">
-                            <label for="email">Full name</label>
+                            <label for="name">Full name</label>
                             <div class="col-xl-9 col-lg-9 no-padding-right">
                                 <input type="text" class="form-control" name="name" id="name">
                             </div>
@@ -21,19 +26,29 @@
                         </div>
 
                         <div class="form-group d-flex justify-content-end">
-                            <label for="password">Your password</label>
+                            <label for="password">Password</label>
                             <div class="col-xl-9 col-lg-9 no-padding-right">
                                 <input type="password" class="form-control" name="password" id="password">
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="role_freelancer">Freelancer</label>
-                            <div class="col-xl-9 col-lg-9 no-padding-right">
-                                <input type="radio" class="form-control" name="role" id="role_freelancer" value="<?= \MVC\Models\User::ROLE_FREELANCER ?>">
-                            </div>
-                            <label for="role_customer">Customer</label>
-                            <div class="col-xl-9 col-lg-9 no-padding-right">
-                                <input type="radio" class="form-control" name="role" id="role_customer" value="<?= \MVC\Models\User::ROLE_CUSTOMER ?>">
+                            <div class="row">
+                                <div class="col-6 member-type-icon">
+                                    <input type="radio" class="form-control reg-custom-input" name="role" id="role_freelancer" value="<?= \MVC\Models\User::ROLE_FREELANCER ?>">
+                                    <label for="role_freelancer">
+                                        <i class="fa fa-code-fork"></i>
+                                        Freelancer
+                                    </label>
+                                </div>
+
+                                <div class="col-6 member-type-icon">
+                                    <input type="radio" class="form-control reg-custom-input" name="role" id="role_customer" value="<?= \MVC\Models\User::ROLE_CUSTOMER ?>">
+                                    <label for="role_customer">
+                                        <i class="fa fa-shopping-basket"></i>
+                                        Customer
+                                    </label>
+                                </div>
                             </div>
                         </div>
 

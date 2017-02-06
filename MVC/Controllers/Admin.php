@@ -3,6 +3,8 @@
 namespace MVC\Controllers;
 
 use MVC\Models\Category;
+use MVC\Models\Customer;
+use MVC\Models\Freelancer;
 use MVC\Models\User;
 use System\Auth\UserSession;
 use System\Controller;
@@ -43,17 +45,17 @@ class Admin extends Controller
      */
     public function usersAction()
     {
-        $dbConnect = Connection::getInstance();
+        $usersRepo = new Repository(User::class);
+        $customersRepo = new Repository(Customer::class);
+        $freelancersRepo = new Repository(Freelancer::class);
 
-        if ($dbConnect->getLink() === false) {
-            $this->getView()->assign('error', 'Boss, we have problems with database connection');
-        }
+        $usersList = $usersRepo->findAll();
+        $customersList = $customersRepo->findAll();
+        $freelancersList = $freelancersRepo->findAll();
 
-        $usersList = $dbConnect->select()
-            ->from('users')
-            ->execute();
-
-        $this->getView()->assign('list', $usersList);
+        $this->getView()->assign('usersList', $usersList);
+        $this->getView()->assign('customersList', $customersList);
+        $this->getView()->assign('freelancersList', $freelancersList);
 
         $this->getView()->view('admin/users');
     }

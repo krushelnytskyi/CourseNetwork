@@ -6,7 +6,20 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/admin/main">Admin panel</a>
+                <a class="nav-link" href="/projects/create">Post a job</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/projects/search">Find a Job</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/freelancers/search">Find a Freelancer</a>
+            </li>
+
+            <?php if (\System\Auth\UserSession::getInstance()->getIdentity()->getRole() === 'super_admin' || \System\Auth\UserSession::getInstance()->getIdentity()->getRole() === 'admin') : ?>
+
+            <?php endif; ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/main">Admin Panel</a>
             </li>
         </ul>
 
