@@ -23,7 +23,7 @@
 
     <?php if (\System\Auth\UserSession::getInstance()->getIdentity() === null) : ?>
         <?php $this->layout('menu/guest'); ?>
-    <? else : ?>
+    <?php else : ?>
         <?php $this->layout('menu/user'); ?>
     <?php endif; ?>
 

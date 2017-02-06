@@ -145,9 +145,6 @@ class Repository
             ->execute();
     }
 
-<<<<<<< HEAD (c040001) - ...
-
-=======
     /**
      * @param object $model
      */
@@ -201,5 +198,4 @@ class Repository
         return $statement;
     }
 
->>>>>>> origin/master (4d87f81) - redirect with 
 }
