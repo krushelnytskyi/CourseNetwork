@@ -1,11 +1,11 @@
 <?php
-
 // Allow execute this file only from command line
 // Example: > php installation.php
-if (php_sapi_name() === 'cli') {
-    $installer = new Install;
-    $installer->run();
-}
+// - if (php_sapi_name() === 'cli') {
+$installer = new Install;
+$installer->run();
+//$installer->installDatabase();
+// - }
 
 /**
  * This class running installation exploded with steps.
@@ -41,41 +41,41 @@ class Install
     /**
      * @step
      */
-        public function installDatabase()
+    public function installDatabase()
     {
-		
+
         $dbForConnect = include 'config/database.php';
 
         try {
-            $dsn = 'mysql:host=' . $dbForConnect['host'] .';dbname=;charset=utf8';
+            $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
-			
-			
-foreach (glob('config/database/*.sql') as $file)
-    {
-   
-        if (true === file_exists($file)) {
-                
-        $file = file_get_contents($file);
-        $pattern[0] = '/(\/\*.*)/';
-                
-        $queries = preg_replace($pattern, '', $file);
-        $queries = explode(';', $queries);
-				                                                                   
-        array_unshift($queries, 'USE `course_network`;');
-				
-             foreach ($queries as $query) {
-                 $query = $pdo->prepare(trim($query . ';'));
-                 $query->execute();
-                }
-            }	
-		}
 
-	} catch (PDOException $e) {
+
+            foreach (glob('config/database/*.sql') as $file) {
+
+                if (true === file_exists($file)) {
+                    $file = file_get_contents($file);
+                    $pattern[0] = '/(\/\*.*)/';
+
+                    $queries = preg_replace($pattern, '', $file);
+                    $queries = explode(';', $queries);
+                    array_unshift($queries, 'USE `course_network`;');
+
+                    foreach ($queries as $query) {
+                        $query = $pdo->prepare(trim($query . ';'));
+                        $query->execute();
+                    }
+                }
+
+            }
+
+
+        } catch (PDOException $e) {
             $this->abort($e->getMessage());
-        }	
-		
+        }
+
     }
+
 
     /**
      * @param string|bool $message Abort message
@@ -94,8 +94,8 @@ foreach (glob('config/database/*.sql') as $file)
     }
 
     /**
-     * @param bool        $condition Condition to control aborting
-     * @param string|bool $message   Abort Message
+     * @param bool $condition Condition to control aborting
+     * @param string|bool $message Abort Message
      *
      * @return void
      */
