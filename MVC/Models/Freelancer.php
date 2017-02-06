@@ -47,15 +47,15 @@ class Freelancer
    */
   public function getId(): int
   {
-    return $this -> id;
+    return $this->id;
   }
 
   /**
    * @return float
    */
-  public function getRate(): float
+  public function getRate()
   {
-    return $this -> rate;
+    return $this->rate;
   }
 
   /**
@@ -65,9 +65,9 @@ class Freelancer
   {
     $repo = new Repository( Plan::class );
 
-    return $repo -> findOneBy(
+    return $repo->findOneBy(
         [
-          'id' => $this -> plan
+          'id' => $this->plan
         ]
     );
   }
@@ -79,8 +79,8 @@ class Freelancer
   {
     $repo = new Repository( User::class );
 
-    return $repo -> findOneBy( [
-        'id' => $this -> user
+    return $repo->findOneBy( [
+        'id' => $this->user
       ] );
   }
 
@@ -92,8 +92,8 @@ class Freelancer
 
     $repo = new Repository( Category::class );
 
-    return $repo -> findOneBy( [
-        'id' => $this -> user
+    return $repo->findOneBy( [
+        'id' => $this->user
       ] );
   }
 
@@ -102,7 +102,7 @@ class Freelancer
    */
   public function setRate( float $rate )
   {
-    $this -> rate = $rate;
+    $this->rate = $rate;
   }
 
   /**
@@ -110,7 +110,7 @@ class Freelancer
    */
   public function setPlan( int $plan )
   {
-    $this -> plan = $plan;
+    $this->plan = $plan;
   }
 
   /**
@@ -118,7 +118,7 @@ class Freelancer
    */
   public function setUser( int $user )
   {
-    $this -> user = $user;
+    $this->user = $user;
   }
 
   /**
@@ -126,7 +126,7 @@ class Freelancer
    */
   function setCategoryId( int $categoryId )
   {
-    $this -> categoryId = $categoryId;
+    $this->categoryId = $categoryId;
   }
 
 }

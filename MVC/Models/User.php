@@ -119,7 +119,7 @@ class User
     /**
      * @return int
      */
-    public function getRole(): int
+    public function getRole()
     {
         return $this->role;
     }

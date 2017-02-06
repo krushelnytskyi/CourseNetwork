@@ -35,12 +35,9 @@
                   <th>Email</th>
                   <th>Role</th>
                 </tr>
-
                 <?php if (count($this->freelancersList) === 0) : ?>
                   <div class="alert alert-info">At this moment we don't have any Users</div>
                 <?php endif; ?>
-
-
                 <?php foreach ($this->usersList as $user) : ?>
                   <?php /** @var \MVC\Models\User $user */ ?>
                   <tr>
@@ -117,15 +114,6 @@
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
         <?php if (isset($this->error) === true) : ?>
           <div class="alert alert-danger">
             <?= $this->error ?>
