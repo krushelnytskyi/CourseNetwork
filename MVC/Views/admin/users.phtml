@@ -3,51 +3,136 @@
   <div class="col-10 admin-panel-wrap light-gray-wrap">
     <?php $this->layout('admin/breadcrumbs'); ?>
 
-    <div class="container-fluid admin-panel-content">
-      <div class="wrapListTable">
-        <h1 class="admin-panel__title">User list</h1>
-        <hr>
-        <table class="table listTable">
-          <tr>
-            <thead class="thead-default">
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Created</th>
-            </thead>
-          </tr>
-          <tbody>
-          <?php
-          $n = count($this->list);
+    <section class="admin-panel__users-list-section">
+      <div class="container-fluid admin-panel-content">
+        <h1 class="admin-panel__title">List of users</h1>
 
-          if ($n == 0)
-          {
-            echo '<p>Sorry, we don\'t have any users</p>';
-          } else {
+        <!--Nav tabs-->
 
-            for ($i = 0; $i < $n; $i++) {
-              echo '<tr>';
-              echo '<td>' . $this->list[$i]['id'] . '</td>';
-              echo '<td>' . $this->list[$i]['name'] . '</td>';
-              echo '<td>' . $this->list[$i]['email'] . '</td>';
-              echo '<td>' . $this->list[$i]['status'] . '</td>';
-              echo '<td>' . $this->list[$i]['created'] . '</td>';
-              echo '</tr>';
-            }
-          }
-          unset($n);
-          ?>
-          </tbody>
-        </table>
-      </div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home" role="tab">All users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Only Customers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#messages" role="tab">Only Freelancers</a>
+          </li>
+        </ul>
 
-      <?php if (isset($this->error) === true) : ?>
-        <div class="alert alert-danger">
-          <?= $this->error ?>
+        <!--Tab panes-->
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="home" role="tabpanel">
+            <div class="wrapListTable">
+              <h1 class="admin-panel__sub-title">Users list</h1>
+              <hr>
+              <table class="table listTable">
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                </tr>
+
+                <?php if (count($this->freelancersList) === 0) : ?>
+                  <div class="alert alert-info">At this moment we don't have any Users</div>
+                <?php endif; ?>
+
+
+                <?php foreach ($this->usersList as $user) : ?>
+                  <?php /** @var \MVC\Models\User $user */ ?>
+                  <tr>
+                    <td><?= $user->getId() ?></td>
+                    <td><?= $user->getName() ?></td>
+                    <td><?= $user->getEmail() ?></td>
+                    <td><?= $user->getRole() ?></td>
+                  </tr>
+                <?php endforeach; ?>
+
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="profile" role="tabpanel">
+            <div class="wrapListTable">
+              <h1 class="admin-panel__sub-title">Customers list</h1>
+              <hr>
+              <table class="table listTable">
+                <tr>
+                  <th>ID</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Plan</th>
+                  <th>Rating</th>
+                </tr>
+
+                <?php if (count($this->freelancersList) === 0) : ?>
+                  <div class="alert alert-info">At this moment we don't have Customers</div>
+                <?php endif; ?>
+
+                <?php foreach ($this->customersList as $customer) : ?>
+                  <?php /** @var \MVC\Models\Customer $customer */ ?>
+                  <tr>
+                    <td><?= $customer->getId() ?></td>
+                    <td><?= $customer->getUser()->getId() ?></td>
+                    <td><?= $customer->getUser()->getName() ?></td>
+                    <td>Temporary not available</td>
+                    <td><?= $customer->getRating() ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="messages" role="tabpanel">
+            <div class="wrapListTable">
+              <h1 class="admin-panel__sub-title">Freelancers list</h1>
+              <hr>
+              <table class="table listTable">
+                <tr>
+                  <th>ID</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Plan</th>
+                  <th>Rate</th>
+                </tr>
+
+                <?php if (count($this->freelancersList) === 0) : ?>
+                  <div class="alert alert-info">At this moment we don't have Freelancers</div>
+                <?php endif; ?>
+
+                <?php foreach ($this->freelancersList as $freelancer) : ?>
+                  <?php /** @var \MVC\Models\Freelancer $freelancer */ ?>
+                  <tr>
+                    <td><?= $freelancer->getId() ?></td>
+                    <td><?= $freelancer->getUser()->getId() ?></td>
+                    <td><?= $freelancer->getUser()->getName() ?></td>
+                    <td>Temporary not available</td>
+                    <td><?= $freelancer->getRate() ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              </table>
+            </div>
+          </div>
         </div>
-      <?php endif; ?>
-    </div>
+
+
+
+
+
+
+
+
+
+        <?php if (isset($this->error) === true) : ?>
+          <div class="alert alert-danger">
+            <?= $this->error ?>
+          </div>
+        <?php endif; ?>
+      </div>
+    </section>
 
   </div>
 </div>

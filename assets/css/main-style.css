@@ -433,6 +433,7 @@ figure.effect-sadie:hover p {
     text-align: center;
 }
 .loginRegisterLeft label {
+    text-align: right;
     padding-top: .3em;
 }
 .loginRegisterLeft .btn-custom1 {
@@ -464,6 +465,47 @@ span.register-notice  {
     color: #8c8c8c;
 }
 
+/**** member-type form ****/
+
+.member-type-icon label {
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    box-shadow: 0 -3px rgba(0,0,0,.15) inset;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.member-type-icon label i {
+    display: block;
+    font-size: 4rem;
+    height: 80px;
+    line-height: 80px;
+    margin-bottom: 15px;
+    text-align: center;
+
+}
+
+.member-type-icon input:checked + label {
+    background-color: #0275d8;
+    color: #fff;
+}
+
+.member-type-icon label:hover {
+    background-color: rgba(172, 172, 172, 0.15);
+}
+
+.reg-custom-input {
+    display: none;
+}
+
 /********************=404 page*******************/
 
 .courseNetwork-not-found {
@@ -488,6 +530,16 @@ span.register-notice  {
     position: relative;
 }
 
+.admin-panel__sub-title {
+    color: #555555;
+    font-size: 20px;
+    font-weight: normal;
+    float: none;
+    text-shadow: 0 1px 0 #ffffff;
+    margin: 20px 10px 10px 20px;
+    position: relative;
+}
+
 .flexListTable {
     margin-right: 0;
 }
@@ -497,6 +549,11 @@ span.register-notice  {
 }
 .listTable td {
     background-color: #fcfcfc;
+}
+
+.admin-panel-content .nav-tabs a.active {
+    background-color: #F8F8F8;
+    border-color: #ddd #ddd transparent;
 }
 /********************=admin menu*******************/
 
@@ -511,6 +568,12 @@ span.register-notice  {
 
 .verticalAdminMenu .admin-label span {
     color: #5975ff;
+}
+
+@media (max-width: 1024px) {
+    .verticalAdminMenu .admin-label {
+        padding-left: 10px;
+    }
 }
 
 .verticalAdminMenu ul {
