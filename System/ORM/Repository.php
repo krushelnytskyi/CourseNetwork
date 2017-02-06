@@ -150,16 +150,27 @@ class Repository
      */
     public function delete($model, $id)
     {
-            $statement = Connection::getInstance()
-	
-            ->delete()
-            ->from($this->storage);
+    $statement = Connection::getInstance()
+       ->delete()
+       ->from($this->storage);
+		 
+		foreach ($this->properties as $property => $key) {
 			
-			$statement->where($this->properties['id'], '=', $id);
-			$result = $statement->execute();	
+		$reflectionProperty = $this->reflection->getProperty($this->properties[$key]);
+        $reflectionProperty->setAccessible(true);
+        $value = $reflectionProperty->getValue($model);
+	    $reflectionProperty->setAccessible(false);
 			
-			return $result === false ? 0 : 'видалило '.$id;
-		
+		$statement
+                ->_and()
+                ->where($this->properties[$key], '=', $value);
+       	
+		}
+			
+		$result = $statement->execute();
+			
+		return $result === false ? 0 : 1;
+
 }
 
 }
