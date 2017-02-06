@@ -57,7 +57,7 @@ class Admin extends Controller
 
         $this->getView()->view('admin/users');
     }
-    
+
     /**
      * List of freelancers Action
      */
@@ -72,13 +72,13 @@ class Admin extends Controller
         $freelancersList = $dbConnect->select()
             ->from('freelancers')
             ->execute();
-        
+
         $this->getView()->assign('list', $freelancersList);
 
         $this->getView()->view('admin/freelancers');
     }
-	
-	/**
+
+    /**
      * List of customers Action
      */
     public function customersAction()
