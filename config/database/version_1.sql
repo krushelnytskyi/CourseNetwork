@@ -33,6 +33,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `balance` DECIMAL (10,2) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `skype` varchar(255) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -56,6 +61,16 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `description` TEXT,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `portfolio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_name` varchar(255) NOT NULL DEFAULT 'work name',
+  `description` TEXT,
+  `image_name` varchar(255),
+  `user_id` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -10,7 +10,7 @@ return [
             'controller' => \MVC\Controllers\Admin::class,
             'action' => 'createCategory'
         ]
-    ],
+     ],
     'patterns' => [
 //        'users\/(.+)' => [
 //            'controller' => 'MVC\Controllers\User',

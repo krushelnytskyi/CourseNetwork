@@ -1,0 +1,50 @@
+<?php $user = \System\Auth\UserSession::getInstance()->getIdentity();?>
+
+<div class="row">
+  <?php $this->layout('using/menu'); ?>
+  <div class="main-user col-sm-10">
+    <?php  if ($user !== null) :?>
+    <h1> Hello <?=  $user->getName();?>&nbsp;!!!</h1>
+    <?php endif;?>
+
+    <table class="table">
+      <thead class="thead-inverse">
+      <tr>
+        <th>id</th>
+        <th>Full Name</th>
+        <th>Login</th>
+        <th>Site</th>
+        <th>Phone</th>
+        <th>Skype</th>
+        <th>Role</th>
+        <th>Balance, $</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row"><?= $user->getId();?></th>
+        <td><?= $user->getName()?:'none'?></td>
+        <td><?= $user->getEmail()?:'none';?></td>
+        <td><?= $user->getSite()?:'none';?></td>
+        <td><?= $user->getPhone()?:'none';?></td>
+        <td><?= $user->getSkype()?:'none';?></td>
+        <td><?= $user->getRole()?:'none';?></td>
+        <td><?= $user->getBalance()?:'none';?></td>
+
+
+      </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>

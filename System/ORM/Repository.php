@@ -162,5 +162,30 @@ class Repository
 			return $result === false ? 0 : 'видалило '.$id;
 		
 }
+  /**
+   * @param object $model
+   */
+  public function update($model, $id)
+  {
+    $result = array();
+    foreach ($this->properties as $property => $column) {
+      $reflectionProperty = $this->reflection->getProperty($property);
+      $reflectionProperty->setAccessible(true);
+      $value = $reflectionProperty->getValue($model);
+
+      if ($value !== null && $this->properties[$reflectionProperty->getName()] !== 'id' ) {
+        $result[$this->properties[$reflectionProperty->getName()]] = $value;
+
+      }
+    $reflectionProperty->setAccessible(false);
+    }
+      $statement = Connection::getInstance()->update()
+     ->from($this->storage)
+      ->set($result)
+      ->where('id','=',$id)
+      ->execute();
+       return $statement;
+  }
+
 
 }

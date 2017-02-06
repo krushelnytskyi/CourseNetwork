@@ -46,7 +46,7 @@ class Update extends Statement
 
         $result = $this->connection->getLink()->query( $sql );
 
-        return ( false === $result ) ? false : $this->connection->getLink()->insert_id;
+        return ( false === $result ) ? false : $this->connection->getLink()->affected_rows;
 
     }
 
