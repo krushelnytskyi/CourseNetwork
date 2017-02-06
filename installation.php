@@ -62,20 +62,18 @@ foreach (glob('config/database/*.sql') as $file)
                 $queries = preg_replace($pattern, '', $file);
                 $queries = explode(';', $queries);
 				                                                                   
-				array_unshift($queries, 'USE `course_network`;');
+		array_unshift($queries, 'USE `course_network`;');
 				
                 foreach ($queries as $query) {
                     $query = $pdo->prepare(trim($query . ';'));
                     $query->execute();
                 }
-            }
-			
+            }	
 		}
 
-		
-        } catch (PDOException $e) {
+	} catch (PDOException $e) {
             $this->abort($e->getMessage());
-        }
+        }	
 		
     }
 
