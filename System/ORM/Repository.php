@@ -148,7 +148,7 @@ class Repository
     /**
      * @param object $model
      */
-    public function delete($model, $id)
+    public function delete($model)
     {
     $statement = Connection::getInstance()
        ->delete()
@@ -158,6 +158,7 @@ class Repository
 			
 		$reflectionProperty = $this->reflection->getProperty($this->properties[$key]);
         $reflectionProperty->setAccessible(true);
+			
         $value = $reflectionProperty->getValue($model);
 	    $reflectionProperty->setAccessible(false);
 			
