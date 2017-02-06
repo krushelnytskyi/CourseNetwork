@@ -41,31 +41,42 @@ class Install
     /**
      * @step
      */
-    public function installDatabase()
+        public function installDatabase()
     {
+		
         $dbForConnect = include 'config/database.php';
 
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] .';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
-
-            $file = 'config/database/version_1.sql';
-
+			
+			
+foreach (glob('config/database/*.sql') as $file)
+    {
+   
             if (true === file_exists($file)) {
+                
                 $file = file_get_contents($file);
                 $pattern[0] = '/(\/\*.*)/';
+                
                 $queries = preg_replace($pattern, '', $file);
                 $queries = explode(';', $queries);
-
+				                                                                   
+				array_unshift($queries, 'USE `course_network`;');
+				
                 foreach ($queries as $query) {
                     $query = $pdo->prepare(trim($query . ';'));
                     $query->execute();
                 }
             }
+			
+		}
 
+		
         } catch (PDOException $e) {
             $this->abort($e->getMessage());
         }
+		
     }
 
     /**
