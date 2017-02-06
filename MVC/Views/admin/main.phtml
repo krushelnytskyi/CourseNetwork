@@ -1,6 +1,12 @@
-<div class="row">
+<div class="row no-mg-rt">
   <?php $this->layout('admin/menu'); ?>
-  <div class="col-10">
-    <h1>Hello admin!</h1>
+  <div class="col-10 admin-panel-wrap light-gray-wrap">
+    <?php $this->layout('admin/breadcrumbs'); ?>
+
+    <div class="container-fluid admin-panel-content">
+      <h1 class="admin-panel__title">Hello admin!</h1>
+      <hr>
+    </div>
+
   </div>
 </div>

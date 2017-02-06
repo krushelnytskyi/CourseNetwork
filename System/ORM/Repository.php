@@ -55,7 +55,7 @@ class Repository
      * @param $order
      * @return array
      */
-    public function findBy(array $criteria = [], $limit = null, $offset = null, $order = null)
+    public function findBy(array $criteria, $limit = null, $offset = null, $order = null)
     {
         $statement = Connection::getInstance()
             ->select()
@@ -108,6 +108,14 @@ class Repository
     }
 
     /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->findBy([]);
+    }
+
+    /**
      * @param $model
      * @return bool|int
      */
@@ -130,8 +138,7 @@ class Repository
 
             $reflectionProperty->setAccessible(false);
         }
-
-        return $statement
+         return $statement
             ->from($this->storage)
             ->columns($columns)
             ->values($values)
@@ -141,29 +148,18 @@ class Repository
     /**
      * @param object $model
      */
-    public function delete($model)
+    public function delete($model, $id)
     {
-		$statement = Connection::getInstance()
-        ->delete()
-        ->from($this->storage);
-		 
-		foreach ($this->properties as $property => $key) {
+            $statement = Connection::getInstance()
+	
+            ->delete()
+            ->from($this->storage);
 			
-		$reflectionProperty = $this->reflection->getProperty($this->properties[$key]);
-        $reflectionProperty->setAccessible(true);
-        $value = $reflectionProperty->getValue($model);
-	    $reflectionProperty->setAccessible(false);
+			$statement->where($this->properties['id'], '=', $id);
+			$result = $statement->execute();	
 			
-		$statement
-                ->_and()
-                ->where($this->properties[$key], '=', $value);
-       	
-		}
-			
-		$result = $statement->execute();
-			
-		return $result === false ? 0 : 1;
+			return $result === false ? 0 : 'видалило '.$id;
 		
 }
-		
+
 }

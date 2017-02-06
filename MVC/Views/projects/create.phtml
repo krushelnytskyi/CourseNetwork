@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row vert-mg-120">
+    <div class="col-8 createProjectWrap  pd-20">
+      <h1>Get your Job Done!</h1>
+      <hr>
+      <form action="/projects/create" method="post" id="formJob">
+        <div class="createJobForm">
+          <div class="form-group">
+            <label for="createFormTitle">What you need to get done?</label>
+            <input type="text" class="form-control" id="createFormTitle" placeholder="e.g I need a designer">
+          </div>
+        </div>
+        <div class="createJobForm">
+            <div class="form-group">
+                <label for="createFormCategory">Pick Category</label>
+                <select class="form-control" id="createFormCategory">
+                    <?php foreach ($this->categories as $category) : ?>
+                        <option value="<?= $category->getName(); ?>"><?= $category->getName(); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <div class="createJobForm">
+          <div class="form-group">
+            <label for="createFormDescription">Description</label>
+            <textarea class="form-control" id="createFormDescription" rows="3" placeholder="Provide a more detailed description to help you get better proposals"></textarea>
+          </div>
+        </div>
+
+        <div class="createJobForm">
+          <div class="row">
+            <div class="form-group col-4">
+              <label for="createFormworkType">Work Type</label>
+              <select class="form-control" id="createFormworkType">
+                <option>Fixed Price</option>
+                <option>Per Hour</option>
+              </select>
+            </div>
+
+            <div class="form-group col-3">
+              <label for="createFormCurrency">Currency</label>
+              <select class="form-control" id="createFormCurrency">
+                <option>UAH</option>
+                <option>USD</option>
+                <option>RUB</option>
+
+              </select>
+            </div>
+
+            <div class="form-group col-4">
+              <label for="createFormBudget">Budget</label>
+              <input type="text" class="form-control" id="createFormBudget" aria-describedby="emailHelp" placeholder="Enter Budget">
+            </div>
+          </div>
+        </div>
+
+        <div class="createJobForm">
+          <label for="createFormFiles">Upload samples and other helpful materials</label>
+          <input type="file" class="form-control-file bnt" id="createFormFiles" aria-describedby="fileHelp">
+        </div>
+
+        <div class="createJobForm">
+          <a href="#" class="btn-custom1">Post Project</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-4 helpfulTips">
+      <h3 class="text-center">USEFUL TIPS</h3>
+      <ol>
+        <li>Describe your Job in as much detail as you can comfortably reveal - it will increase the quality of proposals you receive and shorten the selection process.</li>
+        <li>Upload as much relevant information (pictures, documents, specifications, links, etc) as possible to get a realistic quote.
+        </li>
+        <li>Match the experience level to your requirements – remember, you’re looking for the best you can afford, not the cheapest you can get.
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>

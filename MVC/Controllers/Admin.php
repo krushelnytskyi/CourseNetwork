@@ -2,10 +2,12 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Category;
 use MVC\Models\User;
 use System\Auth\UserSession;
 use System\Controller;
 use System\Database\Connection;
+use System\ORM\Repository;
 
 /**
  * Class Admin
@@ -14,41 +16,77 @@ use System\Database\Connection;
 class Admin extends Controller
 {
 
-  /**
-   * Main admin-page Action
-   */
-  public function mainAction()
-  {
-    if (UserSession::getInstance()->getIdentity()->getStatus() !== User::STATUS_ADMIN) {
-        $this->getView()->view('404');
-    } else {
+    /**
+     * @inheritdoc
+     */
+    public function initial()
+    {
+        $hasIdentity = UserSession::getInstance()->hasIdentity();
+
+//        if (false === $hasIdentity || UserSession::getInstance()->getIdentity()->getRole() !== User::STATUS_USER) {
+//            $this->getView()->view('404');
+//            exit(0);
+//        }
+    }
+
+
+    /**
+     * Main admin-page Action
+     */
+    public function mainAction()
+    {
         $this->getView()->view('admin/main');
     }
 
-  }
-
-  /**
-   * List of users Action
-   */
-  public function usersAction()
-  {
-    $dbConnect = Connection::getInstance();
-    
-    if ($dbConnect->getLink() === false)
+    /**
+     * List of users Action
+     */
+    public function usersAction()
     {
-      $this->getView()->assign('error', 'Boss, we have problems with database connection');
+        $dbConnect = Connection::getInstance();
+
+        if ($dbConnect->getLink() === false) {
+            $this->getView()->assign('error', 'Boss, we have problems with database connection');
+        }
+
+        $usersList = $dbConnect->select()
+            ->from('users')
+            ->execute();
+
+        /* Uncomment for $usersList reverse sort */
+        //$usersList = array_reverse($usersList);
+
+        $this->getView()->assign('list', $usersList);
+
+        $this->getView()->view('admin/users');
     }
-    
-    $usersList = $dbConnect->select()
-                           ->from('users')
-                           ->execute();
-    
-    /* Uncomment for $usersList reverse sort */
-    //$usersList = array_reverse($usersList);
 
-    $this->getView()->assign('list', $usersList);
+    /**
+     *
+     */
+    public function categoriesAction()
+    {
+        $repo = new Repository(Category::class);
+        $categories = $repo->findAll();
 
-    $this->getView()->view('admin/users');
-  }
+        $this->getView()->assign('categories', $categories);
+        $this->getView()->view('admin/categories');
+    }
+
+    public function createCategoryAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+
+            $repo = new Repository(Category::class);
+            $category = new Category();
+            $category->setName($name);
+            $category->setDescription($description);
+
+            $repo->save($category);
+            $this->redirect('admin/categories');
+        }
+    }
 
 }
