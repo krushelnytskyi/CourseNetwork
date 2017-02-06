@@ -1,0 +1,74 @@
+<div class="container" id="verify-container">
+	<menu id="verify-menu">
+		<a href="/payments/verify"><li>Verify Payment Method</li></a>
+	    <a href="/payments/transactions"><li>Transaction History</li></a>
+	    <a class="verify-menu-a" href="/payments/deposit"><li>Deposit Funds</li></a>
+		<a href="/payments/withdraw"><li>Withdraw Money</li></a>
+   </menu>
+   <div id="deposit-container">
+   <div id="verify-title">
+		<h1>Select Payment Method</h1>
+	</div>
+   <ul id="tabs1">
+		<li><input type="radio" name="tab" value="tab11">Credit Card</li>
+		<li><input type="radio" name="tab" value="tab21">PayPal</li>
+		<li><input type="radio" name="tab" value="tab31">Webmoney</li>
+		
+	</ul>
+	</div>
+   	<div id="content1">
+		<div id="tab11">
+			<table class="table">
+			<h4>What card would you like to pay with?</h4>
+			<form action="/payments/verify">
+				<p>Cardholder name</p>
+					<input id="deposit-input" type="text" size="25">
+				<p>Card number</p>
+					<input id="deposit-input1" type="text" size="25">
+				<p>Expiry date</p>
+					<input id="deposit-input2" type="text" size="15" placeholder="MM/YY">
+				<p>Security code</p>
+					<input id="deposit-input3" type="text" size="15"><span id="input-form-info">The last 3 digits displayed on the back of your card</span> 
+				<p>You agree to authorize the use of your credit card for this deposit and future payments.</p>
+			</form>
+				<p>
+					<label for="createFormDeposit">Deposit Amount </label>
+				</p>        
+                <p>
+					<select class="form-control" id="createFormDeposit">
+					<option>USD</option>
+					</select>
+					<input id="deposit-input" type="text" size="15" placeholder="30">
+				</p>
+					<input type="submit" value="Confirm">
+				</div>
+			</table>
+		</div>
+		<div id="tab21">
+			<table class="table">
+				<p>
+					<label for="createFormDeposit">Deposit Amount </label>
+				</p>        
+                <p>
+					<select class="form-control" id="createFormDeposit">
+					<option>USD</option>
+					</select>
+					<input id="deposit-input" type="text" size="15" placeholder="30">
+				</p>
+				<input type="submit" value="Confirm">
+			</table>		
+		</div>
+		<div id="tab31">
+			<table class="table">
+				<p><label for="createFormDeposit">Deposit Amount </label></p>        
+                <p>
+					<select class="form-control" id="createFormDeposit">
+					<option>USD</option>
+					</select>
+					<input id="deposit-input" type="text" size="15" placeholder="30">
+				</p>
+				<input type="submit" value="Confirm">
+			</table>		
+			</div>
+	</div>
+</div>
