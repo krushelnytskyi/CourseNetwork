@@ -8,7 +8,7 @@ ALTER TABLE `projects` ADD COLUMN
 ) 
 AFTER `name`;
 
-ALTER TABLE `categories` ADD COLUMN (`count` int(11) DEFAULT NULL);
+ALTER TABLE `categories` ADD COLUMN (`count` int(11) DEFAULT '0');
 
 
 
