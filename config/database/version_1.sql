@@ -42,7 +42,7 @@ CREATE TABLE `projects` (
   `description` varchar(255) NOT NULL UNIQUE,
   `category` INT(3) NOT NULL,
   `work_type` varchar(124) DEFAULT NULL,
-  `requests_count` int(11) DEFAULT NULL,
+  `requests_count` int(11) DEFAULT '0',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `start` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `finish` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,

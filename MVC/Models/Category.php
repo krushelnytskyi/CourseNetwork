@@ -29,6 +29,12 @@ class Category
     private $description;
 
     /**
+     * @var int
+     * @column(count)
+     */
+    private $count;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -53,6 +59,18 @@ class Category
     }
 
     /**
+     * @return int|null
+     */
+    public function getCount()
+    {
+        if(null !== $this->count) {
+            return $this->count;
+        }else{
+            return 0;
+        }
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name)
@@ -66,6 +84,11 @@ class Category
     public function setDescription(string $description)
     {
         $this->description = $description;
+    }
+
+    public function setCount(int $count)
+    {
+        $this->count = $count;
     }
 
 }

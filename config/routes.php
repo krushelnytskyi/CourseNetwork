@@ -10,10 +10,10 @@ return [
             'controller' => \MVC\Controllers\Admin::class,
             'action' => 'createCategory'
         ],
-        'projects/create-project' => [
-            'controller' => \MVC\Controllers\Projects::class,
-            'action' => 'createProject'
-        ]
+//        'projects/create-project' => [
+//            'controller' => \MVC\Controllers\Projects::class,
+//            'action' => 'createProject'
+//        ]
     ],
     'patterns' => [
 //        'users\/(.+)' => [

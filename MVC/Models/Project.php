@@ -2,11 +2,6 @@
 
 namespace MVC\Models;
 
-use MVC\Models\Category;
-use MVC\Models\Customer;
-use MVC\Models\Freelancer;
-use System\Controller;
-use System\Database\Connection;
 use System\ORM\Repository;
 
 
@@ -150,7 +145,7 @@ class Project
     }
 
     /**
-     * @return object|array
+     * @return Category|null
      */
     public function getCategory()
     {
@@ -158,8 +153,6 @@ class Project
         $category = $repo->findOneBy(['id'=>$this->category]);
 
         return $category;
-
-        //return $this->category;
     }
 
     /**
@@ -167,32 +160,33 @@ class Project
      */
     public function getCreated(): string
     {
-        return $this->created;
+        return strtotime($this->created);
     }
 
     /**
-     * @return int
+     * @return Customer|null
      */
-    public function getCustomer(): int
+    public function getCustomer()
     {
-        /*$repo = new Repository(Customer::class);
+        $repo = new Repository(Customer::class);
         $customer = $repo->findOneBy(['id'=>$this->customer]);
 
-        return $customer;*/
-        return $this->customer;
+        return $customer;
     }
 
     /**
-     * @return int
+     * @return Freelancer|null
      */
-    public function getFreelancer(): int
+    public function getFreelancer()
     {
-        /* $repo = new Repository(Freelancer::class);
-           $freelancer = $repo->findOneBy(['id'=>$this->freelancer]);
+        if(null !== $this->freelancer) {
+            $repo = new Repository(Freelancer::class);
+            $freelancer = $repo->findOneBy(['id' => $this->freelancer]);
 
-       return $freelancer;*/
-
-        return $this->freelancer;
+            return $freelancer;
+        }else{
+            return 0;
+        }
     }
 
     /**

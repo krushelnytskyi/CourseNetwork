@@ -1,12 +1,14 @@
 ALTER TABLE `projects` ADD COLUMN
 (
-    `description` varchar(255) NOT NULL UNIQUE,
-    `category` INT(3) NOT NULL,
-    `work_type` varchar(124) DEFAULT NULL,
-	`requests_count` int(11) DEFAULT NULL,
+  `description` varchar(255) NOT NULL UNIQUE,
+  `category` INT(3) NOT NULL,
+  `work_type` varchar(124) DEFAULT 'Fixed Price',
+	`requests_count` int(11) DEFAULT '0',
 	`budget` int(7) DEFAULT '0',
 ) 
 AFTER `name`;
+
+ALTER TABLE `categories` ADD COLUMN (`count` int(11) DEFAULT NULL);
 
 
 

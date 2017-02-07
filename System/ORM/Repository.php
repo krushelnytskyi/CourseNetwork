@@ -117,42 +117,57 @@ class Repository
 
     /**
      * @param $model
+     * @param $field
+     * @param $delimiter
+     * @param $fieldValue
      * @return bool|int
      */
-    public function save($model)
+    public function save($model, $field = null,  $fieldValue = null, $delimiter = '=')
     {
-        $statement = Connection::getInstance()->insert();
+        if($field === null) {
+            $statement = Connection::getInstance()->insert();
+        }else{
+            $statement = Connection::getInstance()->update();
+        }
 
         $columns = [];
         $values = [];
+        $set = [];
 
         foreach ($this->properties as $property => $column) {
             $reflectionProperty = $this->reflection->getProperty($property);
             $reflectionProperty->setAccessible(true);
             $value = $reflectionProperty->getValue($model);
 
-            if ($value !== null) {
+            if($value !== null && $field !== null){
+                $set[$this->properties[$reflectionProperty->getName()]] = $value;
+            }
+            elseif ($value !== null) {
                 $columns[] = $this->properties[$reflectionProperty->getName()];
                 $values[] = $value;
             }
 
             $reflectionProperty->setAccessible(false);
         }
-         return $statement
-            ->from($this->storage)
-            ->columns($columns)
-            ->values($values)
-            ->execute();
+
+        if($field===null) {
+            $query = $statement->from($this->storage)->columns($columns)->values($values);
+        }else {
+            $query = $statement->from($this->storage)->set($set)->where($field, $delimiter, $fieldValue);
+        }
+
+        return $query->execute();
+
     }
 
     /**
      * @param object $model
+     * @return string|null
      */
     public function delete($model, $id)
     {
 
             $statement = Connection::getInstance()
-	
             ->delete()
             ->from($this->storage);
 			
@@ -161,6 +176,6 @@ class Repository
 			
 			return $result === false ? 0 : 'видалило '.$id;
 		
-}
+    }
 
 }
