@@ -37,13 +37,22 @@ class Projects extends Controller
     public function searchAction()
     {
         $repo = new Repository(Project::class);
-        $projects = $repo->findAll();
+        $projectsAll = $repo->findAll();
+        $countAll = count($projectsAll);
+
+        if(isset($_GET['category']) && null !== $_GET['category'])
+        {
+            $projects = $repo->findBy(['category'=>$_GET['category']]);
+        }else{
+            $projects = $projectsAll;
+        }
 
         $repo = new Repository(Category::class);
         $categories = $repo->findAll();
 
         $this->getView()->assign('categories', $categories);
         $this->getView()->assign('projects', $projects);
+        $this->getView()->assign('countAll', $countAll);
 
        // $this->listItems('Project', 'projects');
         $this->getView()->view('projects/search');

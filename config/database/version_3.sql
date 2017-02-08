@@ -44,7 +44,7 @@ INSERT INTO `plans` (`id`, `name`, `description`, `price`, `role`, `request_amou
 (NULL, 'Gold', 'You can publish 64 projects per month', '39.99', 'customer', '0', '64'),
 (NULL, 'Professional', 'You can publish unlimited projects per month', '59.99', 'customer', '0', '99999'),
 (NULL, 'Free', 'You can apply 8 requests per month', '0', 'freelancer', '8', '0'),
-(NULL, 'Start', 'You can apply 32 requests per month', '19.99', 'freelancer', '32', '0'),
+(NULL, 'Basic', 'You can apply 32 requests per month', '19.99', 'freelancer', '32', '0'),
 (NULL, 'Medium', 'You can apply 64 requests per month', '29.99', 'freelancer', '64', '0'),
 (NULL, 'Unlimited', 'You can apply unlimited requests per month', '59.99', 'freelancer', '99999', '0');
 

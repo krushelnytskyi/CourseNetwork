@@ -85,11 +85,10 @@
           <h2 class="iconCategoriesBlue">Categories</h2>
           <hr>
           <ul class="sidebarFilter">
-            <?php $countAll = count($this->projects)?>
-              <li><a href="#" class="active" >All categories<span class="total-number">(<?= $countAll ?>)</span></a></li>
+              <li><a href="/projects/search/" class="active" >All categories<span class="total-number">(<?= $this->countAll ?>)</span></a></li>
             <?php foreach ($this->categories as $category):?>
               <?php /** @var \MVC\Models\Category $category */?>
-              <li><a href="#"><?= $category->getName() ?><span class="total-number">(<?= $category->getCount() ?>)</span></a></li>
+              <li><a href="/projects/search/?category=<?= $category->getId()?>"><?= $category->getName() ?><span class="total-number">(<?= $category->getCount() ?>)</span></a></li>
             <?php endforeach;?>
 
           <!--  <li><a href="#">Design<span class="total-number">(204)</span></a></li>
