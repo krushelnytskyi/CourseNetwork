@@ -43,16 +43,20 @@ class Install
      */
     public function installDatabase()
     {
-
+		
         $dbForConnect = include 'config/database.php';
 
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
-
-
-            foreach (glob('config/database/*.sql') as $file) {
-
+			
+            foreach (glob('config/database/version_*.sql') as $file) {
+				
+				$path_parts = pathinfo($file);
+                $r = 'config/database/'.$path_parts['filename'].'.sql';
+				
+				if (preg_match('#version_[0-9]+\.sql#Ui', $r))
+    
                 if (true === file_exists($file)) {
                     $file = file_get_contents($file);
                     $pattern[0] = '/(\/\*.*)/';
@@ -69,11 +73,9 @@ class Install
 
             }
 
-
         } catch (PDOException $e) {
             $this->abort($e->getMessage());
         }
-
     }
 
 
