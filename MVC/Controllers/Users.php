@@ -14,6 +14,7 @@ use System\Config;
 use System\Controller;
 use System\Database\Connection;
 use System\Form\Login;
+use System\Form\Register;
 use System\ORM\Repository;
 
 /**
@@ -39,7 +40,7 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email' => $email,
+                    'email'    => $email,
                     'password' => User::hashPassword($password)
                 ]
             );
@@ -64,89 +65,73 @@ class Users extends Controller
     public function registerAction()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $role = $_POST['role'];
 
-            $repo = new Repository(User::class);
-
-            /** @var User $user */
-            $user = $repo->findOneBy(
-                [
-                    'email' => $email,
-                ]
-            );
-
-            if ($user === null) {
-                $user = new User();
-
-                if ($repo->findAll() == null) {
-                    $user->setRole(User::ROLE_SUPER_ADMIN);
-                }
-
-                $user->setEmail($email);
-                $user->setName($name);
-                $user->setPassword(User::hashPassword($password));
-
-                $user->setRole($role);
-                $userId = $repo->save($user);
-
-                if ($role === User::ROLE_CUSTOMER
-                    || $role === User::ROLE_FREELANCER
-                ) {
-
-                    if ($role === User::ROLE_CUSTOMER) {
-
-                        $planRepository = new Repository(Plan::class);
-                        $plan = new Plan();
-                        $plan->setName(Plan::PLAN_ORDINARY);
-
-                        $plan->setType('customer');
-                        $planId = $planRepository->save($plan);
-
-                        $subRepository = new Repository(Customer::class);
-                        $subUser = new Customer();
-
-                        $subUser->setPlan($planId);
-                        $subUser->setRating('0');
-
-                        $subUser->setUser($userId);
-                        $subRepository->save($subUser);
+            $form = new Register($_POST);
+            if ($form->isValid() === false) {
+                $this->getView()->assign('registerErrors', $form->getMessages());
+                $this->getView()->view('users/register');
+            } else {
 
 
-                    } else {
 
-                        $planRepository = new Repository(Plan::class);
-                        $plan = new Plan();
-                        $plan->setName(Plan::PLAN_ORDINARY);
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $role = $_POST['role'];
 
-                        $plan->setType('freelancer');
-                        $planId = $planRepository->save($plan);
+                $repo = new Repository(User::class);
 
-                        $subRepository = new Repository(Freelancer::class);
-                        $subUser = new Freelancer();
-                        $subUser->setRate('0');
+                /** @var User $user */
+                $user = $repo->findOneBy(
+                    [
+                        'email'    => $email,
+                    ]
+                );
 
-                        $subUser->setPlan($planId);
-                        $subUser->setCategoryId('0');
+                if ($user === null) {
+                    $user = new User();
 
-                        $subUser->setUser($userId);
-                        $subRepository->save($subUser);
-
-
+                    if ($repo->findAll() == null){
+                        $user->setRole(User::ROLE_SUPER_ADMIN);
                     }
 
+                    $user->setEmail($email);
+                    $user->setName($name);
+                    $user->setPassword(User::hashPassword($password));
 
-                    $this->forward('users/login');
+                    if ($role === User::ROLE_CUSTOMER
+                        || $role === User::ROLE_FREELANCER
+                    ) {
+                        if ($role === User::ROLE_CUSTOMER) {
+                            $subRepository = new Repository(Customer::class);
+                            $subUser = new Customer();
+                            $subUser->setUser($user->getId());
+                        } else {
+                            $subRepository = new Repository(Freelancer::class);
+                            $subUser = new Freelancer();
+
+                        }
+
+                        $user->setRole($role);
+
+                        $userId = $repo->save($user);
+
+                        $subUser->setUser($userId);
+                        $subRepository->save($subUser);
+
+                        $this->forward('users/login');
+                    } else {
+                        $this->getView()
+                            ->assign('error', 'Select your website role');
+                    }
+
                 } else {
                     $this->getView()
-                        ->assign('error', 'Select your website role');
+                        ->assign('error', 'Account already exists');
                 }
 
-            } else {
-                $this->getView()
-                    ->assign('error', 'Account already exists');
+
+
             }
         }
 

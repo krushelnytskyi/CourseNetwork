@@ -72,7 +72,9 @@ body {
 
 /********************=menu styles*******************/
 
-
+a.nav-logo .text-blue {
+    color: #2439d3;
+}
 
 /********************=footer*******************/
 .footer {
@@ -463,6 +465,10 @@ span.register-notice  {
     margin-bottom: 1em;
     font-size: .75em;
     color: #8c8c8c;
+}
+
+.regist-alerst {
+    margin-top: 1rem;
 }
 
 /**** member-type form ****/
