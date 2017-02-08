@@ -2,10 +2,12 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Category;
 use MVC\Models\Customer;
 use MVC\Models\Freelancer;
 use MVC\Models\Project;
 use MVC\Models\User;
+use MVC\Models\Plan;
 use System\Auth\Session;
 use System\Auth\UserSession;
 use System\Config;
@@ -37,8 +39,8 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email'    => $email,
-                    'password' => $password
+                    'email' => $email,
+                    'password' => User::hashPassword($password)
                 ]
             );
 
@@ -72,14 +74,14 @@ class Users extends Controller
             /** @var User $user */
             $user = $repo->findOneBy(
                 [
-                    'email'    => $email,
+                    'email' => $email,
                 ]
             );
 
             if ($user === null) {
                 $user = new User();
 
-                if ($repo->findAll() == null){
+                if ($repo->findAll() == null) {
                     $user->setRole(User::ROLE_SUPER_ADMIN);
                 }
 
@@ -87,25 +89,54 @@ class Users extends Controller
                 $user->setName($name);
                 $user->setPassword(User::hashPassword($password));
 
+                $user->setRole($role);
+                $userId = $repo->save($user);
+
                 if ($role === User::ROLE_CUSTOMER
                     || $role === User::ROLE_FREELANCER
                 ) {
+
                     if ($role === User::ROLE_CUSTOMER) {
+
+                        $planRepository = new Repository(Plan::class);
+                        $plan = new Plan();
+                        $plan->setName(Plan::PLAN_ORDINARY);
+
+                        $plan->setType('customer');
+                        $planId = $planRepository->save($plan);
+
                         $subRepository = new Repository(Customer::class);
                         $subUser = new Customer();
-                        $subUser->setUser($user->getId());
+
+                        $subUser->setPlan($planId);
+                        $subUser->setRating('0');
+
+                        $subUser->setUser($userId);
+                        $subRepository->save($subUser);
+
+
                     } else {
+
+                        $planRepository = new Repository(Plan::class);
+                        $plan = new Plan();
+                        $plan->setName(Plan::PLAN_ORDINARY);
+
+                        $plan->setType('freelancer');
+                        $planId = $planRepository->save($plan);
+
                         $subRepository = new Repository(Freelancer::class);
                         $subUser = new Freelancer();
+                        $subUser->setRate('0');
+
+                        $subUser->setPlan($planId);
+                        $subUser->setCategoryId('0');
+
+                        $subUser->setUser($userId);
+                        $subRepository->save($subUser);
+
 
                     }
 
-                    $user->setRole($role);
-
-                    $userId = $repo->save($user);
-
-                    $subUser->setUser($userId);
-                    $subRepository->save($subUser);
 
                     $this->forward('users/login');
                 } else {

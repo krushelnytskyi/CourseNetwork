@@ -6,7 +6,6 @@ $installer = new Install;
 $installer->run();
 //$installer->installDatabase();
 // - }
-
 /**
  * This class running installation exploded with steps.
  * To add new installation step - create public not static method
@@ -19,7 +18,6 @@ $installer->run();
  */
 class Install
 {
-
     /**
      * General data defines
      */
@@ -34,7 +32,6 @@ class Install
     public function checkSystem()
     {
         echo 'PHP Version: ' . phpversion() . PHP_EOL;
-
         $this->abortIf(static::MIN_PHP_VERSION > phpversion(), 'Minimum PHP Version: ' . static::MIN_PHP_VERSION);
     }
 
@@ -45,37 +42,33 @@ class Install
     {
 
         $dbForConnect = include 'config/database.php';
-
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
 
+            foreach (glob('config/database/version_*.sql') as $file) {
 
-            foreach (glob('config/database/*.sql') as $file) {
+                $path_parts = pathinfo($file);
+                $r = 'config/database/' . $path_parts['filename'] . '.sql';
 
-                if (true === file_exists($file)) {
-                    $file = file_get_contents($file);
-                    $pattern[0] = '/(\/\*.*)/';
+                if (preg_match('#version_[0-9]+\.sql#Ui', $r))
 
-                    $queries = preg_replace($pattern, '', $file);
-                    $queries = explode(';', $queries);
-                    array_unshift($queries, 'USE `course_network`;');
-
-                    foreach ($queries as $query) {
-                        $query = $pdo->prepare(trim($query . ';'));
-                        $query->execute();
+                    if (true === file_exists($file)) {
+                        $file = file_get_contents($file);
+                        $pattern[0] = '/(\/\*.*)/';
+                        $queries = preg_replace($pattern, '', $file);
+                        $queries = explode(';', $queries);
+                        array_unshift($queries, 'USE `course_network`;');
+                        foreach ($queries as $query) {
+                            $query = $pdo->prepare(trim($query . ';'));
+                            $query->execute();
+                        }
                     }
-                }
-
             }
-
-
         } catch (PDOException $e) {
             $this->abort($e->getMessage());
         }
-
     }
-
 
     /**
      * @param string|bool $message Abort message
@@ -84,11 +77,9 @@ class Install
     private function abort($message = false)
     {
         echo 'Aborting installation. ';
-
         if (false === $message) {
             echo 'Message: ' . $message;
         }
-
         echo PHP_EOL;
         exit(0);
     }
@@ -114,17 +105,13 @@ class Install
     {
         $methods = (new ReflectionClass(static::class))
             ->getMethods(ReflectionMethod::IS_PUBLIC);
-
         echo 'Starting installing process' . PHP_EOL;
-
         foreach ($methods as $method) {
             if (1 === preg_match('/[\s\t]+@step[\s\t]+/', $method->getDocComment())) {
                 echo 'Installing step: ' . $method->getName() . PHP_EOL;
                 $this->{$method->getName()}();
             }
         }
-
         echo 'Installation finished successfully' . PHP_EOL;
     }
-
 }

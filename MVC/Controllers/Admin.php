@@ -65,18 +65,10 @@ class Admin extends Controller
      */
     public function freelancersAction()
     {
-        $dbConnect = Connection::getInstance();
+        $freelancersRepo = new Repository(Freelancer::class);
+        $freelancersList = $freelancersRepo->findAll();
 
-        if ($dbConnect->getLink() === false) {
-            $this->getView()->assign('error', 'Boss, we have problems with database connection');
-        }
-
-        $freelancersList = $dbConnect->select()
-            ->from('freelancers')
-            ->execute();
-
-        $this->getView()->assign('list', $freelancersList);
-
+        $this->getView()->assign('freelancersList', $freelancersList);
         $this->getView()->view('admin/freelancers');
     }
 
@@ -85,18 +77,10 @@ class Admin extends Controller
      */
     public function customersAction()
     {
-        $dbConnect = Connection::getInstance();
+        $customersRepo = new Repository(Customer::class);
+        $customersList = $customersRepo->findAll();
 
-        if ($dbConnect->getLink() === false) {
-            $this->getView()->assign('error', 'Boss, we have problems with database connection');
-        }
-
-        $customersList = $dbConnect->select()
-            ->from('customers')
-            ->execute();
-
-        $this->getView()->assign('list', $customersList);
-
+        $this->getView()->assign('customersList', $customersList);
         $this->getView()->view('admin/customers');
     }
 
