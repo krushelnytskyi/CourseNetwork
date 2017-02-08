@@ -23,7 +23,7 @@ class Admin extends Controller
      */
     public function initial()
     {
-        $hasIdentity = UserSession::getInstance()->hasIdentity();
+        //$hasIdentity = UserSession::getInstance()->hasIdentity();
 
 //        if (false === $hasIdentity || UserSession::getInstance()->getIdentity()->getRole() !== User::STATUS_USER) {
 //            $this->getView()->view('404');

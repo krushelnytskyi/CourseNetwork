@@ -4,374 +4,317 @@ namespace MVC\Models;
 
 use System\ORM\Repository;
 
+
 /**
- * Class Project
+ * Class Projects
  * @package MVC\Models
  * @table(projects)
  */
 class Project
 {
+    /**
+     * @var int
+     * @column(id)
+     */
+    private $id;
 
-  /**
-   * @var int
-   * @column(id)
-   */
-  private $id;
+    /**
+     * @var string
+     * @column(name)
+     */
+    private $name;
 
-  /**
-   * @var string
-   * @column(name)
-   */
-  private $name;
+    /**
+     * @var string
+     * @column(description)
+     */
+    private $description;
 
-  /**
-   * @var string
-   * @column(created)
-   */
-  private $created;
+    /**
+     * @var string
+     * @column(work_type)
+     */
+    private $workType;
 
-  /**
-   * @var int
-   * @column(category_id)
-   */
-  private $category;
+    /**
+     * @var float
+     * @column(budget)
+     */
+    private $budget;
 
-  /**
-   * @var string
-   * @column(start)
-   */
-  private $start;
+    /**
+     * @var int
+     * @column(requests_count)
+     */
+    private $requestsCount;
 
-  /**
-   * @var string
-   * @column(finish)
-   */
-  private $finish;
+    /**
+     * @var string
+     * @column(created)
+     */
+    private $created;
 
-  /**
-   * @var int
-   * @column(status)
-   */
-  private $status;
+    /**
+     * @var int
+     * @column(category)
+     */
+    private $category;
 
-  /**
-   * @var int
-   * @column(cost)
-   */
-  private $cost;
+    /**
+     * @var string
+     * @column(start)
+     */
+    private $start;
 
-  /**
-   * @var int
-   * @column(paid)
-   */
-  private $paid;
+    /**
+     * @var string
+     * @column(finish)
+     */
+    private $finish;
 
-  /**
-   * @var int
-   * @column(freelancer)
-   */
-  private $freelancer;
+    /**
+     * @var int
+     * @column(status)
+     */
+    private $status;
 
-  /**
-   * @var int
-   * @column(customer)
-   */
-  private $customer;
+    /**
+     * @var int
+     * @column(paid)
+     */
+    private $paid;
 
-  /**
-   * @var string
-   * @column(description)
-   */
-  private $description;
+    /**
+     * @var int
+     * @column(freelancer)
+     */
+    private $freelancer;
 
-  /**
-   * @var string
-   * @column(work_type)
-   */
-  private $workType;
+    /**
+     * @var int
+     * @column(customer)
+     */
+    private $customer;
 
-  /**
-   * @var int
-   * @column(budget)
-   */
-  private $budget;
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-  /**
-   * @var int
-   * @column(requests_count)
-   */
-  private $requestsCount;
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
-  /**
-   * @var int
-   * @column(bookmark_id)
-   */
-  private $bookmarkId;
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
 
-  /**
-   * @return int id | null
-   */
-  public function getId(): int
-  {
-    return $this -> id;
-  }
+    /**
+     * @return string
+     */
+    public function getWorkType(): string
+    {
+        return $this->workType;
+    }
 
-  /**
-   * @return string
-   */
-  public function getName(): string
-  {
-    return $this -> name;
-  }
+    /**
+     * @return int
+     */
+    public function getRequestsCount(): int
+    {
+        return $this->requestsCount;
+    }
 
-  /**
-   * @return string
-   */
-  function getCreated(): string
-  {
-    return $this -> created;
-  }
+    /**
+     * @return float
+     */
+    public function getBudget(): float
+    {
+        return $this->budget;
+    }
 
-  /**
-   *
-   * @return Category
-   */
-  function getCategory(): Category
-  {
-    $repo = new Repository( Category::class );
+    /**
+     * @return Category|null
+     */
+    public function getCategory()
+    {
+        $repo = new Repository(Category::class);
+        $category = $repo->findOneBy(['id'=>$this->category]);
 
-    return $repo -> findOneBy(
-        [
-          'id' => $this -> category
-        ]
-    );
-  }
+        return $category;
+    }
 
-  /**
-   * @return string
-   */
-  function getStart(): string
-  {
-    return $this -> start;
-  }
+    /**
+     * @return string
+     */
+    public function getCreated(): string
+    {
+        return strtotime($this->created);
+    }
 
-  /**
-   * @return string
-   */
-  function getFinish(): string
-  {
-    return $this -> finish;
-  }
+    /**
+     * @return Customer|null
+     */
+    public function getCustomer()
+    {
+        $repo = new Repository(Customer::class);
+        $customer = $repo->findOneBy(['id'=>$this->customer]);
 
-  /**
-   * @return int
-   */
-  function getStatus(): int
-  {
-    return $this -> status;
-  }
+        return $customer;
+    }
 
-  /**
-   * @return int
-   */
-  function getCost(): int
-  {
-    return $this -> cost;
-  }
+    /**
+     * @return Freelancer|null
+     */
+    public function getFreelancer()
+    {
+        if(null !== $this->freelancer) {
+            $repo = new Repository(Freelancer::class);
+            $freelancer = $repo->findOneBy(['id' => $this->freelancer]);
 
-  /**
-   * @return int
-   */
-  function getPaid(): int
-  {
-    return $this -> paid;
-  }
+            return $freelancer;
+        }else{
+            return 0;
+        }
+    }
 
-  /**
-   * @return Freelancer
-   */
-  function getFreelancer(): Freelancer
-  {
+    /**
+     * @return string
+     */
+    public function getFinish(): string
+    {
+        return $this->finish;
+    }
 
-    $repo = new Repository( Freelancer::class );
+    /**
+     * @return int
+     */
+    public function getPaid(): int
+    {
+        return $this->paid;
+    }
 
-    return $repo -> findOneBy( [
-        'category_id' => $this -> freelancer
-      ] );
-  }
+    /**
+     * @return string
+     */
+    public function getStart(): string
+    {
+        return $this->start;
+    }
 
-  /**
-   * @return Customer
-   */
-  function getCustomer(): Customer
-  {
+    /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
 
-    $repo = new Repository( Customer::class );
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
 
-    return $repo -> findOneBy( [
-        'plan_id' => $this -> customer
-      ] );
-  }
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
 
-  /**
-   * @return string
-   */
-  function getDescription(): string
-  {
-    return $this -> description;
-  }
+    /**
+     * @param int $category
+     */
+    public function setCategory(int $category)
+    {
+        $this->category = $category;
+    }
 
-  /**
-   * @return string
-   */
-  function getWorkType(): string
-  {
-    return $this -> workType;
-  }
+    /**
+     * @param int $requestsCount
+     */
+    public function setRequestsCount(int $requestsCount)
+    {
+        $this->requestsCount = $requestsCount;
+    }
 
-  /**
-   * @return int
-   */
-  function getBudget(): int
-  {
-    return $this -> budget;
-  }
+    /**
+     * @param string $workType
+     */
+    public function setWorkType(string $workType)
+    {
+        $this->workType = $workType;
+    }
 
-  /**
-   * @return int
-   */
-  function getRequestsCount(): int
-  {
-    return $this -> requestsCount;
-  }
+    /**
+     * @param int $freelancer
+     */
+    public function setFreelancer(int $freelancer)
+    {
+        $this->freelancer = $freelancer;
+    }
 
-  /**
-   * @return int
-   */
-  function getBookmarkId(): int
-  {
-    return $this -> bookmarkId;
-  }
+    /**
+     * @param int $customer
+     */
+    public function setCustomer(int $customer)
+    {
+        $this->customer = $customer;
+    }
 
-  /**
-   * @param int
-   */
-  public function setFreelancer( int $freelancer )
-  {
-    $this -> freelancer = $freelancer;
-  }
+    /**
+     * @param string $start
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
 
-  /**
-   * @param int
-   */
-  public function setCustomer( int $customer )
-  {
-    $this -> customer = $customer;
-  }
+    /**
+     * @param string $finish
+     */
+    public function setFinish($finish)
+    {
+        $this->finish = $finish;
+    }
 
-  /**
-   * @param string $name
-   */
-  public function setName( string $name )
-  {
-    $this -> name = $name;
-  }
+    /**
+     * @param int $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 
-  /**
-   * @param string $start
-   */
-  public function setStart( string $start )
-  {
-    $this -> start = $start;
-  }
+    /**
+     * @param int $budget
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    }
 
-  /**
-   * @param string $finish
-   */
-  public function setFinish( string $finish )
-  {
-    $this -> finish = $finish;
-  }
-
-  /**
-   * @param int $status
-   */
-  public function setStatus( int $status )
-  {
-    $this -> status = $status;
-  }
-
-  /**
-   * @param int $cost
-   */
-  public function setCost( int $cost )
-  {
-    $this -> cost = $cost;
-  }
-
-  /**
-   * @param int $paid
-   */
-  public function setPaid( int $paid )
-  {
-    $this -> paid = $paid;
-  }
-
-  /**
-   *
-   * @param string $created
-   */
-  function setCreated( string $created )
-  {
-    $this -> created = $created;
-  }
-
-  /**
-   * @param int $category
-   */
-  function setCategory( int $category )
-  {
-    $this -> category = $category;
-  }
-
-  /**
-   * @param string $description
-   */
-  function setDescription( string $description )
-  {
-    $this -> description = $description;
-  }
-
-  /**
-   * @param string $workType
-   */
-  function setWorkType( string $workType )
-  {
-    $this -> workType = $workType;
-  }
-
-  /**
-   * @param int $budget
-   */
-  function setBudget( int $budget )
-  {
-    $this -> budget = $budget;
-  }
-
-  /**
-   * @param int $requestsCount
-   */
-  function setRequestsCount( int $requestsCount )
-  {
-    $this -> requestsCount = $requestsCount;
-  }
-
-  /**
-   * @param int $bookmarkId
-   */
-  function setBookmarkId( int $bookmarkId )
-  {
-    $this -> bookmarkId = $bookmarkId;
-  }
+    /**
+     * @param int $paid
+     */
+    public function setPaid($paid)
+    {
+        $this->paid = $paid;
+    }
 
 }

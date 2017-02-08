@@ -1,13 +1,18 @@
 <div class="container">
   <div class="row vert-mg-120">
+    <?php if (isset($this->error) === true) : ?>
+      <div class="alert alert-danger">
+        <?= $this->error ?>
+      </div>
+    <?php endif; ?>
     <div class="col-8 createProjectWrap  pd-20">
       <h1>Get your Job Done!</h1>
       <hr>
-      <form action="/projects/create" method="post" id="formJob">
+      <form action="create" method="post" id="formJob">
         <div class="createJobForm">
           <div class="form-group">
             <label for="createFormTitle">What you need to get done?</label>
-            <input type="text" class="form-control" id="createFormTitle" placeholder="e.g I need a designer">
+            <input type="text" name="name" class="form-control" id="createFormTitle" placeholder="e.g I need a designer">
           </div>
         </div>
         <div class="createJobForm">
@@ -27,15 +32,15 @@
           </div>
         </div>
 
-        <div class="createJobForm">
-          <div class="row">
-            <div class="form-group col-4">
-              <label for="createFormworkType">Work Type</label>
-              <select class="form-control" id="createFormworkType">
-                <option>Fixed Price</option>
-                <option>Per Hour</option>
-              </select>
-            </div>
+          <div class="createJobForm">
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="createFormworkType">Work Type</label>
+                <select name="work-type" class="form-control" id="createFormworkType">
+                  <option value="fixed-price">Fixed Price</option>
+                  <option value="per-hour">Per Hour</option>
+                </select>
+              </div>
 
             <div class="form-group col-4">
               <label for="createFormBudget">Budget</label>

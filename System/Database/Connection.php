@@ -84,7 +84,7 @@ class Connection
 
     public function update()
     {
-      return new Update();
+        return new Update();
     }
 
 }

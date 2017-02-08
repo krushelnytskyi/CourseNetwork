@@ -38,7 +38,7 @@ class Users extends Controller
             $user = $repo->findOneBy(
                 [
                     'email'    => $email,
-                    'password' => User::hashPassword($password)
+                    'password' => $password
                 ]
             );
 

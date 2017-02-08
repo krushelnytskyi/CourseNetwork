@@ -85,8 +85,13 @@
           <h2 class="iconCategoriesBlue">Categories</h2>
           <hr>
           <ul class="sidebarFilter">
-            <li><a href="#" class="active" >All categories<span class="total-number">(4414)</span></a></li>
-            <li><a href="#">Design<span class="total-number">(204)</span></a></li>
+              <li><a href="/projects/search/" class="active" >All categories<span class="total-number">(<?= $this->countAll ?>)</span></a></li>
+            <?php foreach ($this->categories as $category):?>
+              <?php /** @var \MVC\Models\Category $category */?>
+              <li><a href="/projects/search/?category=<?= $category->getId()?>"><?= $category->getName() ?><span class="total-number">(<?= $category->getCount() ?>)</span></a></li>
+            <?php endforeach;?>
+
+          <!--  <li><a href="#">Design<span class="total-number">(204)</span></a></li>
             <li><a href="#">Web Development<span class="total-number">(238)</span></a></li>
             <li><a href="#">Business support<span class="total-number">(398)</span></a></li>
             <li><a href="#">Video, phote & audio<span class="total-number">(178)</span></a></li>
@@ -100,11 +105,12 @@
             <li><a href="#">Translations<span class="total-number">(140)</span></a></li>
             <li><a href="#">Creative Arts<span class="total-number">(189)</span></a></li>
             <li><a href="#">Tutorials<span class="total-number">(387)</span></a></li>
-            <li><a href="#">Extraordinary<span class="total-number">(390)</span></a></li>
+            <li><a href="#">Extraordinary<span class="total-number">(390)</span></a></li>-->
+
           </ul>
         </div>
 
-        <div class="sidebarBox">
+        <!--<div class="sidebarBox">
           <h2 class="iconLocationBlue">Location</h2>
           <hr>
 
@@ -113,9 +119,9 @@
           <div class="type-city select-location-item">
             <div class="">
               <a href="" class="drill_down_links"><label for="searchJobTypeCity">City</label></a>
-                <div class="drill_down_body">
-                  <input type="text" class="form-control" id="searchJobTypeCity" aria-describedby="typeCity" placeholder="Enter city">
-                </div>
+              <div class="drill_down_body">
+                <input type="text" class="form-control" id="searchJobTypeCity" aria-describedby="typeCity" placeholder="Enter city">
+              </div>
             </div>
           </div>
 
@@ -137,10 +143,9 @@
               </div>
             </form>
           </div>
-
           <div class="select-location-item">
             <!-- Large modal -->
-            <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Choose location on map...</a>
+         <!--   <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Choose location on map...</a>
 
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
@@ -163,9 +168,10 @@
             </div>
           </div>
 
-        </div>
+        </div>-->
 
-        <div class="sidebarBox">
+
+    <!--<div class="sidebarBox">
           <h2 class="iconStarBlue">Search by your skills</h2>
           <hr>
           <form action="">
@@ -182,7 +188,7 @@
               <option value="8">Super Skill</option>
             </select>
           </form>
-        </div>
+        </div>-->
 
       </div>
 
@@ -229,6 +235,43 @@
 
         <div class="project-list-result">
 
+          <!-- Project-item -->
+
+          <?php foreach($this->projects as $project):?>
+            <?php /** @var \MVC\Models\Project $project */?>
+            <div class="project-item">
+              <div class="project-item__header clearfix">
+                <h2 class="title float-left"><a href="#"><?= $project->getName() ?></a></h2>
+                <a href="" class="project-item__bookmark float-right"></a>
+              </div>
+              <div class="project-item-meta">
+                <ul class="project-item-attributes">
+                  <li><?= $project->getWorkType() ?></li>
+                  <li><?= $project->getBudget() ?>$</li>
+                  <li>Posted <?= date('d F', $project->getCreated()) ?></li>
+                  <li><?= $project->getRequestsCount() ?> Proposals</li>
+                </ul>
+                <p class="desc"><?= $project->getDescription() ?>
+                </p>
+                <ul class="tags">
+                  <li><a href="#"><?= $project->getCategory()->getName() ?></a></li>
+                </ul>
+              </div>
+              <div class="project-item-footer clearfix">
+                <div class="float-left client clearfix">
+                  <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
+                  <div class="float-left">
+                    <h4 class="client-name">
+                      <a href="#"><?= $project->getCustomer()->getUser()->getName() ?></a>
+                    </h4>
+                  </div>
+                </div>
+                <div class="float-right send">
+                  <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
+                </div>
+              </div>
+            </div>
+          <?php endforeach;?>
           <!-- Project-item -->
 
           <div class="project-item">
