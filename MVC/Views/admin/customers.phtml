@@ -18,23 +18,19 @@
                     </tr>
                     <tbody>
                     <?php
-                    $n = count($this->list);
-                    if ($n == 0) {
-                        echo '<p>Sorry, we don\'t have any freelancers</p>';
-
-                    } else {
-                        for ($i = 0; $i < $n; $i++) { ?>
-
+					foreach ($this->customersList as $i) {
+                    if (count($this->customersList)== 0) {
+                        echo '<p>Sorry, we don\'t have any customers</p>';
+                    } else { ?>
                             <tr>
-                                <td><?= $this->list[$i]['id'] ?></td>
-                                <td><?= $this->list[$i]['user_id'] ?></td>
-                                <td><?= $this->list[$i]['rating'] ?></td>
-                                <td><?= $this->list[$i]['plan_id'] ?></td>
+                                <td><?= $i->getId() ?></td>
+                                <td><?= $i->getRating() ?></td>
+                                <td><?= $i->getPlan() ?></td>
+                                <td><?= $i->getUser()->getId() ?></td>
                             </tr>
-
+                              
                         <?php }
-                    }
-                    unset($n);
+					}
                     ?>
                     </tbody>
                 </table>
