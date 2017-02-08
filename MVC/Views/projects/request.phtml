@@ -1,0 +1,31 @@
+
+<div class="row flexListTable">
+    <?php $this->layout('using/menu'); ?>
+
+    <div class="container-fluid admin-panel-content">
+        <div class="wrapListTable">
+            <h1 class="admin-panel__title">Request</h1>
+            <hr>
+            <table class="table listTable">
+                <tr>
+                    <thead class="thead-default">
+                    <th>ID</th>
+                    <th>projectID</th>
+                    <th>freelancerID</th>
+                    </thead>
+                </tr>
+                <tbody>
+
+                <tr>
+                    <td><?= $this->thisrequest->getId() ?></td>
+                    <td><?= $this->thisrequest->getProjectId() ?></td>
+                    <td><?= $this->thisrequest->getFreelancerId() ?></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
