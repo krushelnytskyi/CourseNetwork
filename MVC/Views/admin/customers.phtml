@@ -18,19 +18,19 @@
                     </tr>
                     <tbody>
                     <?php
-		     foreach ($this->customersList as $i) {
-                    if (count($this->customersList)== 0) {
-                        echo '<p>Sorry, we don\'t have any customers</p>';
-                    } else { ?>
+                    foreach ($this->customersList as $i) {
+                        if (count($this->customersList) == 0) {
+                            echo '<p>Sorry, we don\'t have any customers</p>';
+                        } else { ?>
                             <tr>
                                 <td><?= $i->getId() ?></td>
                                 <td><?= $i->getRating() ?></td>
                                 <td><?= $i->getPlan() ?></td>
                                 <td><?= $i->getUser()->getId() ?></td>
                             </tr>
-                              
+
                         <?php }
-					}
+                    }
                     ?>
                     </tbody>
                 </table>
