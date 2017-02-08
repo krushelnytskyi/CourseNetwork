@@ -31,6 +31,15 @@ class Config
 
         $configValues = include $file;
 
+        $userFile = APP_ROOT . 'config/user/' . $config . '.php';
+
+        if (file_exists($userFile) === true) {
+            $configValues = array_replace_recursive(
+                $configValues,
+                include $userFile
+            );
+        }
+
         $key = (array)$key;
 
         foreach ($key as $innerKey) {

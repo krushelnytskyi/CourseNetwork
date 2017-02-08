@@ -49,26 +49,30 @@ class Repository
     }
 
     /**
-     * @param array $criteria
+     * @param array|Criteria $criteria
      * @param $limit
      * @param $offset
      * @param $order
      * @return array
      */
-    public function findBy(array $criteria, $limit = null, $offset = null, $order = null)
+    public function findBy($criteria, $limit = null, $offset = null, $order = null)
     {
-        $statement = Connection::getInstance()
-            ->select()
-            ->from($this->storage);
+        if (is_array($criteria)) {
+            $statement = Connection::getInstance()
+                ->select()
+                ->from($this->storage);
 
-        if ($limit !== null) {
-            $statement->limit($limit);
-        }
+            if ($limit !== null) {
+                $statement->limit($limit);
+            }
 
-        foreach ($criteria as $field => $value) {
-            $statement
-                ->_and()
-                ->where($this->properties[$field], '=', $value);
+            foreach ($criteria as $field => $value) {
+                $statement
+                    ->_and()
+                    ->where($this->properties[$field], '=', $value);
+            }
+        } else {
+            $statement = $criteria;
         }
 
         $rows = $statement->execute();
@@ -166,18 +170,9 @@ class Repository
      */
     public function delete($model)
     {
-
-            $statement = Connection::getInstance()
         $statement = Connection::getInstance()
             ->delete()
             ->from($this->storage);
-			
-			$statement->where($this->properties['id'], '=', $id);
-			$result = $statement->execute();	
-			
-			return $result === false ? 0 : 'видалило '.$id;
-		
-    }
 
         foreach ($this->properties as $property => $key) {
 
@@ -199,28 +194,25 @@ class Repository
     }
 
     /**
-     * @param object $model
+     * @return array
      */
-    public function update($model, $id)
+    public function getProperties()
     {
-        $result = array();
-        foreach ($this->properties as $property => $column) {
-            $reflectionProperty = $this->reflection->getProperty($property);
-            $reflectionProperty->setAccessible(true);
-            $value = $reflectionProperty->getValue($model);
+        return $this->properties;
+    }
 
-            if ($value !== null && $this->properties[$reflectionProperty->getName()] !== 'id' ) {
-                $result[$this->properties[$reflectionProperty->getName()]] = $value;
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getProperty($key)
+    {
+        return isset($this->properties[$key]) ? $this->properties[$key] : $key;
+    }
 
-            }
-            $reflectionProperty->setAccessible(false);
-        }
-        $statement = Connection::getInstance()->update()
-            ->from($this->storage)
-            ->set($result)
-            ->where('id','=',$id)
-            ->execute();
-        return $statement;
+    public function getStorage()
+    {
+        return $this->storage;
     }
 
 }

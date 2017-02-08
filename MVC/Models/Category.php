@@ -69,7 +69,7 @@ class Category
    */
   function getCount(): int
   {
-    return $this -> count;
+    return (int)$this->count;
   }
 
   /**

@@ -15,6 +15,7 @@ use System\Controller;
 use System\Database\Connection;
 use System\Form\Login;
 use System\Form\Register;
+use System\ORM\Criteria;
 use System\ORM\Repository;
 
 /**
@@ -142,6 +143,18 @@ class Users extends Controller
     {
         UserSession::getInstance()->clearIdentity();
         $this->forward('users/login');
+    }
+
+    public function testAction()
+    {
+        $repo = new Repository(Category::class);
+
+        $criteria = new Criteria($repo);
+        $criteria->whereIn('id', [4, 5, 8]);
+
+        var_dump($repo->findBy($criteria));
+        exit(0);
+
     }
 
 }

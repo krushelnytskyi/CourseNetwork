@@ -192,6 +192,19 @@ abstract class Statement
         return $this;
     }
 
+    public function whereLike($field, $value)
+    {
+        if (null !== $this->whereCondition) {
+            $this->where .= ' ' . $this->whereCondition . ' ';
+            $this->whereCondition = null;
+        } else {
+            $this->where = null;
+        }
+
+        // todo make method work
+        // select name from projects where name LIKE '_est';
+    }
+
     /**
      * @return $this
      */

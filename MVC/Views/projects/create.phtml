@@ -18,9 +18,9 @@
         <div class="createJobForm">
             <div class="form-group">
                 <label for="createFormCategory">Pick Category</label>
-                <select class="form-control" id="createFormCategory">
+                <select name="category" class="form-control" id="createFormCategory">
                     <?php foreach ($this->categories as $category) : ?>
-                        <option value="<?= $category->getName(); ?>"><?= $category->getName(); ?></option>
+                        <option value="<?= $category->getId(); ?>"><?= $category->getName(); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -50,7 +50,7 @@
         </div>
 
         <div class="createJobForm">
-          <a href="#" class="btn-custom1">Post Project</a>
+          <button class="btn-custom1">Post Project</button>
         </div>
       </form>
     </div>

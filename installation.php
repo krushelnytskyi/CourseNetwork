@@ -46,12 +46,34 @@ class Install
             $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
 
-            foreach (glob('config/database/version_*.sql') as $file) {
+            $files = glob('config/database/version_*.sql');
+            var_dump($files);
 
-                $path_parts = pathinfo($file);
-                $r = 'config/database/' . $path_parts['filename'] . '.sql';
 
-                if (preg_match('#version_[0-9]+\.sql#Ui', $r))
+            usort(
+                $files,
+                function ($file1, $file2) {
+                    preg_match('/(version)_([0-9]+)\.sql/', $file1, $matches1);
+                    preg_match('/version_([0-9]+)\.sql/', $file2, $matches2);
+
+                    if ((int)$matches1[1] > (int)$matches2[1]) {
+                        return 1;
+                    } elseif ((int)$matches1[1] < (int)$matches2[1]) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            );
+
+            foreach ($files as $file) {
+
+                $pathParts = pathinfo($file);
+                $filename = 'config/database/' . $pathParts['filename'] . '.sql';
+
+                if (preg_match('#version_[0-9]+\.sql#Ui', $filename))
+
+                    echo $filename . PHP_EOL;
 
                     if (true === file_exists($file)) {
                         $file = file_get_contents($file);
