@@ -22,25 +22,20 @@
                     </tr>
                     <tbody>
                     <?php
-                    $n = count($this->list);
-                    if ($n == 0) {
-                        echo '<p>Sorry, we don\'t have any freelancers</p>';
-                    } else {
-                        for ($i = 0; $i < $n; $i++) { ?>
+                    foreach ($this->freelancersList as $i) {
+                        if (count($this->freelancersList) == 0) {
+                            echo '<p>Sorry, we don\'t have any freelancers</p>';
+                        } else { ?>
                             <tr>
-                                <td><?= $this->list[$i]['id'] ?></td>
-                                <td><?= $this->list[$i]['user_id'] ?></td>
-                                <td><?= $this->list[$i]['connect_used'] ?></td>
-                                <td><?= $this->list[$i]['rate'] ?></td>
-                                <td><?= $this->list[$i]['rating'] ?></td>
-                                <td><?= $this->list[$i]['job_count'] ?></td>
-                                <td><?= $this->list[$i]['plan_id'] ?></td>
-                                <td><?= $this->list[$i]['status'] ?></td>
+                                <td><?= $i->getId() ?></td>
+                                <td><?= $i->getRate() ?></td>
+                                <td><?= $i->getPlan() ?></td>
+                                <td><?= $i->getUser()->getId() ?></td>
+                                <td><?= $i->getCategoryId() ?></td>
                             </tr>
 
                         <?php }
                     }
-                    unset($n);
                     ?>
                     </tbody>
                 </table>
