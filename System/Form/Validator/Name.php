@@ -3,10 +3,10 @@
 namespace System\Form\Validator;
 
 /**
- * Class Email
+ * Class Name
  * @package System\Form\Validator
  */
-class Email
+class Name
 {
     /**
      * @var
@@ -14,12 +14,12 @@ class Email
     protected $name;
 
     /**
-     * @var string $value
+     * @var string
      */
     protected $value;
 
     /**
-     * Email constructor.
+     * Name constructor.
      * @param $name
      * @param $value
      */
@@ -34,12 +34,7 @@ class Email
      */
     public function isValid()
     {
-//        return (filter_var($this->name, FILTER_VALIDATE_EMAIL) == true) ? true : false;
-        if (filter_var($this->value, FILTER_VALIDATE_EMAIL) == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return (preg_match('/^(?![\d_])[0-9A-Z_a-z\s]{3,20}$/', $this->value)) ? true : false;
     }
 
     /**
@@ -55,7 +50,6 @@ class Email
      */
     public function getMessage()
     {
-        return 'Do you think it looks like email?';
+        return 'Can you input normal name?';
     }
-
 }

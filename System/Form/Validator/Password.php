@@ -3,10 +3,10 @@
 namespace System\Form\Validator;
 
 /**
- * Class Email
+ * Class Password
  * @package System\Form\Validator
  */
-class Email
+class Password
 {
     /**
      * @var
@@ -14,19 +14,19 @@ class Email
     protected $name;
 
     /**
-     * @var string $value
+     * @var
      */
     protected $value;
 
     /**
-     * Email constructor.
+     * Password constructor.
      * @param $name
      * @param $value
      */
     public function __construct($name, $value)
     {
         $this->name = $name;
-        $this->value = trim($value);
+        $this->value = $value;
     }
 
     /**
@@ -34,12 +34,7 @@ class Email
      */
     public function isValid()
     {
-//        return (filter_var($this->name, FILTER_VALIDATE_EMAIL) == true) ? true : false;
-        if (filter_var($this->value, FILTER_VALIDATE_EMAIL) == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return (preg_match('/^[0-9A-Za-z!@#$%\-_^:&+=§\?()]{8,50}$/', $this->value)) ? true : false;
     }
 
     /**
@@ -55,7 +50,7 @@ class Email
      */
     public function getMessage()
     {
-        return 'Do you think it looks like email?';
+        return 'Please write your password at least 8 characters';
     }
 
 }

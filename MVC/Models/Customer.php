@@ -47,7 +47,7 @@ class Customer
   /**
    * @return float
    */
-  public function getRating(): float
+  public function getRating()//: float
   {
     return $this -> rating;
   }
@@ -89,7 +89,7 @@ class Customer
   /**
    * @param int $user_id
    */
-  public function setUser( int $user_id )
+  public function setUser( /*int*/ $user_id )
   {
     $this -> user = $user_id;
   }

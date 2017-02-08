@@ -2,17 +2,19 @@
 
 namespace System\Form;
 
+use System\Form\Validator\Name;
 use System\Form\Validator\Email;
 use System\Form\Validator\Password;
 
 /**
- * Class Login
+ * Class Register
  * @package System\Form
  */
-class Login extends AbstractForm
+class Register extends AbstractForm
 {
+
     /**
-     * Login constructor.
+     * Register constructor.
      * @param $data
      */
     public function __construct($data)
@@ -22,8 +24,9 @@ class Login extends AbstractForm
 
         $this->validators = [
 
+            new Name('name', $this->data['name']),
             new Email('email', $this->data['email']),
-            new Password('password', $this->data['email'])
+            new Password('password', $this->data['password'])
 
         ];
 

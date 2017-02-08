@@ -87,7 +87,7 @@ class User
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()//: int
     {
         return $this->id;
     }
@@ -127,7 +127,7 @@ class User
     /**
      * @return float
      */
-    function getBalance(): float
+    function getBalance()//: float
     {
         return $this->balance;
     }
@@ -206,7 +206,7 @@ class User
     /**
      * @param int $role
      */
-    public function setRole(int $role)
+    public function setRole($role)
     {
         $this->role = $role;
     }
