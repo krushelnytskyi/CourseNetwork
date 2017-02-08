@@ -3,6 +3,8 @@
 namespace MVC\Controllers;
 
 use MVC\Models\Category;
+use MVC\Models\Customer;
+use MVC\Models\Freelancer;
 use MVC\Models\User;
 use System\Auth\UserSession;
 use System\Controller;
@@ -43,17 +45,17 @@ class Admin extends Controller
      */
     public function usersAction()
     {
-        $dbConnect = Connection::getInstance();
+        $usersRepo = new Repository(User::class);
+        $customersRepo = new Repository(Customer::class);
+        $freelancersRepo = new Repository(Freelancer::class);
 
-        if ($dbConnect->getLink() === false) {
-            $this->getView()->assign('error', 'Boss, we have problems with database connection');
-        }
+        $usersList = $usersRepo->findAll();
+        $customersList = $customersRepo->findAll();
+        $freelancersList = $freelancersRepo->findAll();
 
-        $usersList = $dbConnect->select()
-            ->from('users')
-            ->execute();
-
-        $this->getView()->assign('list', $usersList);
+        $this->getView()->assign('usersList', $usersList);
+        $this->getView()->assign('customersList', $customersList);
+        $this->getView()->assign('freelancersList', $freelancersList);
 
         $this->getView()->view('admin/users');
     }
@@ -63,18 +65,10 @@ class Admin extends Controller
      */
     public function freelancersAction()
     {
-        $dbConnect = Connection::getInstance();
+        $freelancersRepo = new Repository(Freelancer::class);
+        $freelancersList = $freelancersRepo->findAll();
 
-        if ($dbConnect->getLink() === false) {
-            $this->getView()->assign('error', 'Boss, we have problems with database connection');
-        }
-
-        $freelancersList = $dbConnect->select()
-            ->from('freelancers')
-            ->execute();
-
-        $this->getView()->assign('list', $freelancersList);
-
+        $this->getView()->assign('freelancersList', $freelancersList);
         $this->getView()->view('admin/freelancers');
     }
 
@@ -83,18 +77,10 @@ class Admin extends Controller
      */
     public function customersAction()
     {
-        $dbConnect = Connection::getInstance();
+        $customersRepo = new Repository(Customer::class);
+        $customersList = $customersRepo->findAll();
 
-        if ($dbConnect->getLink() === false) {
-            $this->getView()->assign('error', 'Boss, we have problems with database connection');
-        }
-
-        $customersList = $dbConnect->select()
-            ->from('customers')
-            ->execute();
-
-        $this->getView()->assign('list', $customersList);
-
+        $this->getView()->assign('customersList', $customersList);
         $this->getView()->view('admin/customers');
     }
 
