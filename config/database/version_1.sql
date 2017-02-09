@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `balance` decimal(10,2) DEFAULT NULL,
-  `plan_id` int(11) NOT NULL,
+  `plan_id` int(11) NOT NULL DEFAULT 1,
   `site` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `skype` varchar(255) DEFAULT NULL,
