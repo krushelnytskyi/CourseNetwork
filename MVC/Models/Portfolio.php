@@ -31,6 +31,11 @@ class Portfolio {
    * @column(image_name)
    */
   private $imageName;
+  /**
+   * @var string
+   * @column(site)
+   */
+  private $site;
 
   /**
    * @var int
@@ -62,8 +67,12 @@ class Portfolio {
     public function getImageName() {
       return $this->imageName;
     }
-
-
+    /**
+     * @return string
+     */
+    public function getSite() {
+      return $this->site;
+    }
     /**
      * @param int $user
      */
@@ -89,5 +98,11 @@ class Portfolio {
      */
     public function setImageName($imageName) {
       $this->imageName = $imageName;
+    }
+    /**
+    * @param string $site
+    */
+    public function setSite($site) {
+      $this->site = $site;
     }
 }

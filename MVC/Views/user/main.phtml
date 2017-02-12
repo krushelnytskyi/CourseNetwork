@@ -1,0 +1,61 @@
+<?php $user = \System\Auth\UserSession::getInstance()->getIdentity();?>
+
+<div class="row">
+  <?php $this->layout('user/menu'); ?>
+  <div class="main-user col-sm-10">
+      <div class="offset-1 project-item col-sm-10 main-user-one">
+          <img src="/assets/img/user-page/avatar/<?=$user->getAvatar(); ?>" class="float-left client-avatar" alt="">
+          <div class="project-item__header clearfix ">
+              <h2 class="title"><h1> Hello <?=  $user->getName();?>&nbsp;!!!</h1></h2>
+          </div>
+          <p class="offset-2 col-sm-10">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
+          bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
+          elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
+          massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
+          eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+          </p>
+          <a href="/user/news"><img id ="banner-main" src="/assets/img/user-page/banner-main.jpg" class="float-left" alt=""></a>
+          <table class="table offset-3 col-sm-6">
+              <thead class="thead-inverse">
+                  <tr>
+                      <th>Setting</th>
+                      <th>Current value</th>
+                  </tr>
+              </thead>
+              <tbody>
+                   <tr>
+                       <td>Name:</td>
+                       <td><?= $user->getName()?:'none'?></td>
+                   </tr>
+                   <tr>
+                       <td>Email:</td>
+                       <td><?= $user->getEmail()?:'none';?></td>
+                   </tr>
+                   <tr>
+                       <td>Site:</td>
+                       <td><?= $user->getSite()?:'none';?></td>
+                   </tr>
+                   <tr>
+                       <td>Phone:</td>
+                       <td><?= $user->getPhone()?:'none';?></td>
+                   </tr>
+                   <tr>
+                       <td>Skype:</td>
+                       <td><?= $user->getPhone()?:'none';?></td>
+                   </tr>
+                   <tr>
+                       <td>Role:</td>
+                       <td><?= $user->getRole()?:'none';?></td>
+                   </tr>
+                   <tr>
+                       <td>Balance:</td>
+                       <td><?= $user->getBalance()?:'none';?></td>
+                   </tr>
+                   <tr class="tr-inverse"><td>Futer</td><td></td></tr>
+              </tbody>
+          </table>
+
+       </div>
+  </div>
+</div>

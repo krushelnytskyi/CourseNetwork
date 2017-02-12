@@ -1,0 +1,9 @@
+<?php $user = \System\Auth\UserSession::getInstance()->getIdentity();?>
+<div class="row">
+    <?php $this->layout('user/menu'); ?>
+    <div class="workdiary col-sm-10">
+      <iframe  class="offset-1  col-sm-10"
+               src="https://calendar.google.com/calendar/embed?src=klhb20v8eggdsastguaeos7npo%40group.calendar.google.com&ctz=Europe/Kiev"
+      </iframe>
+    </div>
+</div>

@@ -53,7 +53,7 @@ class Users extends Controller
                 UserSession::getInstance()
                     ->setIdentity($user->getId());
 
-                $this->forward('using/main');
+                $this->forward('user/main');
             }
         }
 

@@ -1,0 +1,64 @@
+
+<div class="row">
+  <?php $this->layout('user/menu'); ?>
+  <?php  if (\System\Auth\UserSession::getInstance()->getIdentity() !== null) :?>
+    <?php  $user = \System\Auth\UserSession::getInstance()->getIdentity();?>
+  <?php endif;?>
+
+  <div class="add-user col-sm-10">
+    <h3 class="offset-1"> Add yours work :</h3>
+    <form   action="/user/portfolio"
+            enctype="multipart/form-data" method="post">
+      <input type="hidden" name="addButton" value="addButton">
+      <div class="form-group row">
+        <label for="example-text-input" class="col-1 col-1 offset-1 col-form-label">Name</label>
+        <div class="col-6">
+          <input class="form-control " type="text" name ="workName"
+                 placeholder="Input name yours work">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-url-input" class="col-1 col-1 offset-1 col-form-label">Site</label>
+        <div class="col-6">
+          <input class="form-control" type="url" name="site" placeholder="Input your site">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-1 offset-1 col-form-label">Description</label>
+        <div class="col-6">
+          <textarea class="form-control" type="text" name="description"
+                 placeholder="Input description"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-1 offset-1 col-form-label">Image</label>
+        <div class="col-6">
+          <div class="fileform">
+            <input type="text" name="imageName" value="<?= $user->getAvatar()?:'';?>">
+            <div class="selectbutton">Upload</div>
+            <input id="upload" type="file" name="avatar"
+                   accept="image/jpeg,image/png,image/gif"
+
+                   onchange="uploadFile(this.files[0].name)">
+          </div>
+        </div>
+</div>
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-1 offset-1 col-form-label"></label>
+        <div class="col-2">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </div>
+
+    </form>
+
+
+
+
+  </div>
+</div>
+
+
+
+

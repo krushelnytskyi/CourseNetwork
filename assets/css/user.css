@@ -1,21 +1,5 @@
 /********************=user menu*******************/
-.clearfix img {
-    width: 160px;
-    height: 160px;
-
-}
-.avatar_foto{
-    text-align: left;
-    color: #ec971f;
-}
-#avatar_foto{
-    text-align: center;
-    color: #ec971f;
-    font-family: Ubuntu;
-    font-size: larger;
-}
-
-.main-user{
+div.main-user {
 
 
     background-image: url("/assets/img/user-page/setting/background.jpg");
@@ -26,14 +10,62 @@
 .main-user h1{
     text-align: center;
 }
-.main-user table{
-    margin-top: 30px;
+.main-user-one table{
+    position: relative;
+    top: -50px;
+    left:70px;
+
 }
-.main-user table th,td {
-text-align: center;
+.main-user-one table th{
+    text-align: left;
+    font-size: small;
 }
+.main-user-one table th:first-child{
+    padding-left: 100px;
+}
+
 .main-user table td {
     color:#0275d8;
+    text-align: left;
+    /*padding-left: 180px;*/
+}
+.main-user table td:first-child {
+    color: #1d1e1f;
+    font-weight: 600;
+    padding-left: 100px;
+
+}
+.tr-inverse{
+    background-color: #1d1e1f;
+    color: #1d1e1f;
+}
+.tr-inverse :first-child{
+    background-color: #1d1e1f;
+    color: #1d1e1f;
+}
+
+.main-user-one {
+    background-color: white;
+    text-align: center;
+    border-radius: 30px;
+}
+.main-user-one img {
+    width: 160px;
+    height: 160px;
+    border-radius: 40px;
+
+}
+.main-user-one p {
+    position: relative;
+    text-align: justify;
+    top: -100px;
+}
+#banner-main{
+    height: 320px;
+    width: 160px;
+    border-radius: 0;
+    position: relative;
+    bottom: 25px;
 }
 .setting-user{
     background-image: url("/assets/img/user-page/setting/background.jpg");
@@ -49,18 +81,41 @@ padding-bottom: 30px;
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 30px
+
 }
-.thumbnail{
+.custom {
+  width: 70px;
+    text-align: center;
+    padding: 5px 5px;
+}
+.custom img{
+    width: 280px;
+    hight: 280px;
+
+}
+.custom-checkbox{
+    position: absolute;
+    left: 15px;
+    top:  0;
+    width: 20px;
+    height: 20px;
+    }
+.thumb-custom{
     padding-top: 50px;
 }
-.caption{
+.cap-custom{
     text-align: center;
     padding-top: 10px;
+    max-width: 280px;
 }
-.caption p {
-    text-align: justify;
-    margin-top: 10px;
+.cap-custom p{
+    text-align: center;
+    padding-top: 10px;
+    width: 280px;
+    margin-left: 15px;
+
 }
+
 .add-user {
 
     width:auto;
@@ -122,4 +177,39 @@ padding-bottom: 30px;
 }
 .col-6 {
     position:relative;
+}
+.workdiary{
+    background-image: url("/assets/img/user-page/setting/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 90px
+}
+/*style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"*/
+.workdiary iframe{
+    height: 600px;
+    frame-border:0;
+    scrolling:no;
+    border-width:0;
+}
+.jobs-user{
+    background-image: url("/assets/img/user-page/setting/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 80px
+}
+.jobs-user table {
+    margin-top: 20px;
+}
+.jobs-user table th,td {
+    text-align: center;
+}
+.news-user{
+
+}
+.news-user h1,h2,img {
+    text-align: center;
+}
+.menuinfo-user{
+    text-align: justify;
+    padding-top: 15px;
 }

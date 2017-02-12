@@ -173,8 +173,7 @@ class Repository
         $statement = Connection::getInstance()
             ->delete()
             ->from($this->storage);
-
-        foreach ($this->properties as $property => $key) {
+        /*foreach ($this->properties as $property => $key) {
 
             $reflectionProperty = $this->reflection->getProperty($this->properties[$key]);
             $reflectionProperty->setAccessible(true);
@@ -185,11 +184,19 @@ class Repository
             $statement
                 ->_and()
                 ->where($this->properties[$key], '=', $value);
-
+        }*/
+        foreach ($this->properties as $property => $key) {
+            $reflectionProperty = $this->reflection->getProperty($property);
+            $reflectionProperty->setAccessible(true);
+            if ($key === 'id'){
+                $criteria['id'] = $reflectionProperty->getValue($model);
+            }
+            $reflectionProperty->setAccessible(false);
         }
-
+        $statement
+            ->_and()
+            ->where('id', '=', $criteria['id']);
         $result = $statement->execute();
-
         return $result === false ? 0 : 1;
     }
 
