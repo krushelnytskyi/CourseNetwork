@@ -95,23 +95,37 @@
                 </div>
             </div>
         </div>
-        <div class="project-proposals clearfix">
-            <div class="project-proposals-header">
-                <div class="submitted-header">Submitted proposals (11)</div>
-                <div class="freelancers-rating-header">Raiting</div>
-                <div class="project-proposal-header">Proposal (USD)</div>
+        <div class="row project-proposals">
+            <div class="col-lg-12 project-proposals-header ">
+                <div class=" col-lg-7 submitted-header">Submitted proposals (<?= $this->project->getRequestsCount() ?>)</div>
+                <div class="col-lg-2 freelancers-rating-header">Raiting</div>
+                <div class="col-lg-3 project-proposal-header">Proposal (USD)</div>
             </div>
-            <div class="project-proposals-list">
-                <?php if (isset($this->errorProposals) === true) : ?>
+            <div class="project-proposals-list col-lg-12">
+                <?php if (isset($this->errorProposals)) : ?>
                     <div class="alert alert-info">
                         <?= $this->errorProposals ?>
                     </div>
                 <?php else: ?>
-                <div class="project-proposals-item">
-                    <div class="proposals-submitted">Submitted proposals (11)</div>
-                    <div class="proposals-freelancers-rating">Raiting</div>
-                    <div class="project-proposal">Proposal (USD)</div>
-                </div>
+
+                    <?php foreach($this->proposals as $proposal):?>
+                        <?php /** @var \MVC\Models\Request $proposal */?>
+                        <div class="row project-proposals-item">
+                            <div class="col-lg-7 proposals-submitted">
+                               <!-- <div class="col-lg-2"><?php //= $proposal->getFreelancerId()->getUser()->getAvatar()?></div>-->
+                                <div class="col-lg-12">
+                                    <a href="#"><?= $proposal->getFreelancerId()->getUser()->getName() ?></a>
+                                </div>
+                                <div class="col-lg-12"><?= $proposal->getRequestText() ?></div>
+                            </div>
+                            <div class="col-lg-2 proposals-freelancers-rating">
+                                <?= $proposal->getFreelancerId()->getRating() ?>
+                            </div>
+                            <div class="col-lg-3 project-proposal">
+                                Proposal <?= $proposal->getRate() ?>$ for <?= $proposal->getDeadline() ?> days
+                            </div>
+                        </div>
+                    <?php endforeach;?>
                 <?php endif;?>
             </div>
         </div>

@@ -144,15 +144,15 @@ class Projects extends Controller
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            $rate = Connection::getInstance()->secureString($_POST['rate']);
-            $deadline = Connection::getInstance()->secureString($_POST['deadline']);
+            $rate = (float)Connection::getInstance()->secureString($_POST['rate']);
+            $deadline = (int)Connection::getInstance()->secureString($_POST['deadline']);
             $description = Connection::getInstance()->secureString($_POST['description']);
 
             $repoProposals = new Repository(Request::class);
             $proposals = new Request();
 
-            $projectId = $project->getId();
-            $freelancerId = $freelancerModel->getId();
+            $projectId = (int)$project->getId();
+            $freelancerId = (int)$freelancerModel->getId();
 
             $proposals->setRate($rate);
             $proposals->setDeadline($deadline);
@@ -166,21 +166,9 @@ class Projects extends Controller
             $project->setRequestsCount($countProposals);
             $freelancerModel->setRequestBalance($countBalance);
 
-//            echo '<pre>';
-////            var_dump($_POST);
-////            var_dump($project);
-////            var_dump($freelancerModel);
-//            var_dump($proposals);
-////            var_dump($countProposals);
-////            var_dump($countBalance);
-//            echo '</pre>';
-//            exit(0);
-
-
-
             $repoProposals->save($proposals);
             $repo->save($project, 'id', $id);
-            $repoFreelancer->save($freelancerModel,'user', $user);
+            $repoFreelancer->save($freelancerModel,'user_id', $user);
 
             $_POST = array();
         }

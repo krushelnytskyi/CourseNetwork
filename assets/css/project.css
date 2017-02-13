@@ -77,6 +77,7 @@
 .project-proposals{
     width: 100%;
     border:1px solid #4D525B;
+    margin: 0;
     margin-bottom: 20px;
 }
 
@@ -104,19 +105,30 @@
     width: 100%;
 }
 
-.submitted-header,
+.project-proposals-list{
+    padding: 0;
+}
+
+.project-proposals-item{
+    margin: 0;
+    border-bottom: 1px solid #DEDEDE;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.project-proposals-item:last-child
+{
+    border-bottom: none;
+}
+
+.proposals-freelancers-rating
+{
+    margin-left: 15px;
+}
+
 .proposals-submitted{
-    width: 60%;
-}
-
-.freelancers-rating-header,
-.proposals-freelancers-rating{
-    width: 20%;
-}
-
-.project-proposal-header,
-.project-proposal{
-    width: 20%;
+    margin-left: -15px;
 }
 
 .vert-mg-proposal{

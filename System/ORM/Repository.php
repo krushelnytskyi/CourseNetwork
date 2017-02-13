@@ -160,6 +160,8 @@ class Repository
             $query = $statement->from($this->storage)->set($set)->where($field, $delimiter, $fieldValue);
         }
 
+
+
         return $query->execute();
 
     }

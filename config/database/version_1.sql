@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
   `project_id` int(11),
   `freelancer_id` int(11),
   `request_text` varchar(255) NOT NULL,
-  `rate` decimal(4,2) DEFAULT NULL,
+  `rate` decimal(6,2) DEFAULT NULL,
   `deadline` int(11),
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
