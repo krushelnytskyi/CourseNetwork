@@ -1,0 +1,30 @@
+<div class="row">
+    <?php $this->layout('user/menu'); ?>
+    <div class="portfolio-user col-sm-10">
+        <div class="d-inline-block offset-10">
+            <form action="/user/portfolio" method="post">
+                <input type="hidden" name="addLink">
+                <button  class="btn btn-primary custom" type="submit">Add</button>
+            </form>
+        </div>
+        <div class="d-inline-block">
+            <form action="/user/portfolio" method="post">
+                <input type="hidden" name="delButton">
+                <button  class="btn btn-primary custom" type="submit">Delete</button>
+        </div>
+        <div class="row">
+            <?php foreach ($this->portfolio as $this->item):?>
+            <div class="thumbnail col-3 offset-1 custom">
+                <input  class="form-check-input custom-checkbox" type="checkbox"
+                        name="<?=$this->item->getId();?>" value="<?=$this->item->getId();?>">
+                <img src="/assets/img/user-page/portfolio/<?= $this->item->getImageName();?>"  alt="image">
+                <div class="caption cap-custom">
+                    <a href=<?= $this->item->getSite();?> ><?= $this->item->getWorkName();?></a>
+                    <p class="col-12"><?= $this->item->getDescription();?></p>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        </form>
+    </div>
+</div>

@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `portfolio` (
   `work_name` varchar(255) NOT NULL DEFAULT 'work name',
   `description` TEXT,
   `image_name` varchar(255),
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT 1,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
