@@ -1,4 +1,3 @@
-
 <?php
 
 namespace MVC\Controllers;
@@ -16,7 +15,7 @@ use System\ORM\Repository;
  */
 class Requests extends Controller
 {
-    public function requestAction()
+   /* public function requestAction()
     {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -35,5 +34,5 @@ class Requests extends Controller
             $this->getView()->view('projects/requests');
 
         }
-    }
+    }*/
 }

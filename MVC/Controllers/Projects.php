@@ -3,7 +3,9 @@
 namespace MVC\Controllers;
 
 use MVC\Models\Project;
+use MVC\Models\Freelancer;
 use MVC\Models\Category;
+use MVC\Models\Request;
 use MVC\Models\User;
 use System\Auth\Session;
 use System\Auth\UserSession;
@@ -20,16 +22,43 @@ class Projects extends Controller
 
     /**
      * function for created any list items
-     * @param $class          string
+     * @param $model
      * @param $variablesName  string
-     * @return                object
+     * @return object
+     * @internal param string $class
      */
-   /* public function listItems($class, $variablesName){
-        $repo = new Repository($class::class);
+    public function listItems($model, $variablesName)
+    {
+        $repo = new Repository($model);
         $listItems = $repo->findAll();
 
         return $this->getView()->assign($variablesName, $listItems);
-    }*/
+    }
+
+    /**
+     * @param $url
+     * @param $model
+     * @param $criteriaVariable
+     * @param $view
+     * @param string $variableName
+     */
+    public function detailItem($url, $model, $criteriaVariable, $view, $variableName = 'detail')
+    {
+        $url =  Connection::getInstance()->secureString($url);
+
+        preg_match('/([0-9]+)/', $url, $matches);
+        $id = (int)$matches[0];
+
+        $repo = new Repository($model);
+        $detail = $repo->findOneBy([$criteriaVariable => $id]);
+
+        if(null !== $detail){
+            $this->getView()->assign($variableName, $detail);
+            $this->getView()->view($view);
+        }else{
+            $this->getView()->view('404');
+        }
+    }
 
     /**
      * Search Projects Action
@@ -40,9 +69,12 @@ class Projects extends Controller
         $projectsAll = $repo->findAll();
         $countAll = count($projectsAll);
 
-        if(isset($_GET['category']) && null !== $_GET['category'])
+        $url =  Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
+
+        if(preg_match('/\/projects\/category\/([0-9]+)/', $url, $matches))
         {
-            $projects = $repo->findBy(['category'=>$_GET['category']]);
+            $id = (int)$matches[1];
+            $projects = $repo->findBy(['category'=>$id]);
         }else{
             $projects = $projectsAll;
         }
@@ -57,6 +89,239 @@ class Projects extends Controller
        // $this->listItems('Project', 'projects');
         $this->getView()->view('projects/search');
     }
+
+    /**
+     * Detail project page
+     */
+    public function projectAction()
+    {
+        //$this->detailItem($_SERVER['REQUEST_URI'], Project::class, 'id', 'projects/project', 'project');
+        $url =  Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
+
+        preg_match('/\/projects\/project\/([0-9]+)/', $url, $matches);
+        $id = (int)$matches[1];
+
+        $repo = new Repository(Project::class);
+        $project = $repo->findOneBy(['id' => $id]);
+
+        if(null === $project)
+        {
+            $this->getView()->view('404');
+        }
+        else
+        {
+            $repoProposals = new Repository(Request::class);
+            $proposals = $repoProposals->findBy(['projectId' => $id]);
+
+            if(null !== $proposals)
+            {
+                $this->getView()->assign('proposals', $proposals);
+            }else{
+                $this->getView()->assign('errorProposals', 'You might be first who send proposal');
+            }
+        }
+
+        if(UserSession::getInstance()->getIdentity() !== null)
+        {
+            $role = UserSession::getInstance()->getIdentity()->getRole();
+        }
+
+        if($role === User::ROLE_FREELANCER){
+            $user =  UserSession::getInstance()->getIdentity()->getId();
+
+            $repoFreelancer = new Repository(Freelancer::class);
+            $freelancerModel = $repoFreelancer->findOneBy(['user'=>$user]);
+
+            if((int)$freelancerModel->getRequestBalance() > 0)
+            {
+                $this->getView()->assign('freelancer', $freelancerModel);
+            }else{
+                $this->getView()->assign('errorUser', 'Ended proposals on the balance');
+            }
+        }else{
+            $this->getView()->assign('errorUser', 'Only freelancers can send proposals');
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $rate = (float)Connection::getInstance()->secureString($_POST['rate']);
+            $deadline = (int)Connection::getInstance()->secureString($_POST['deadline']);
+            $description = Connection::getInstance()->secureString($_POST['description']);
+
+            $repoProposals = new Repository(Request::class);
+            $proposals = new Request();
+
+            $projectId = (int)$project->getId();
+            $freelancerId = (int)$freelancerModel->getId();
+
+            $proposals->setRate($rate);
+            $proposals->setDeadline($deadline);
+            $proposals->setRequestText($description);
+            $proposals->setProjectId($projectId);
+            $proposals->setFreelancerId($freelancerId);
+
+            $countProposals = (int)$project->getRequestsCount()+1;
+            $countBalance = (int)$freelancerModel->getRequestBalance()-1;
+
+            $project->setRequestsCount($countProposals);
+            $freelancerModel->setRequestBalance($countBalance);
+
+            $repoProposals->save($proposals);
+            $repo->save($project, 'id', $id);
+            $repoFreelancer->save($freelancerModel,'user_id', $user);
+
+            $_POST = array();
+        }
+
+        $this->getView()->assign('project', $project);
+        $this->getView()->view('projects/project');
+    }
+
+    /**
+     * Project Request action
+     */
+    public function requestAction(){
+
+//        if(null !== UserSession::getInstance()->getReferer()){
+//            $url_referer = $_SERVER['HTTP_REFERER']; //request
+//            $url_origin = UserSession::getInstance()->getReferer(); //1
+//
+//            preg_match_all('/\d+/', $url_origin, $matches); //1
+//            $id_origin = (int)$matches[0];
+//
+//            preg_match_all('/\d+/', $url_referer, $matches); //0
+//            $id_referer = (int)$matches[0];
+//
+//            if($id_origin !== null && $id_referer !== null && $id_origin !== $id_referer)
+//            {
+//                UserSession::getInstance()->clearReferer();
+//                UserSession::getInstance()->saveReferer();
+//            }
+//        }
+//        else
+//        if((preg_match('/\/projects\/project\/([0-9]+)/', $_SERVER['HTTP_REFERER'])) === 1)
+//        {
+//            UserSession::getInstance()->saveReferer();
+//            $url = UserSession::getInstance()->getReferer();
+//
+//            var_dump($url);
+//            exit(0);
+//        }
+
+//        var_dump($url);
+//        exit(0);
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+//            $url = UserSession::getInstance()->getReferer();
+//            $url =  Connection::getInstance()->secureString($url);
+//
+//            if(preg_match('/\/projects\/request\//', $_SERVER['HTTP_REFERER']) === 1){
+//
+//                var_dump($url);
+//                exit(0);
+
+//                preg_match_all('/\d+/', $url, $matches);
+//                $id = (int)$matches[0];
+            $id = 1;
+
+                $repo = new Repository(Project::class);
+                $project = $repo->findOneBy(['id' => $id]);
+
+                $freelancer = UserSession::getInstance()->getIdentity();
+
+                if($freelancer !==null ){
+
+                    $role = $freelancer->getRole();
+
+                    if($role === User::ROLE_FREELANCER){
+                        $freelancer_id = (int)$freelancer->getId();
+
+                        $rate = Connection::getInstance()->secureString($_POST['rate']);
+                        $deadline = Connection::getInstance()->secureString($_POST['deadline']);
+                        $description = Connection::getInstance()->secureString($_POST['description']);
+
+                        $repoRequest = new Repository(Request::class);
+                        $request = new Request();
+
+                        $repoFreelancer = new Repository(Freelancer::class);
+                        $freelancerModel = $repoFreelancer->findOneBy(['user'=>$freelancer_id]);
+
+                        $request->setRate($rate);
+                        $request->setDeadline($deadline);
+                        $request->setRequestText($description);
+                        $request->setProjectId($id);
+                        $request->setFreelancerId($freelancer_id);
+
+//                        echo '<pre>';
+//                        var_dump($freelancerModel);
+//                        var_dump($request);
+//                        exit(0);
+//                        echo '</pre>';
+
+                        $countProposals = $project->getRequestsCount()+1;
+                        $countBalance = $freelancerModel->getRequestBalance()-1;
+
+                        $project->setRequestsCount($countProposals);
+                        $freelancerModel->setRequestBalance($countBalance);
+
+                        $repoRequest->save($request);
+                        $repo->save($project, 'id', $id);
+                       // $repoFreelancer->save($freelancerModel,'user', $freelancer_id);
+
+                        $this->forward('/projects/project/'.$id);
+                        //$this->forward($url);
+                    }else{
+                        $this->getView()->assign('error', 'Only freelancers can send proposals');
+                    }
+
+                }else{
+                    $this->getView()->assign('error', 'You must be authorized as freelancer for created projects');
+                }
+//            }
+//            else{
+//                $this->forward('projects/search');
+//            }
+
+        }else{
+
+            $this->getView()->view('projects/request');
+        }
+
+    }
+
+    /**
+     * Category page action
+     */
+    public function categoryAction()
+    {
+        $repo = new Repository(Project::class);
+        $projectsAll = $repo->findAll();
+
+        $repoCategories = new Repository(Category::class);
+        $categories = $repoCategories->findAll();
+
+        $countAll = count($projectsAll);
+
+        $url =  Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
+
+        preg_match_all('/\d+/', $url, $matches);
+        $id = (int)$matches[0];
+
+        if(null !== $id)
+        {
+            $category = $repoCategories->findOneBy(['id' => $id]);
+            if(null !== $category){
+                $projects = $repo->findBy(['category'=>$id]);
+                $this->getView()->assign('projects', $projects);
+                $this->getView()->assign('categories', $categories);
+                $this->getView()->assign('countAll', $countAll);
+                $this->getView()->view('projects/category');
+            }else{
+                $this->getView()->view('404');
+            }
+        }
+    }
+
 
     /**
      * view create project form
@@ -82,7 +347,7 @@ class Projects extends Controller
 
                $role = $customer->getRole();
 
-               if($role === 'customer'){
+               if($role === User::ROLE_CUSTOMER){
                    $customer = $customer->getId();
 
                    $name = Connection::getInstance()->secureString($_POST['name']);

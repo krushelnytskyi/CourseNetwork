@@ -1036,7 +1036,9 @@ ul.sidebarFilter li{
 }
 
 .project-item:hover,
-.freelancer-item:hover {
+.freelancer-item:hover,
+.project-proposals:hover
+{
     -webkit-box-shadow: 0 0 5px #dddddd;
     -moz-box-shadow: 0 0 5px #dddddd;
     box-shadow: 0 0 5px #89adea;

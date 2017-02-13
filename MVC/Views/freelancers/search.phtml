@@ -27,9 +27,14 @@
           <h2 class="iconCategoriesBlue">Categories</h2>
           <hr>
           <ul class="sidebarFilter">
-            <li><a href="#" class="active">All categories<span class="total-number">(4414)</span></a></li>
-            <li><a href="#">Design<span class="total-number">(204)</span></a></li>
-            <li><a href="#">Web Development<span class="total-number">(238)</span></a></li>
+            <li><a href="/freelancers/search/" class="active">All categories<span class="total-number">(<?= $this->countAll ?>)</span></a></li>
+
+            <?php foreach ($this->categories as $category):?>
+              <?php /** @var \MVC\Models\Category $category */?>
+              <li><a href="/freelancers/category/<?= $category->getId()?>/"><?= $category->getName() ?><span class="total-number">(<?= $category->getCountFreelancers() ?>)</span></a></li>
+            <?php endforeach;?>
+
+            <!--<li><a href="#">Web Development<span class="total-number">(238)</span></a></li>
             <li><a href="#">Business support<span class="total-number">(398)</span></a></li>
             <li><a href="#">Video, phote & audio<span class="total-number">(178)</span></a></li>
             <li><a href="#">Writing<span class="total-number">(223)</span></a></li>
@@ -42,7 +47,7 @@
             <li><a href="#">Translations<span class="total-number">(140)</span></a></li>
             <li><a href="#">Creative Arts<span class="total-number">(189)</span></a></li>
             <li><a href="#">Tutorials<span class="total-number">(387)</span></a></li>
-            <li><a href="#">Extraordinary<span class="total-number">(390)</span></a></li>
+            <li><a href="#">Extraordinary<span class="total-number">(390)</span></a></li>-->
           </ul>
         </div>
 
@@ -75,7 +80,7 @@
           </ul>
         </div>
 
-        <div class="sidebarBox">
+        <!--<div class="sidebarBox">
           <h2 class="iconLocationBlue">Location</h2>
           <hr>
 
@@ -111,7 +116,7 @@
 
           <div class="select-location-item">
             <!-- Large modal -->
-            <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Choose location on map...</a>
+          <!--  <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Choose location on map...</a>
 
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
@@ -134,7 +139,7 @@
             </div>
           </div>
 
-        </div>
+        </div>-->
 
         <div class="sidebarBox">
           <h2 class="iconStarBlue">Show only</h2>
@@ -262,11 +267,12 @@
         <div class="freelancers-list-result">
 
           <!-- Freelancer-item -->
-
+          <?php foreach($this->freelancers as $freelancer):?>
+          <?php /** @var \MVC\Models\Freelancer $freelancer */?>
           <div class="freelancer-item">
             <div class="freelancer-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum Web Developer</a></h2>
-              <span class="float-right rating-amount">(90)</span>
+              <h2 class="title float-left"><a href="#"><?= $freelancer->getUser()->getName() ?></a></h2>
+              <span class="float-right rating-amount">(<?= $freelancer->getRating() ?>)</span>
               <span class="freelancer-rating float-right">
                 <span style="width: 100%;"></span>
               </span>
@@ -278,29 +284,25 @@
                 </div>
                 <div class="freelancer-meta float-right">
                   <ul class="freelancer-item-attributes clearfix">
-                    <li>70$ / Hr</li>
-                    <li><a href="#">4 reviews</a></li>
-
+                    <li><?= $freelancer->getRate() ?>$ / Hr</li>
+                    <li><a href="#"><?= $freelancer->getJobCount() ?>  review(s)</a></li>
                   </ul>
-                  <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                    bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                    elis, ultricies nec, pellentesque eu, pretium quis, sem.
+                  <p class="desc"><?= $freelancer->getDescription() ?>
                   </p>
                 </div>
               </div>
               <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
+                <li><a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a></li>
+                <!--<li><a href="#">Design</a></li>
                 <li><a href="#">PHP</a></li>
                 <li><a href="#">Admin</a></li>
                 <li><a href="#">Web Development</a></li>
                 <li><a href="#">Adobe Photoshop</a></li>
-                <li><a href="#">Javascript Senior</a></li>
+                <li><a href="#">Javascript Senior</a></li>-->
               </ul>
             </div>
           </div>
-
+          <?php endforeach;?>
           <!-- Freelancer-item -->
 
           <div class="freelancer-item">

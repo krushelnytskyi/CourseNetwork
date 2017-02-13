@@ -34,6 +34,12 @@ class Category
    */
   private $count;
 
+    /**
+     * @var int
+     * @column(count_freelancers)
+     */
+    private $countFreelancers;
+
   /**
    * @var string
    * @column(slug)
@@ -45,7 +51,7 @@ class Category
    */
   public function getId(): int
   {
-    return $this -> id;
+    return $this->id;
   }
 
   /**
@@ -53,7 +59,7 @@ class Category
    */
   public function getName(): string
   {
-    return $this -> name;
+    return $this->name;
   }
 
   /**
@@ -67,49 +73,67 @@ class Category
   /**
    * @return int
    */
-  function getCount(): int
+  public function getCount(): int
   {
     return (int)$this->count;
   }
 
+    /**
+     * @return int|null
+     */
+    public function getCountFreelancers(): int
+    {
+        return $this->countFreelancers;
+    }
+
   /**
    * @return string
    */
-  function getSlug(): string
+  public function getSlug(): string
   {
-    return $this -> slug;
+    return $this->slug;
   }
 
   /**
    * @param string $name
    */
-  public function setName( string $name )
+  public function setName(string $name)
   {
-    $this -> name = $name;
+    $this->name = $name;
   }
 
   /**
    * @param string $description
    */
-  public function setDescription( string $description )
+  public function setDescription(string $description)
   {
-    $this -> description = $description;
+    $this->description = $description;
   }
 
   /**
    * @param int $count
+   * @return int
    */
-  function setCount( int $count )
+  public function setCount(int $count)
   {
-    $this -> count = $count;
+    $this->count = $count;
   }
+
+    /**
+     * @param int $countFreelancers
+     * @return int
+     */
+    public function setCountFreelancers(int $countFreelancers)
+    {
+        $this->countFreelancers = $countFreelancers;
+    }
 
   /**
    * @param string $slug
    */
-  function setSlug( string $slug )
+  public function setSlug(string $slug)
   {
-    $this -> slug = $slug;
+    $this->slug = $slug;
   }
 
 }

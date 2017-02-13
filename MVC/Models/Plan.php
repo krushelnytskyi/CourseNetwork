@@ -9,14 +9,6 @@ namespace MVC\Models;
  */
 class Plan
 {
-
-    /**
-     * User roles
-     */
-    const PLAN_ORDINARY = 'ordinary';
-    const PLAN_PREMIUM = 'premium';
-    const PLAN_SUPERPREMIUM = 'superpremium';
-
     /**
      * @var int
      * @column(id)
@@ -43,38 +35,26 @@ class Plan
 
     /**
      * @var int
-     * @column(skills_amount)
-     */
-    private $skillsAmount;
-
-    /**
-     * @var int
-     * @column(follow_allow)
-     */
-    private $followAllow;
-
-    /**
-     * @var int
-     * @column(article_allow)
-     */
-    private $articleAllow;
-
-    /**
-     * @var int
      * @column(project_amount)
      */
     private $projectAmount;
 
     /**
-     * @var boolean
-     * @column(for_freelancer)
+     * @var float
+     * @column(price)
      */
-    private $type; // = freelancer, customer    ;
+    private $price;
+
+    /**
+     * @var string
+     * @column(role)
+     */
+    private $role;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -82,53 +62,29 @@ class Plan
     /**
      * @return string
      */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getRequestAmount()
+    public function getName(): string
     {
-        return $this->requestAmount;
+        return $this->name;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getSkillsAmount()
+    public function getPrice()
     {
-        return $this->skillsAmount;
+        return $this->price;
     }
 
     /**
-     * @return int
-     */
-    public function getFollowAllow()
-    {
-        return $this->followAllow;
-    }
-
-    /**
-     * @return int
-     */
-    public function getArticleAllow()
-    {
-        return $this->articleAllow;
-    }
-
-    /**
-     * @return int
+     * @return int|null
      */
     public function getProjectAmount()
     {
@@ -136,25 +92,25 @@ class Plan
     }
 
     /**
-     * @return bool
+     * @return int|null
      */
-    public function getForFreelancer()
+    public function getRequestAmount()
     {
-        return $this->forFreelancer;
+        return $this->requestAmount;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function getForCustomer()
+    public function getRole():string
     {
-        return $this->forCustomer;
+        return $this->role;
     }
 
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -162,65 +118,41 @@ class Plan
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
 
     /**
-     * @param int $requestAmount
+     * @param float $price
      */
-    public function setRequestAmount($requestAmount)
+    public function setPrice(float $price)
     {
-        $this->requestAmount = $requestAmount;
-    }
-
-    /**
-     * @param int $skillsAmount
-     */
-    public function setSkillsAmount($skillsAmount)
-    {
-        $this->skillsAmount = $skillsAmount;
-    }
-
-    /**
-     * @param int $followAllow
-     */
-    public function setFollowAllow($followAllow)
-    {
-        $this->followAllow = $followAllow;
-    }
-
-    /**
-     * @param int $articleAllow
-     */
-    public function setArticleAllow($articleAllow)
-    {
-        $this->articleAllow = $articleAllow;
+        $this->price = $price;
     }
 
     /**
      * @param int $projectAmount
      */
-    public function setProjectAmount($projectAmount)
+    public function setProjectAmount(int $projectAmount)
     {
         $this->projectAmount = $projectAmount;
     }
 
     /**
-     * @param bool $forFreelancer
+     * @param int $requestAmount
      */
-    public function setForFreelancer($forFreelancer)
+    public function setRequestAmount(int $requestAmount)
     {
-        $this->forFreelancer = $forFreelancer;
+        $this->requestAmount = $requestAmount;
     }
 
     /**
-     * @param bool $forCustomer
+     * @param string $role
      */
-    public function setForCustomer($forCustomer)
+    public function setRole(string $role)
     {
-        $this->forCustomer = $forCustomer;
+        $this->role = $role;
     }
 
 }

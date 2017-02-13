@@ -145,7 +145,7 @@ class Project
     }
 
     /**
-     * @return Category|null
+     * @return object|null
      */
     public function getCategory()
     {

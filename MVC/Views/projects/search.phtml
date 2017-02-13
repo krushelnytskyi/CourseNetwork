@@ -88,7 +88,7 @@
               <li><a href="/projects/search/" class="active" >All categories<span class="total-number">(<?= $this->countAll ?>)</span></a></li>
             <?php foreach ($this->categories as $category):?>
               <?php /** @var \MVC\Models\Category $category */?>
-              <li><a href="/projects/search/?category=<?= $category->getId()?>"><?= $category->getName() ?><span class="total-number">(<?= $category->getCount() ?>)</span></a></li>
+              <li><a href="/projects/category/<?= $category->getId()?>/"><?= $category->getName() ?><span class="total-number">(<?= $category->getCount() ?>)</span></a></li>
             <?php endforeach;?>
 
           <!--  <li><a href="#">Design<span class="total-number">(204)</span></a></li>
@@ -241,7 +241,7 @@
             <?php /** @var \MVC\Models\Project $project */?>
             <div class="project-item">
               <div class="project-item__header clearfix">
-                <h2 class="title float-left"><a href="#"><?= $project->getName() ?></a></h2>
+                <h2 class="title float-left"><a href="/projects/project/<?= $project->getId() ?>"><?= $project->getName() ?></a></h2>
                 <a href="" class="project-item__bookmark float-right"></a>
               </div>
               <div class="project-item-meta">
@@ -251,10 +251,10 @@
                   <li>Posted <?= date('d F', $project->getCreated()) ?></li>
                   <li><?= $project->getRequestsCount() ?> Proposals</li>
                 </ul>
-                <p class="desc"><?= $project->getDescription() ?>
+                <p class="desc"><?=  $string = substr($project->getDescription(), 0, 300) ?>
                 </p>
                 <ul class="tags">
-                  <li><a href="#"><?= $project->getCategory()->getName() ?></a></li>
+                  <li><a href="/projects/category/<?= $project->getCategory()->getId() ?>/"><?= $project->getCategory()->getName() ?></a></li>
                 </ul>
               </div>
               <div class="project-item-footer clearfix">
@@ -267,7 +267,7 @@
                   </div>
                 </div>
                 <div class="float-right send">
-                  <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
+                  <a href="/projects/project/<?= $project->getId()?>/" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
                 </div>
               </div>
             </div>

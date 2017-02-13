@@ -1,0 +1,170 @@
+.project-info{
+    padding: 0;
+    border-bottom: 1px solid #DEDEDE;
+    margin-bottom: -3px;
+    position: relative;
+    background: #F7F7F7;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: left;
+    color: #333;
+    width: 100%;
+}
+
+.project-detail{
+    margin-top: 30px;
+}
+
+.project-info-box{
+    background: #FFF;
+    border: #DEDEDE solid 1px;
+    padding: 5px 15px;
+    margin: 10px 0 10px 10px;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    float: left;
+    box-sizing: content-box;
+}
+
+.project-detail h1{
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.project-item-attributes-value{
+    color: #008bcb;
+    font-weight: 700;
+    font-size: 22px;
+    box-sizing: content-box;
+    text-align: center;
+    line-height: 18px;
+    margin-top: 5px;
+}
+
+.project-info-box ul.project-item-attributes li{
+    padding: 0 20px;
+}
+
+.project-info-box .project-item-attributes li + li{
+    border-left: 1px solid #DEDEDE;
+}
+
+.project-info-box .project-item-attributes li + li:before{
+    content: '';
+}
+
+.project-info-box .project-item-attributes{
+    margin-bottom: 0;
+}
+
+.project-info .project-item__bookmark{
+    margin-right: 15px;
+}
+
+.project-info-proposal-box{
+    margin: 20px 40px 10px 10px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-sizing: content-box;
+}
+
+.project-description-box{
+    display: block;
+    float: left;
+    margin-top: 20px;
+}
+
+.project-proposals{
+    width: 100%;
+    border:1px solid #4D525B;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.project-proposals-header,
+.submitted-header,
+.freelancers-rating-header,
+.project-proposal-header,
+.proposals-submitted,
+.proposals-freelancers-rating,
+.project-proposal{
+    display: block;
+    float: left;
+}
+
+.project-proposals-header{
+    color: #fff;
+    font-size: 12px;
+    font-size: .75rem;
+    line-height: 2.5;
+    text-transform: uppercase;
+    background: #4D525B;
+    box-sizing: border-box;
+    padding: 5px 0 5px 20px;
+    font-weight: 700;
+    width: 100%;
+}
+
+.project-proposals-list{
+    padding: 0;
+}
+
+.project-proposals-item{
+    margin: 0;
+    border-bottom: 1px solid #DEDEDE;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.project-proposals-item:last-child
+{
+    border-bottom: none;
+}
+
+.proposals-freelancers-rating
+{
+    margin-left: 15px;
+}
+
+.proposals-submitted{
+    margin-left: -15px;
+}
+
+.vert-mg-proposal{
+    margin-top: 100px;
+    margin-bottom: 50px;
+    background: #FFFFFF;
+}
+
+.form-control.proposal-input{
+    display: inline-block;
+    width: 85%;
+    margin-right: 5px;
+}
+
+.pd--15 a, .pd--15 a:hover{
+    text-decoration: none;
+}
+
+.project-request-balance{
+    display: ruby;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #4fb55d;
+    color: #4fb55d;
+    font-weight: 400;
+    padding: 20px 10px 10px 10px;
+    text-align: center;
+}
+
+.proposals-available{
+    font-size: 2rem;
+    font-weight: 400;
+    padding: 5px;
+}
+
+.proposal-form
+{
+    display: none;
+}

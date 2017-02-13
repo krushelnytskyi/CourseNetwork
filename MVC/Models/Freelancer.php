@@ -1,132 +1,238 @@
 <?php
 
-namespace MVC\Models;
+    namespace MVC\Models;
 
-use System\ORM\Repository;
+    use System\ORM\Repository;
 
-/**
- * Class Freelancer
- * @package MVC\Models
- * @table(freelancers)
- */
+    /**
+    * Class Freelancers
+    * @package MVC\Models
+    * @table(freelancers)
+    */
 class Freelancer
 {
+   /**
+    * @var int
+    * @column(id)
+    */
+    private $id;
 
-  /**
-   * @var int
-   * @column(id)
-   */
-  private $id;
+    /**
+     * @var int
+     * @column(user_id)
+     */
+    private $user;
 
-  /**
-   * @var float
-   * @column(rate)
-   */
-  private $rate;
+    /**
+     * @var string
+     * @column(description)
+     */
+    private $description;
 
-  /**
-   * @var int
-   * @column(plan_id)
-   */
-  private $plan;
+    /**
+     * @var float
+     * @column(rate)
+     */
+    private $rate;
 
-  /**
-   * @var int
-   * @column(user_id)
-   */
-  private $user;
+    /**
+     * @var float
+     * @column(rating)
+     */
+    private $rating;
 
-  /**
-   * @var int
-   * @column(category_id)
-   */
-  private $categoryId;
+    /**
+     * @var int
+     * @column(job_count)
+     */
+    private $jobCount;
 
-  /**
-   * @return int
-   */
-  public function getId(): int
-  {
-    return $this->id;
-  }
+    /**
+     * @var int
+     * @column(plan_id)
+     */
+    private $plan;
 
-  /**
-   * @return float
-   */
-  public function getRate()
-  {
-    return $this->rate;
-  }
+    /**
+     * @var int
+     * @column(status)
+     */
+    private $status;
 
-  /**
-   * @return Plan|null
-   */
-  public function getPlan(): Plan
-  {
-    $repo = new Repository( Plan::class );
+    /**
+     * @var int
+     * @column(request_balance)
+     */
+    private $requestBalance;
 
-    return $repo->findOneBy(
-        [
-          'id' => $this->plan
-        ]
-    );
-  }
+    /**
+     * @var int
+     * @column(category_id)
+     */
+    private $category;
 
-  /**
-   * @return User|null
-   */
-  public function getUser(): User
-  {
-    $repo = new Repository( User::class );
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return (int)$this->id;
+    }
 
-    return $repo->findOneBy( [
-        'id' => $this->user
-      ] );
-  }
+    /**
+     * @return \MVC\Models\Category
+     */
+    public function getCategory():Category
+    {
+        $repo = new Repository(Category::class);
 
-  /**
-   * @return Category|null
-   */
-  function getCategoryId(): Category
-  {
+        return $repo -> findOneBy( [
+            'id' => $this->category
+        ] );
+    }
 
-    $repo = new Repository( Category::class );
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-    return $repo->findOneBy( [
-        'id' => $this->user
-      ] );
-  }
+    /**
+     * @return int|null
+     */
+    public function getJobCount():int
+    {
+        return (int)$this->jobCount;
+    }
 
-  /**
-   * @param float $rate
-   */
-  public function setRate( float $rate )
-  {
-    $this->rate = $rate;
-  }
+    /**
+     * @return \MVC\Models\Plan
+     */
+    public function getPlan():Plan
+    {
+        $repo = new Repository(Plan::class);
 
-  /**
-   * @param int $plan
-   */
-  public function setPlan( int $plan )
-  {
-    $this->plan = $plan;
-  }
+        return $repo -> findOneBy( [
+            'id' => $this->plan
+        ] );
+    }
 
-  /**
-   * @param int $user
-   */
-  public function setUser( int $user )
-  {
-    $this->user = $user;
-  }
+    /**
+     * @return float
+     */
+    public function getRating():float
+    {
+        return (float)$this->rating;
+    }
 
-  /**
-   * @param int $categoryId
-   */
-  function setCategoryId( int $categoryId )
-  {
-    $this->categoryId = $categoryId;
-  }
+    /**
+     * @return float
+     */
+    public function getRate():float
+    {
+        return (float)$this->rate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRequestBalance():int
+    {
+        return (int)$this->requestBalance;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus():int
+    {
+        return (int)$this->status;
+    }
+
+    /**
+     * @return \MVC\Models\User
+     */
+    public function getUser(): User
+    {
+        $repo = new Repository(User::class);
+
+        return $repo -> findOneBy( [
+            'id' => $this->user
+        ] );
+    }
+
+    /**
+     * @param float $rate
+     */
+    public function setRate(float $rate)
+    {
+        $this->rate = (float)$rate;
+    }
+
+    /**
+     * @param int $user
+     */
+    public function setUser(int $user)
+    {
+        $this->user = (int)$user;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param int $category
+     */
+    public function setCategory(int $category)
+    {
+        $this->category = (int)$category;
+    }
+
+    /**
+     * @param int $plan
+     */
+    public function setPlan(int $plan)
+    {
+        $this->plan = (int)$plan;
+    }
+
+    /**
+     * @param float $rating
+     */
+    public function setRating(float $rating)
+    {
+        $this->rating = (float)$rating;
+    }
+
+    /**
+     * @param int $jobCount
+     */
+    public function setJobCount(int $jobCount)
+    {
+        $this->jobCount = (int)$jobCount;
+    }
+
+    /**
+     * @param int $requestBalance
+     */
+    public function setRequestBalance(int $requestBalance)
+    {
+        $this->requestBalance = (int)$requestBalance;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus(int $status)
+    {
+        $this->status = (int)$status;
+    }
 
 }

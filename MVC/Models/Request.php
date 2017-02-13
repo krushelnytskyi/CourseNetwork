@@ -1,125 +1,150 @@
 <?php
 
-namespace MVC\Models;
+    namespace MVC\Models;
 
-use System\ORM\Repository;
+    use System\ORM\Repository;
 
-/**
- * Class Request
- * @package MVC\Models
- * @table(requests)
- */
+    /**
+    * Class Requests
+    * @package MVC\Models
+    * @table(requests)
+    */
 class Request
 {
 
-  /**
-   * @var int
-   * @column(id)
-   */
-  private $id;
+    /**
+    * @var int
+    * @column(id)
+    */
+    private $id;
 
-  /**
-   * @var int
-   * @column(project_id)
-   */
-  private $projectId;
+    /**
+    * @var int
+    * @column(project_id)
+    */
+    private $projectId;
 
-  /**
-   * @var int
-   * @column(freelancer_id)
-   */
-  private $freelancerId;
+    /**
+    * @var int
+    * @column(freelancer_id)
+    */
+    private $freelancerId;
 
-  /**
-   * @var string
-   * @column(request_text)
-   */
-  private $requestText;
+    /**
+    * @var string
+    * @column(request_text)
+    */
+    private $requestText;
 
-  /**
-   * @var float
-   * @column(rate)
-   */
-  private $rate;
+    /**
+    * @var float
+    * @column(rate)
+    */
+    private $rate;
 
-  /**
-   * @return int
-   */
-  function getId(): int
-  {
-    return $this -> id;
-  }
+    /**
+     * @var int
+     * @column(deadline)
+     */
+    private $deadline;
 
-  /**
-   * @return \MVC\Models\Project
-   */
-  function getProjectId(): Project
-  {
-    $repo = new Repository( Project::class );
+    /**
+    * @return int
+    */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-    return $repo -> findOneBy( [
-        'id' => $this -> projectId
-      ] );
-  }
+    /**
+    * @return \MVC\Models\Project
+    */
+    public function getProjectId()
+    {
+        $repo = new Repository( Project::class );
 
-  /**
-   * @return \MVC\Models\Freelancer
-   */
-  function getFreelancerId(): Freelancer
-  {
-    $repo = new Repository( Freelancer::class );
+        return $repo -> findOneBy( [
+            'id' => $this->projectId
+          ] );
+    }
 
-    return $repo -> findOneBy( [
-        'id' => $this -> freelancerId
-      ] );
-  }
+    /**
+    * @return \MVC\Models\Freelancer
+    */
+    public function getFreelancerId()
+    {
+        $repo = new Repository(Freelancer::class);
 
-  /**
-   * @return string
-   */
-  function getRequestText(): string
-  {
-    return $this -> requestText;
-  }
+        return $repo->findOneBy( [
+            'id' => $this -> freelancerId
+          ] );
+    }
 
-  /**
-   * @return float
-   */
-  function getRate(): float
-  {
-    return $this -> rate;
-  }
+    /**
+     * @return float
+     */
+    public function getRate(): float
+    {
+        return $this->rate;
+    }
 
-  /**
-   * @param int $projectId
-   */
-  function setProjectId( int $projectId )
-  {
-    $this -> projectId = $projectId;
-  }
+    /**
+     * @return int
+     */
+    public function getDeadline(): int
+    {
+        return $this->deadline;
+    }
 
-  /**
-   * @param int $freelancerId
-   */
-  function setFreelancerId( int $freelancerId )
-  {
-    $this -> freelancerId = $freelancerId;
-  }
+    /**
+     * @return string
+     */
+    public function getRequestText(): string
+    {
+        return $this->requestText;
+    }
 
-  /**
-   * @param string $requestText
-   */
-  function setRequestText( string $requestText )
-  {
-    $this -> requestText = $requestText;
-  }
+    /**
+     * @param int $deadline
+     */
+    public function setDeadline(int $deadline)
+    {
+        $this->deadline = $deadline;
+    }
 
-  /**
-   * @param float $rate
-   */
-  function setRate( float $rate )
-  {
-    $this -> rate = $rate;
-  }
+    /**
+
+
+    /**
+     * @param int $freelancerId
+     */
+    public function setFreelancerId(int $freelancerId)
+    {
+        $this->freelancerId = $freelancerId;
+    }
+
+    /**
+     * @param int $projectId
+     */
+    public function setProjectId(int $projectId)
+    {
+        $this->projectId = $projectId;
+    }
+
+    /**
+     * @param float $rate
+     */
+    public function setRate(float $rate)
+    {
+        $this->rate = $rate;
+    }
+
+    /**
+     * @param string $requestText
+     */
+    public function setRequestText(string $requestText)
+    {
+        $this->requestText = $requestText;
+    }
 
 }
