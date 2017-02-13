@@ -192,7 +192,7 @@ class Project
     /**
      * @return string
      */
-    public function getFinish(): string
+    public function getFinish()
     {
         return $this->finish;
     }
@@ -208,7 +208,7 @@ class Project
     /**
      * @return string
      */
-    public function getStart(): string
+    public function getStart()
     {
         return $this->start;
     }

@@ -101,7 +101,7 @@ class Customer
   }
 
   /**
-   * @param decimal $rating
+   * @param float $rating
    */
   public function setRating(float $rating)
   {
@@ -115,5 +115,14 @@ class Customer
     {
         $this->projectBalance = $projectBalance;
     }
+
+    /**
+     * @param int $userId
+     */
+    public function setUser($userId)
+    {
+        $this -> user = $userId;
+    }
+
 
 }

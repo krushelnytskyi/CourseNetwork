@@ -6,7 +6,7 @@
                 <div class="project-info-box">
                     <ul class="project-item-attributes">
                         <li>Payment Type<div class="project-item-attributes-value"><?= $this->project->getWorkType() ?></div></li>
-                        <li>Budget<div class="project-item-attributes-value"><?= $this->project->getBudget() ?>$</div></li>
+                        <li>Budget<div class="project-item-attributes-value">$<?= $this->project->getBudget() ?></div></li>
                         <li>Posted<div class="project-item-attributes-value"><?= date('d F', $this->project->getCreated()) ?></div></li>
                         <li>Proposals<div class="project-item-attributes-value"><?= $this->project->getRequestsCount() ?></div></li>
                     </ul>

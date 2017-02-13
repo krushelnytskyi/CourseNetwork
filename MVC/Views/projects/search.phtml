@@ -1,538 +1,142 @@
 <div class="search-page-header">
-  <div class="container">
-    <h1>Fing Frellance Projects
-      <br>
-      <span>Search over 4,875 job postings in any category. Submit a free quote and get hired today!</span>
-    </h1>
-  </div>
-</div>
-
-<div class="light-gray-wrap project-search-wrap">
-
-  <div class="custom-nav">
     <div class="container">
-      <ul class="tab">
-        <li><a href="/projects/search" class="active">Find a Job</a></li>
-        <li><a href="/freelancers/search">Find a Freelancer</a></li>
-      </ul>
+        <h1>Fing Frellance Projects
+            <br>
+            <span>Search over 4,875 job postings in any category. Submit a free quote and get hired today!</span>
+        </h1>
     </div>
-  </div>
+</div>
+<div class="light-gray-wrap project-search-wrap">
+    <?= $this->layout('partial/search-tabs') ?>
+    <div class="container">
+        <div class="row search-page-content">
+            <div class="sidebarProjectFilter">
+                <div class="sidebarBox jobType">
+                    <h2 class="iconBubbleBlue">Job type</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li>
+                            <label class="control control--radio radio-inline">
+                                <input type="radio" value="" checked="checked">All
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="control control--radio radio-inline">
+                                <input type="radio" value="">Fixed
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="control control--radio radio-inline">
+                                <input type="radio" value="">Per Hour
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebarBox">
+                    <h2 class="iconCategoriesBlue">Categories</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li><a href="/projects/search/" class="active">All categories<span
+                                        class="total-number">(<?= $this->countAll ?>)</span></a></li>
+                        <?php foreach ($this->categories as $category): ?>
+                            <?php /** @var \MVC\Models\Category $category */ ?>
+                            <li><a href="/projects/category/<?= $category->getId() ?>/"><?= $category->getName() ?><span
+                                            class="total-number">(<?= $category->getCount() ?>)</span></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="projectList">
+                <!-- Search box -->
+                <header class="clearfix">
+                    <form action="" id="project-search-form" class="search-box">
+                        <div class="row">
+                            <div class="col-10 search-input no-padding-right">
+                                <input type="search" id="keyword" placeholder="Search projects...">
+                            </div>
+                            <div class="col-2 search-button no-padding-left">
+                                <input type="submit" class="btn-custom1" value="Search">
+                            </div>
+                        </div>
+                    </form>
+                </header>
+                <!-- Sorting -->
+                <div>
+                    <div class="col-6">
+                        <div class="row justify-content-start align-items-center">
+                            <div class="sortBy">Sort by</div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Latest
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Latest</a>
+                                    <a class="dropdown-item" href="#">Popularity</a>
+                                    <a class="dropdown-item" href="#">Ending soon</a>
+                                    <a class="dropdown-item" href="#">Budget</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php if (count($this->projects) > 0) : ?>
+                <!-- Project list -->
+                    <div class="project-list-result">
+                        <!-- Project-item -->
+                        <?php foreach ($this->projects as $project): ?>
+                            <?php /** @var \MVC\Models\Project $project */ ?>
+                            <div class="project-item">
+                                <div class="project-item__header clearfix">
+                                    <h2 class="title float-left"><a
+                                                href="/projects/project/<?= $project->getId() ?>"><?= $project->getName() ?></a>
+                                    </h2>
+                                    <a href="" class="project-item__bookmark float-right"></a>
+                                </div>
+                                <div class="project-item-meta">
+                                    <ul class="project-item-attributes">
+                                            <li><?= $project->getWorkType() ?></li>
+                                        <li><?= $project->getBudget() ?>$</li>
+                                        <li>Posted <?= date('d F', $project->getCreated()) ?></li>
+                                        <li><?= $project->getRequestsCount() ?> Proposals</li>
+                                    </ul>
+                                    <p class="desc"><?= $string = substr($project->getDescription(), 0, 300) ?>
+                                    </p>
+                                    <ul class="tags">
+                                        <li>
+                                            <a href="/projects/category/<?= $project->getCategory()->getId() ?>/"><?= $project->getCategory()->getName() ?></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="project-item-footer clearfix">
+                                    <div class="float-left client clearfix">
+                                        <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar"
+                                                         alt=""></a>
+                                        <div class="float-left">
+                                            <h4 class="client-name">
+                                                <a href="#"><?= $project->getCustomer()->getUser()->getName() ?></a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="float-right send">
+                                        <a href="/projects/project/<?= $project->getId() ?>/"
+                                           class="btn btn-custom1 button-send-proposal">Send Proposal</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                        <!-- Project-item -->
+                    </div>
+                <?php else: ?>
+                    <div class="text-center text-muted">
+                        <h3>Nothing found</h3>
+                    </div>
+                <?php endif; ?>
 
-  <div class="container">
-
-    <div class="row search-page-content">
-      <div class="sidebarProjectFilter">
-
-        <!-- <div class="sidebarBox">
-          <h2 class="iconBubbleBlue">Experience level</h2>
-          <hr>
-          <ul class="sidebarFilter">
-
-            <li>
-              <label class="control control--checkbox">
-                <input type="checkbox" value="" checked="checked">Entry level($)
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--checkbox">
-                <input type="checkbox" value="" checked="checked">Intermediate level($$)
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--checkbox">
-                <input type="checkbox" value="" checked="checked">Expert level($$$)
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-          </ul>
-        </div> -->
-
-        <div class="sidebarBox jobType">
-          <h2 class="iconBubbleBlue">Job type</h2>
-          <hr>
-          <ul class="sidebarFilter">
-
-            <li>
-              <label class="control control--radio radio-inline">
-                <input type="radio" value="" checked="checked">All
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--radio radio-inline">
-                <input type="radio" value="">Fixed
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--radio radio-inline">
-                <input type="radio" value="">Per Hour
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-          </ul>
+            </div>
         </div>
-
-        <div class="sidebarBox">
-          <h2 class="iconCategoriesBlue">Categories</h2>
-          <hr>
-          <ul class="sidebarFilter">
-              <li><a href="/projects/search/" class="active" >All categories<span class="total-number">(<?= $this->countAll ?>)</span></a></li>
-            <?php foreach ($this->categories as $category):?>
-              <?php /** @var \MVC\Models\Category $category */?>
-              <li><a href="/projects/category/<?= $category->getId()?>/"><?= $category->getName() ?><span class="total-number">(<?= $category->getCount() ?>)</span></a></li>
-            <?php endforeach;?>
-
-          <!--  <li><a href="#">Design<span class="total-number">(204)</span></a></li>
-            <li><a href="#">Web Development<span class="total-number">(238)</span></a></li>
-            <li><a href="#">Business support<span class="total-number">(398)</span></a></li>
-            <li><a href="#">Video, phote & audio<span class="total-number">(178)</span></a></li>
-            <li><a href="#">Writing<span class="total-number">(223)</span></a></li>
-            <li><a href="#">Software development<span class="total-number">(204)</span></a></li>
-            <li><a href="#">Marketing & PR<span class="total-number">(170)</span></a></li>
-            <li><a href="#">Admin<span class="total-number">(198)</span></a></li>
-            <li><a href="#">Search Marketing<span class="total-number">(201)</span></a></li>
-            <li><a href="#">Social Media<span class="total-number">(159)</span></a></li>
-            <li><a href="#">Mobile<span class="total-number">(301)</span></a></li>
-            <li><a href="#">Translations<span class="total-number">(140)</span></a></li>
-            <li><a href="#">Creative Arts<span class="total-number">(189)</span></a></li>
-            <li><a href="#">Tutorials<span class="total-number">(387)</span></a></li>
-            <li><a href="#">Extraordinary<span class="total-number">(390)</span></a></li>-->
-
-          </ul>
-        </div>
-
-        <!--<div class="sidebarBox">
-          <h2 class="iconLocationBlue">Location</h2>
-          <hr>
-
-          <a href="#" class="select-location-item active">Any Location</a>
-
-          <div class="type-city select-location-item">
-            <div class="">
-              <a href="" class="drill_down_links"><label for="searchJobTypeCity">City</label></a>
-              <div class="drill_down_body">
-                <input type="text" class="form-control" id="searchJobTypeCity" aria-describedby="typeCity" placeholder="Enter city">
-              </div>
-            </div>
-          </div>
-
-          <div class="select-country select-location-item">
-            <form action="">
-              <a href="" class="drill_down_links"><label for="searchJobselectCountry">Select country</label></a>
-              <div class="drill_down_body">
-                <select id="searchJobselectCountry" class="custom-select">
-                  <option selected>Country</option>
-                  <option value="1">Ukraine</option>
-                  <option value="2">India</option>
-                  <option value="3">Moldova</option>
-                  <option value="4">Somali</option>
-                  <option value="5">Zimbabve</option>
-                  <option value="6">Russia</option>
-                  <option value="7">Serbia</option>
-                  <option value="8">USA</option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <div class="select-location-item">
-            <!-- Large modal -->
-         <!--   <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Choose location on map...</a>
-
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Choose location on this map</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="/assets/img/projects-freelancers-search-page/map.jpg" alt="">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Apply</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>-->
-
-
-    <!--<div class="sidebarBox">
-          <h2 class="iconStarBlue">Search by your skills</h2>
-          <hr>
-          <form action="">
-            <label for="searchJobselectSkill"></label>
-            <select id="searchJobselectSkill" class="custom-select">
-              <option selected>Select one</option>
-              <option value="1">Web Design</option>
-              <option value="2">Drupal</option>
-              <option value="3">SQL</option>
-              <option value="4">Word</option>
-              <option value="5">Exel</option>
-              <option value="6">Something...</option>
-              <option value="7">Another skill</option>
-              <option value="8">Super Skill</option>
-            </select>
-          </form>
-        </div>-->
-
-      </div>
-
-
-      <div class="projectList">
-
-        <!-- Search box -->
-
-        <header class="clearfix">
-          <form action="" id="project-search-form" class="search-box">
-            <div class="row">
-              <div class="col-10 search-input no-padding-right">
-                <input type="search" id="keyword" placeholder="Search projects...">
-              </div>
-              <div class="col-2 search-button no-padding-left">
-                <input type="submit" class="btn-custom1" value="Search">
-              </div>
-            </div>
-          </form>
-        </header>
-
-        <!-- Sorting -->
-
-        <div>
-          <div class="col-6">
-            <div class="row justify-content-start align-items-center">
-              <div class="sortBy">Sort by</div>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Latest
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Latest</a>
-                  <a class="dropdown-item" href="#">Popularity</a>
-                  <a class="dropdown-item" href="#">Ending soon</a>
-                  <a class="dropdown-item" href="#">Budget</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project list -->
-
-        <div class="project-list-result">
-
-          <!-- Project-item -->
-
-          <?php foreach($this->projects as $project):?>
-            <?php /** @var \MVC\Models\Project $project */?>
-            <div class="project-item">
-              <div class="project-item__header clearfix">
-                <h2 class="title float-left"><a href="/projects/project/<?= $project->getId() ?>"><?= $project->getName() ?></a></h2>
-                <a href="" class="project-item__bookmark float-right"></a>
-              </div>
-              <div class="project-item-meta">
-                <ul class="project-item-attributes">
-                  <li><?= $project->getWorkType() ?></li>
-                  <li><?= $project->getBudget() ?>$</li>
-                  <li>Posted <?= date('d F', $project->getCreated()) ?></li>
-                  <li><?= $project->getRequestsCount() ?> Proposals</li>
-                </ul>
-                <p class="desc"><?=  $string = substr($project->getDescription(), 0, 300) ?>
-                </p>
-                <ul class="tags">
-                  <li><a href="/projects/category/<?= $project->getCategory()->getId() ?>/"><?= $project->getCategory()->getName() ?></a></li>
-                </ul>
-              </div>
-              <div class="project-item-footer clearfix">
-                <div class="float-left client clearfix">
-                  <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                  <div class="float-left">
-                    <h4 class="client-name">
-                      <a href="#"><?= $project->getCustomer()->getUser()->getName() ?></a>
-                    </h4>
-                  </div>
-                </div>
-                <div class="float-right send">
-                  <a href="/projects/project/<?= $project->getId()?>/" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-                </div>
-              </div>
-            </div>
-          <?php endforeach;?>
-          <!-- Project-item -->
-
-          <div class="project-item">
-            <div class="project-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-              <a href="" class="project-item__bookmark float-right"></a>
-            </div>
-            <div class="project-item-meta">
-              <ul class="project-item-attributes">
-                <li>Fixed Price</li>
-                <li>250$</li>
-                <li>Posted 15 September</li>
-                <li>12 Proposals</li>
-              </ul>
-              <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-              </p>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-              </ul>
-            </div>
-            <div class="project-item-footer clearfix">
-              <div class="float-left client clearfix">
-                <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                <div class="float-left">
-                  <h4 class="client-name">
-                    <a href="#">New Client</a>
-                  </h4>
-                </div>
-              </div>
-              <div class="float-right send">
-                <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project-item -->
-
-          <div class="project-item">
-            <div class="project-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-              <a href="" class="project-item__bookmark float-right"></a>
-            </div>
-            <div class="project-item-meta">
-              <ul class="project-item-attributes">
-                <li>Fixed Price</li>
-                <li>250$</li>
-                <li>Posted 15 September</li>
-                <li>12 Proposals</li>
-              </ul>
-              <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-              </p>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-              </ul>
-            </div>
-            <div class="project-item-footer clearfix">
-              <div class="float-left client clearfix">
-                <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                <div class="float-left">
-                  <h4 class="client-name">
-                    <a href="#">New Client</a>
-                  </h4>
-                </div>
-              </div>
-              <div class="float-right send">
-                <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project-item -->
-
-          <div class="project-item">
-            <div class="project-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-              <a href="" class="project-item__bookmark float-right"></a>
-            </div>
-            <div class="project-item-meta">
-              <ul class="project-item-attributes">
-                <li>Fixed Price</li>
-                <li>250$</li>
-                <li>Posted 15 September</li>
-                <li>12 Proposals</li>
-              </ul>
-              <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-              </p>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-              </ul>
-            </div>
-            <div class="project-item-footer clearfix">
-              <div class="float-left client clearfix">
-                <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                <div class="float-left">
-                  <h4 class="client-name">
-                    <a href="#">New Client</a>
-                  </h4>
-                </div>
-              </div>
-              <div class="float-right send">
-                <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project-item -->
-
-          <div class="project-item">
-            <div class="project-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-              <a href="" class="project-item__bookmark float-right"></a>
-            </div>
-            <div class="project-item-meta">
-              <ul class="project-item-attributes">
-                <li>Fixed Price</li>
-                <li>250$</li>
-                <li>Posted 15 September</li>
-                <li>12 Proposals</li>
-              </ul>
-              <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-              </p>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-              </ul>
-            </div>
-            <div class="project-item-footer clearfix">
-              <div class="float-left client clearfix">
-                <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                <div class="float-left">
-                  <h4 class="client-name">
-                    <a href="#">New Client</a>
-                  </h4>
-                </div>
-              </div>
-              <div class="float-right send">
-                <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project-item -->
-
-          <div class="project-item">
-            <div class="project-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-              <a href="" class="project-item__bookmark float-right"></a>
-            </div>
-            <div class="project-item-meta">
-              <ul class="project-item-attributes">
-                <li>Fixed Price</li>
-                <li>250$</li>
-                <li>Posted 15 September</li>
-                <li>12 Proposals</li>
-              </ul>
-              <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-              </p>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-              </ul>
-            </div>
-            <div class="project-item-footer clearfix">
-              <div class="float-left client clearfix">
-                <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                <div class="float-left">
-                  <h4 class="client-name">
-                    <a href="#">New Client</a>
-                  </h4>
-                </div>
-              </div>
-              <div class="float-right send">
-                <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project-item -->
-
-          <div class="project-item">
-            <div class="project-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-              <a href="" class="project-item__bookmark float-right"></a>
-            </div>
-            <div class="project-item-meta">
-              <ul class="project-item-attributes">
-                <li>Fixed Price</li>
-                <li>250$</li>
-                <li>Posted 15 September</li>
-                <li>12 Proposals</li>
-              </ul>
-              <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                elis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-              </p>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-              </ul>
-            </div>
-            <div class="project-item-footer clearfix">
-              <div class="float-left client clearfix">
-                <a href="#"><img src="/assets/img/icons/user.png" class="float-left client-avatar" alt=""></a>
-                <div class="float-left">
-                  <h4 class="client-name">
-                    <a href="#">New Client</a>
-                  </h4>
-                </div>
-              </div>
-              <div class="float-right send">
-                <a href="#" class="btn btn-custom1 button-send-proposal">Send Proposal</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
     </div>
-  </div>
 </div>

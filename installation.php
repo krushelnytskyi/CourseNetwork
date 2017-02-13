@@ -1,11 +1,14 @@
 <?php
+
 // Allow execute this file only from command line
 // Example: > php installation.php
-// - if (php_sapi_name() === 'cli') {
-$installer = new Install;
-$installer->run();
-//$installer->installDatabase();
-// - }
+if (php_sapi_name() === 'cli') {
+    require_once 'System/autoloader.php';
+
+    $installer = new Install;
+    $installer->run();
+}
+
 /**
  * This class running installation exploded with steps.
  * To add new installation step - create public not static method
@@ -41,14 +44,14 @@ class Install
     public function installDatabase()
     {
 
-        $dbForConnect = include 'config/user/database.php';
+        $dbForConnect = \System\Config::getInstance()->get('database');
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
 
             $files = glob('config/database/version_*.sql');
-            var_dump($files);
 
+            // todo: Use System\Database\Connection
 
             usort(
                 $files,
