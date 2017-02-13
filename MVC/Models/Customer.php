@@ -36,6 +36,12 @@ class Customer
    */
   private $user;
 
+   /**
+    * @var int
+    * @column(project_balance)
+   */
+   private $projectBalance;
+
   /**
    * @return int id | null
    */
@@ -51,6 +57,14 @@ class Customer
   {
     return $this -> rating;
   }
+
+    /**
+     * @return int|null
+     */
+    public function getProjectBalance()
+    {
+        return $this->projectBalance;
+    }
 
   /**
    * @return Plan
@@ -81,25 +95,25 @@ class Customer
   /**
    * @param int $plan
    */
-  public function setPlan( int $plan )
+  public function setPlan(int $plan)
   {
     $this -> plan = $plan;
   }
 
   /**
-   * @param int $user_id
-   */
-  public function setUser( /*int*/ $user_id )
-  {
-    $this -> user = $user_id;
-  }
-
-  /**
    * @param decimal $rating
    */
-  public function setRating( float $rating )
+  public function setRating(float $rating)
   {
     $this -> rating = $rating;
   }
+
+    /**
+     * @param int $projectBalance
+     */
+    public function setProjectBalance(int $projectBalance)
+    {
+        $this->projectBalance = $projectBalance;
+    }
 
 }

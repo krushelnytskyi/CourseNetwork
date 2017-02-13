@@ -9,7 +9,6 @@ USE `course_network`;
 CREATE TABLE IF NOT EXISTS `freelancers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `connect_used` int(7) DEFAULT '0',
   `rate` decimal(4,2) DEFAULT NULL,
   `rating` decimal(4,2) DEFAULT NULL,
   `job_count` int(7) DEFAULT '0',
@@ -46,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
-  `description` varchar(255) NOT NULL UNIQUE,
+  `description` TEXT,
   `category` INT(3) NOT NULL,
   `work_type` varchar(124) DEFAULT NULL,
   `requests_count` int(11) DEFAULT '0',
@@ -122,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
   `freelancer_id` int(11),
   `request_text` varchar(255) NOT NULL,
   `rate` decimal(4,2) DEFAULT NULL,
+  `deadline` int(11),
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

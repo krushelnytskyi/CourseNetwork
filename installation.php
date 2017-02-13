@@ -41,7 +41,7 @@ class Install
     public function installDatabase()
     {
 
-        $dbForConnect = include 'config/database.php';
+        $dbForConnect = include 'config/user/database.php';
         try {
             $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
             $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);

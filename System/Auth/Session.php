@@ -17,6 +17,7 @@ class Session
      * $_SESSION key constant
      */
     const IDENTITY = 'IDENTITY';
+    const ORIGIN_URL = 'originUrl';
 
     use Singleton;
 
@@ -58,6 +59,32 @@ class Session
     public function clearIdentity()
     {
         session_unset();
+    }
+
+    /**
+     * Save origin http referer
+     * @return string
+     */
+    public function saveReferer()
+    {
+        $_SESSION[static::ORIGIN_URL] = $_SERVER[static::ORIGIN_URL];
+
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReferer()
+    {
+        return $_SESSION[static::ORIGIN_URL];
+    }
+
+    /*
+     * Clear origin http referer after use
+     */
+    public function clearReferer()
+    {
+        $_SESSION[static::ORIGIN_URL] = null;
     }
 }
 

@@ -41,7 +41,7 @@ class Dispatcher
         }
 
         foreach (Config::getInstance()->get('routes', 'patterns') as $pattern => $rule) {
-            if (preg_match('/' . $pattern . '/', $url) === 1) {
+            if (preg_match('#' . $pattern . '#', $url) === 1) {
                 $controller = preg_replace('/' . $pattern . '/', $rule['controller'], $url);
                 $action = preg_replace('/' . $pattern . '/', $rule['action'], $url);
             }
