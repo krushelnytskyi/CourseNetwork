@@ -142,29 +142,28 @@ class  User extends Controller
         }
     }
 
-    public function workdiaryAction()
-    {
-        $this->getView()->view('user/workdiary');
-    }
-
     public function jobsstatusAction()
     {
         $user = \System\Auth\UserSession::getInstance()->getIdentity();
         $projectsRepo = new Repository(Project::class);
         $projects = new Project();
-        if ($user->getRole() === 'freelancer') {
-            $repo = new Repository(Freelancer::class);
-            $freelancer = $repo->findOneBy([
+        if (true === empty($projectsRepo->findAll())){
+            $projects = $projectsRepo->findAll();
+        } else {
+            if ($user->getRole() === 'freelancer') {
+                $repo = new Repository(Freelancer::class);
+                $freelancer = $repo->findOneBy([
                 'user' => $user->getId()
-            ]);
-            $projects = $projectsRepo->findBy(['freelancer' => $freelancer->getId()]);
-        }
-        if ($user->getRole() === 'customer') {
-            $repo = new Repository(Customer::class);
-            $customer = $repo->findOneBy([
+                ]);
+                $projects = $projectsRepo->findBy(['freelancer' => $freelancer->getId()]);
+            }
+            if ($user->getRole() === 'customer') {
+                $repo = new Repository(Customer::class);
+                $customer = $repo->findOneBy([
                 'user' => $user->getId()
-            ]);
-            $projects = $projectsRepo->findBy(['customer' => $customer->getId()]);
+                ]);
+                $projects = $projectsRepo->findBy(['customer' => $customer->getId()]);
+            }
         }
 
         $name = array();

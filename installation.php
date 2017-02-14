@@ -1,5 +1,5 @@
 <?php
-
+use System\Database\Connection;
 // Allow execute this file only from command line
 // Example: > php installation.php
 if (php_sapi_name() === 'cli') {
@@ -44,15 +44,9 @@ class Install
     public function installDatabase()
     {
 
-        $dbForConnect = \System\Config::getInstance()->get('database');
         try {
-            $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
-            $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
-
             $files = glob('config/database/version_*.sql');
-
-            // todo: Use System\Database\Connection
-
+            $connect =Connection::getInstance()->getConnect();
             usort(
                 $files,
                 function ($file1, $file2) {
@@ -83,14 +77,12 @@ class Install
                         $pattern[0] = '/(\/\*.*)/';
                         $queries = preg_replace($pattern, '', $file);
                         $queries = explode(';', $queries);
-                        array_unshift($queries, 'USE `course_network`;');
                         foreach ($queries as $query) {
-                            $query = $pdo->prepare(trim($query . ';'));
-                            $query->execute();
+                            $connect->query(trim($query).';');
                         }
                     }
             }
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $this->abort($e->getMessage());
         }
     }
