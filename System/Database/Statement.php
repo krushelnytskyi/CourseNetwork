@@ -12,9 +12,11 @@ abstract class Statement
     /**
      * Where patterns
      */
-    const PATTERN_WHERE        = '%s `%s` %s \'%s\'';
-    const PATTERN_WHERE_IN     = '`%s` IN (%s)';
-    const PATTERN_WHERE_NOT_IN = '`%s` NOT IN (%s)';
+    const PATTERN_WHERE           = '%s `%s` %s \'%s\'';
+    const PATTERN_WHERE_IN        = '`%s` IN (%s)';
+    const PATTERN_WHERE_NOT_IN    = '`%s` NOT IN (%s)';
+    const PATTERN_WHERE_LIKE      = '`%s` LIKE \'%s\'';
+    const PATTERN_WHERE_NOT_LIKE  = '`%s` NOT LIKE \'%s\'';
 
     /**
      * Allowed conditions for where
@@ -126,7 +128,7 @@ abstract class Statement
         }
 
         $where = sprintf(
-            static::PATTERN_WHERE,
+            static::PATTERN_WHERE, //sprintf format
             $this->whereCondition,
             $field,
             $delimiter,
@@ -191,20 +193,27 @@ abstract class Statement
 
         return $this;
     }
-
-    public function whereLike($field, $value)
+	
+	/**
+     * @param $field
+     * @param $values
+     * @return $this
+     */
+    public function whereLike($field, $values)
     {
-        if (null !== $this->whereCondition) {
-            $this->where .= ' ' . $this->whereCondition . ' ';
-            $this->whereCondition = null;
-        } else {
-            $this->where = null;
-        }
-
-        // todo make method work
-        // select name from projects where name LIKE '_est';
+		return $this->buildWhere($field, $values, static::PATTERN_WHERE_LIKE);        
     }
 
+	/**
+     * @param $field
+     * @param $values
+     * @return $this
+     */
+	public function whereNotLike($field, $values)
+	{
+		return $this->buildWhere($field, $values, static::PATTERN_WHERE_NOT_LIKE);        
+    }
+    
     /**
      * @return $this
      */
