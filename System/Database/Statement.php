@@ -180,16 +180,16 @@ abstract class Statement
             $this->where = null;
         }
 
-        $this->where .= sprintf(
-            $pattern,
-            $field,
-            '\'' . implode('\', \'', array_map(
+        if (is_array($values) === true) {
+            $values = '\'' . implode('\', \'', array_map(
                 function ($value) {
                     return $this->connection->getLink()->real_escape_string($value);
                 },
                 $values
-            )) . '\''
-        );
+            )) . '\'';
+        }
+
+        $this->where .= sprintf($pattern, $field, $values);
 
         return $this;
     }
