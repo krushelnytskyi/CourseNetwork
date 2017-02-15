@@ -25,17 +25,31 @@ class Connection
      */
     protected $link;
 
+    /**
+     * @var \mysqli
+     */
+    protected $connect;
+
+
     public function __construct()
     {
         $databaseConfig = Config::getInstance()->get('database');
+
+        $this->connect = new \mysqli(
+        $databaseConfig['host'],
+        $databaseConfig['username'],
+        $databaseConfig['password']
+        );
+        $this->connect->query('CREATE DATABASE IF NOT EXISTS `course_network`');
 
         $this->link = new \mysqli(
             $databaseConfig['host'],
             $databaseConfig['username'],
             $databaseConfig['password'],
             $databaseConfig['database']
-        );
-    }
+    );
+
+        }
 
     /**
      * @return \mysqli
@@ -43,6 +57,14 @@ class Connection
     public function getLink(): \mysqli
     {
         return $this->link;
+    }
+
+    /**
+     * @return \mysqli
+     */
+    public function getConnect(): \mysqli
+    {
+        return $this->connect;
     }
 
     /**
