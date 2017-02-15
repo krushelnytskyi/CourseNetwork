@@ -187,6 +187,8 @@ abstract class Statement
                 },
                 $values
             )) . '\'';
+        } else {
+            $values = $this->connection->getLink()->real_escape_string($values);
         }
 
         $this->where .= sprintf($pattern, $field, $values);

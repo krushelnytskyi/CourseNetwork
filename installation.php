@@ -44,46 +44,49 @@ class Install
     public function installDatabase()
     {
 
-        try {
-            $files = glob('config/database/version_*.sql');
-            $connect =Connection::getInstance()->getConnect();
-            usort(
-                $files,
-                function ($file1, $file2) {
-                    preg_match('/(version)_([0-9]+)\.sql/', $file1, $matches1);
-                    preg_match('/version_([0-9]+)\.sql/', $file2, $matches2);
+        Connection::getInstance()->getLink()->query(
+            sprintf(
+                'CREATE DATABASE IF NOT EXISTS `%s`',
+                \System\Config::getInstance()->get('database', 'database')
+            )
+        );
 
-                    if ((int)$matches1[1] > (int)$matches2[1]) {
-                        return 1;
-                    } elseif ((int)$matches1[1] < (int)$matches2[1]) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
+        $files = glob('config/database/version_*.sql');
+
+        usort(
+            $files,
+            function ($file1, $file2) {
+                preg_match('/(version)_([0-9]+)\.sql/', $file1, $matches1);
+                preg_match('/version_([0-9]+)\.sql/', $file2, $matches2);
+
+                if ((int)$matches1[1] > (int)$matches2[1]) {
+                    return 1;
+                } elseif ((int)$matches1[1] < (int)$matches2[1]) {
+                    return -1;
+                } else {
+                    return 0;
                 }
-            );
-
-            foreach ($files as $file) {
-
-                $pathParts = pathinfo($file);
-                $filename = 'config/database/' . $pathParts['filename'] . '.sql';
-
-                if (preg_match('#version_[0-9]+\.sql#Ui', $filename))
-
-                    echo $filename . PHP_EOL;
-
-                    if (true === file_exists($file)) {
-                        $file = file_get_contents($file);
-                        $pattern[0] = '/(\/\*.*)/';
-                        $queries = preg_replace($pattern, '', $file);
-                        $queries = explode(';', $queries);
-                        foreach ($queries as $query) {
-                            $connect->query(trim($query).';');
-                        }
-                    }
             }
-        } catch (Exception $e) {
-            $this->abort($e->getMessage());
+        );
+
+        foreach ($files as $file) {
+
+            $pathParts = pathinfo($file);
+            $filename = 'config/database/' . $pathParts['filename'] . '.sql';
+
+            if (preg_match('#version_[0-9]+\.sql#Ui', $filename))
+
+                echo $filename . PHP_EOL;
+
+            if (true === file_exists($file)) {
+                $file = file_get_contents($file);
+                $pattern[0] = '/(\/\*.*)/';
+                $queries = preg_replace($pattern, '', $file);
+                $queries = explode(';', $queries);
+                foreach ($queries as $query) {
+                    Connection::getInstance()->getLink()->query(trim($query).';');
+                }
+            }
         }
     }
 

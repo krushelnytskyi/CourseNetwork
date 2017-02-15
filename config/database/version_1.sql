@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(255) NOT NULL UNIQUE,
   `description` TEXT,
   `count` int(11),
-  `slug` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

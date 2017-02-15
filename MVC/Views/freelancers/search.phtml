@@ -191,15 +191,11 @@
                                     </div>
                                 </div>
                                 <ul class="tags">
-                                    <li>
-                                        <a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a>
-                                    </li>
-                                    <!--<li><a href="#">Design</a></li>
-                                    <li><a href="#">PHP</a></li>
-                                    <li><a href="#">Admin</a></li>
-                                    <li><a href="#">Web Development</a></li>
-                                    <li><a href="#">Adobe Photoshop</a></li>
-                                    <li><a href="#">Javascript Senior</a></li>-->
+                                    <?php if ($freelancer->getCategory() !== null) : ?>
+                                        <li>
+                                            <a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </div>

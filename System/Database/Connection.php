@@ -35,21 +35,14 @@ class Connection
     {
         $databaseConfig = Config::getInstance()->get('database');
 
-        $this->connect = new \mysqli(
-        $databaseConfig['host'],
-        $databaseConfig['username'],
-        $databaseConfig['password']
-        );
-        $this->connect->query('CREATE DATABASE IF NOT EXISTS `course_network`');
-
         $this->link = new \mysqli(
             $databaseConfig['host'],
             $databaseConfig['username'],
-            $databaseConfig['password'],
-            $databaseConfig['database']
-    );
+            $databaseConfig['password']
+        );
 
-        }
+        $this->getLink()->select_db($databaseConfig['database']);
+    }
 
     /**
      * @return \mysqli

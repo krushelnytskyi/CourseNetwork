@@ -11,6 +11,7 @@ use System\Auth\Session;
 use System\Auth\UserSession;
 use System\Controller;
 use System\Database\Connection;
+use System\ORM\Criteria;
 use System\ORM\Repository;
 
 /**
@@ -65,28 +66,30 @@ class Projects extends Controller
      */
     public function searchAction()
     {
-        $repo = new Repository(Project::class);
-        $projectsAll = $repo->findAll();
-        $countAll = count($projectsAll);
+        $url = $_SERVER['REQUEST_URI'];
 
-        $url =  Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
+        $criteria = new Criteria(new Repository(Project::class));
 
-        if(preg_match('/\/projects\/category\/([0-9]+)/', $url, $matches))
-        {
-            $id = (int)$matches[1];
-            $projects = $repo->findBy(['category'=>$id]);
-        }else{
-            $projects = $projectsAll;
+        if (false === empty($_POST['search'])) {
+            $like = '%' . $_POST['search'] . '%';
+
+            $criteria
+                ->whereLike('name', $like)
+                ->_or()->whereLike('description', $like);
+        }
+
+        if (false === empty($_POST['category'])) {
+            $criteria
+                ->_and()->where('category', '=', $_POST['category']);
         }
 
         $repo = new Repository(Category::class);
         $categories = $repo->findAll();
 
         $this->getView()->assign('categories', $categories);
-        $this->getView()->assign('projects', $projects);
-        $this->getView()->assign('countAll', $countAll);
+        $this->getView()->assign('projects', $criteria->getResult());
+        $this->getView()->assign('countAll', 5);
 
-       // $this->listItems('Project', 'projects');
         $this->getView()->view('projects/search');
     }
 
@@ -376,7 +379,7 @@ class Projects extends Controller
                    $repo->save($project);
                    $repoCategory->save($category, 'id', $categoryId);
 
-                   $this->forward('projects/search');
+                   $this->redirect('projects/search');
                }else{
                    $this->getView()->assign('error', 'Only customers can create project');
                }
