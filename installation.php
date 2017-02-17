@@ -1,17 +1,17 @@
 <?php
 // Allow execute this file only from command line
 // Example: > php installation.php
-// - if (php_sapi_name() === 'cli') {
-$installer = new Install;
-$installer->run();
-//$installer->installDatabase();
-// - }
+if (php_sapi_name() === 'cli') {
+    include 'System/autoloader.php';
+    $installer = new Install;
+    $installer->run();
+}
 /**
  * This class running installation exploded with steps.
  * To add new installation step - create public not static method
  * and add annotation @step to this method. Remember: order is strict.
  *
- * @see https://github.com/krushelnytskyi/CourseNetwork to more information
+ * @see https://github.com/krushelnytskyi/CourseShop to more information
  * about installation. This class is not secure.
  *
  * Class Install
@@ -22,7 +22,6 @@ class Install
      * General data defines
      */
     const MIN_PHP_VERSION = 7.0;
-
     /**
      * @step
      * Check software requirements
@@ -34,64 +33,41 @@ class Install
         echo 'PHP Version: ' . phpversion() . PHP_EOL;
         $this->abortIf(static::MIN_PHP_VERSION > phpversion(), 'Minimum PHP Version: ' . static::MIN_PHP_VERSION);
     }
-
     /**
      * @step
      */
     public function installDatabase()
     {
-
-        $dbForConnect = include 'config/user/database.php';
-        try {
-            $dsn = 'mysql:host=' . $dbForConnect['host'] . ';dbname=;charset=utf8';
-            $pdo = new PDO($dsn, $dbForConnect['username'], $dbForConnect['password']);
-
-            $files = glob('config/database/version_*.sql');
-            var_dump($files);
-
-
-            usort(
-                $files,
-                function ($file1, $file2) {
-                    preg_match('/(version)_([0-9]+)\.sql/', $file1, $matches1);
-                    preg_match('/version_([0-9]+)\.sql/', $file2, $matches2);
-
-                    if ((int)$matches1[1] > (int)$matches2[1]) {
-                        return 1;
-                    } elseif ((int)$matches1[1] < (int)$matches2[1]) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
+        $database = include 'config/database.php';
+        $mysqli = new \mysqli(
+            $database['host'],
+            $database['username'],
+            $database['password']
+        );
+        if ($mysqli->connect_errno !== 0) {
+            $this->abort($mysqli->connect_errno);
+        } else {
+            echo 'Connection to MySQL established' . PHP_EOL;
+            if ($mysqli->select_db($database['database']) === false) {
+                if ($mysqli->query('CREATE DATABASE'.' '.$database['database']) === true) {
+                    echo 'Database created' . PHP_EOL;
+                } else {
+                    $this->abort('Database can not be created');
                 }
-            );
-
-            foreach ($files as $file) {
-
-                $pathParts = pathinfo($file);
-                $filename = 'config/database/' . $pathParts['filename'] . '.sql';
-
-                if (preg_match('#version_[0-9]+\.sql#Ui', $filename))
-
-                    echo $filename . PHP_EOL;
-
-                    if (true === file_exists($file)) {
-                        $file = file_get_contents($file);
-                        $pattern[0] = '/(\/\*.*)/';
-                        $queries = preg_replace($pattern, '', $file);
-                        $queries = explode(';', $queries);
-                        array_unshift($queries, 'USE `course_network`;');
-                        foreach ($queries as $query) {
-                            $query = $pdo->prepare(trim($query . ';'));
-                            $query->execute();
-                        }
-                    }
+            } else {
+                echo 'Database already created' . PHP_EOL;
             }
-        } catch (PDOException $e) {
-            $this->abort($e->getMessage());
         }
+        $mysqli->close();
     }
-
+    /**
+     * @step
+     */
+    public function installModels()
+    {
+        $modelsInstaller = new \System\ORM\ModelsInstaller();
+        $modelsInstaller->installModels();
+    }
     /**
      * @param string|bool $message Abort message
      * @return void
@@ -99,16 +75,15 @@ class Install
     private function abort($message = false)
     {
         echo 'Aborting installation. ';
-        if (false === $message) {
+        if (false !== $message) {
             echo 'Message: ' . $message;
         }
         echo PHP_EOL;
         exit(0);
     }
-
     /**
-     * @param bool $condition Condition to control aborting
-     * @param string|bool $message Abort Message
+     * @param bool        $condition Condition to control aborting
+     * @param string|bool $message   Abort Message
      *
      * @return void
      */
@@ -118,7 +93,6 @@ class Install
             $this->abort($message);
         }
     }
-
     /**
      * Run Installation
      * @return void

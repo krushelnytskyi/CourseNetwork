@@ -53,7 +53,7 @@ class Users extends Controller
                 UserSession::getInstance()
                     ->setIdentity($user->getId());
 
-                $this->forward('using/main');
+                $this->forward('user/main');
             }
         }
 
@@ -72,14 +72,10 @@ class Users extends Controller
                 $this->getView()->assign('registerErrors', $form->getMessages());
                 $this->getView()->view('users/register');
             } else {
-
-
-
                 $name = $_POST['name'];
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $role = $_POST['role'];
-
                 $repo = new Repository(User::class);
 
                 /** @var User $user */

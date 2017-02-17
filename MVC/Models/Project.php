@@ -12,6 +12,9 @@ use System\ORM\Repository;
  */
 class Project
 {
+
+    const TYPE_PER_HOUR = 'per-hour';
+    const TYPE_FIXED = 'fixed-price';
     /**
      * @var int
      * @column(id)
@@ -192,7 +195,7 @@ class Project
     /**
      * @return string
      */
-    public function getFinish(): string
+    public function getFinish()
     {
         return $this->finish;
     }
@@ -208,7 +211,7 @@ class Project
     /**
      * @return string
      */
-    public function getStart(): string
+    public function getStart()
     {
         return $this->start;
     }

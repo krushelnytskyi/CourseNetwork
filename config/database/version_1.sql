@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `balance` decimal(10,2) DEFAULT NULL,
-  `plan_id` int(11) NOT NULL,
+  `plan_id` int(11) DEFAULT NULL,
   `site` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `skype` varchar(255) DEFAULT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(255) NOT NULL UNIQUE,
   `description` TEXT,
   `count` int(11),
-  `slug` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `portfolio` (
   `work_name` varchar(255) NOT NULL DEFAULT 'work name',
   `description` TEXT,
   `image_name` varchar(255),
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT 1,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

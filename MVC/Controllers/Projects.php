@@ -11,6 +11,7 @@ use System\Auth\Session;
 use System\Auth\UserSession;
 use System\Controller;
 use System\Database\Connection;
+use System\ORM\Criteria;
 use System\ORM\Repository;
 
 /**
@@ -65,30 +66,40 @@ class Projects extends Controller
      */
     public function searchAction()
     {
-        $repo = new Repository(Project::class);
-        $projectsAll = $repo->findAll();
-        $countAll = count($projectsAll);
 
-        $url =  Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
+        $criteria = new Criteria(new Repository(Project::class));
 
-        if(preg_match('/\/projects\/category\/([0-9]+)/', $url, $matches))
+        if (false === empty($_POST['search']))
         {
-            $id = (int)$matches[1];
-            $projects = $repo->findBy(['category'=>$id]);
-        }else{
-            $projects = $projectsAll;
+           $like = '%' . $_POST['search'] . '%';
+
+           $like =  Connection::getInstance()->secureString($like);
+
+            $criteria
+                ->whereLike('name', $like)
+                ->_or()->whereLike('description', $like);
+        }
+        elseif(false === empty($_POST))
+        {
+            foreach ($_POST as $key => $value){
+                if (false === empty($value)) {
+                    $criteria
+                        ->_and()->where($key, '=', $value);
+                }
+            }
+
         }
 
         $repo = new Repository(Category::class);
         $categories = $repo->findAll();
 
         $this->getView()->assign('categories', $categories);
-        $this->getView()->assign('projects', $projects);
-        $this->getView()->assign('countAll', $countAll);
+        $this->getView()->assign('projects', $criteria->getResult());
+        $this->getView()->assign('countAll', 5);
 
-       // $this->listItems('Project', 'projects');
         $this->getView()->view('projects/search');
     }
+
 
     /**
      * Detail project page

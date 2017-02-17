@@ -1,474 +1,212 @@
 <div class="search-page-header">
-  <div class="container">
-    <h1>Find & Hire Freelancers
-      <br>
-      <span>Search 3,603,454 freelancers being offered. Submit a free quote and get hired today!</span>
-    </h1>
-  </div>
-</div>
-
-<div class="light-gray-wrap project-search-wrap">
-
-  <div class="custom-nav">
     <div class="container">
-      <ul class="tab">
-        <li><a href="/projects/search">Find a Job</a></li>
-        <li><a href="/freelancers/search" class="active">Find a Freelancer</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container">
-
-    <div class="row search-page-content">
-      <div class="sidebarProjectFilter">
-
-        <div class="sidebarBox">
-          <h2 class="iconCategoriesBlue">Categories</h2>
-          <hr>
-          <ul class="sidebarFilter">
-            <li><a href="/freelancers/search/" class="active">All categories<span class="total-number">(<?= $this->countAll ?>)</span></a></li>
-
-            <?php foreach ($this->categories as $category):?>
-              <?php /** @var \MVC\Models\Category $category */?>
-              <li><a href="/freelancers/category/<?= $category->getId()?>/"><?= $category->getName() ?><span class="total-number">(<?= $category->getCountFreelancers() ?>)</span></a></li>
-            <?php endforeach;?>
-
-            <!--<li><a href="#">Web Development<span class="total-number">(238)</span></a></li>
-            <li><a href="#">Business support<span class="total-number">(398)</span></a></li>
-            <li><a href="#">Video, phote & audio<span class="total-number">(178)</span></a></li>
-            <li><a href="#">Writing<span class="total-number">(223)</span></a></li>
-            <li><a href="#">Software development<span class="total-number">(204)</span></a></li>
-            <li><a href="#">Marketing & PR<span class="total-number">(170)</span></a></li>
-            <li><a href="#">Admin<span class="total-number">(198)</span></a></li>
-            <li><a href="#">Search Marketing<span class="total-number">(201)</span></a></li>
-            <li><a href="#">Social Media<span class="total-number">(159)</span></a></li>
-            <li><a href="#">Mobile<span class="total-number">(301)</span></a></li>
-            <li><a href="#">Translations<span class="total-number">(140)</span></a></li>
-            <li><a href="#">Creative Arts<span class="total-number">(189)</span></a></li>
-            <li><a href="#">Tutorials<span class="total-number">(387)</span></a></li>
-            <li><a href="#">Extraordinary<span class="total-number">(390)</span></a></li>-->
-          </ul>
-        </div>
-
-        <div class="sidebarBox jobType">
-          <h2 class="iconBubbleBlue">Job type</h2>
-          <hr>
-          <ul class="sidebarFilter">
-
-            <li>
-              <label class="control control--radio radio-inline">
-                <input type="radio" value="" checked="checked">All
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--radio radio-inline">
-                <input type="radio" value="">Fixed
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--radio radio-inline">
-                <input type="radio" value="">Per Hour
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-          </ul>
-        </div>
-
-        <!--<div class="sidebarBox">
-          <h2 class="iconLocationBlue">Location</h2>
-          <hr>
-
-          <a href="#" class="select-location-item active">Any Location</a>
-
-          <div class="type-city select-location-item">
-            <div class="">
-              <a href="" class="drill_down_links"><label for="searchFreelancerTypeCity">City</label></a>
-                <div class="drill_down_body">
-                  <input type="text" class="form-control" id="searchFreelancerTypeCity" aria-describedby="typeCity" placeholder="Enter city">
-                </div>
-            </div>
-          </div>
-
-          <div class="select-country select-location-item">
-            <form action="">
-              <a href="" class="drill_down_links"><label for="searchFreelancerSelectCountry">Select country</label></a>
-              <div class="drill_down_body">
-                <select id="searchFreelancerSelectCountry" class="custom-select">
-                  <option selected>Country</option>
-                  <option value="1">Ukraine</option>
-                  <option value="2">India</option>
-                  <option value="3">Moldova</option>
-                  <option value="4">Somali</option>
-                  <option value="5">Zimbabve</option>
-                  <option value="6">Russia</option>
-                  <option value="7">Serbia</option>
-                  <option value="8">USA</option>
-                </select>
-              </div>
-            </form>
-          </div>
-
-          <div class="select-location-item">
-            <!-- Large modal -->
-          <!--  <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Choose location on map...</a>
-
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Choose location on this map</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="/assets/img/projects-freelancers-search-page/map.jpg" alt="">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Apply</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>-->
-
-        <div class="sidebarBox">
-          <h2 class="iconStarBlue">Show only</h2>
-          <hr>
-          <ul class="sidebarFilter">
-
-            <li>
-              <label class="control control--checkbox">
-                <input type="checkbox" value="">Is online
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-            <li>
-              <label class="control control--checkbox">
-                <input type="checkbox" value="">Freelancers with portfolio
-                <div class="control__indicator"></div>
-              </label>
-            </li>
-
-          </ul>
-        </div>
-
-        <div class="sidebarBox">
-          <h2 class="iconCoinBlue">Rate/Hr</h2>
-          <hr>
-          <ul class="sidebarFilter">
-            <li><a href="#" class="active">Any Rate</a></li>
-            <li><a href="#" class="">$0 - $25</a></li>
-            <li><a href="#" class="">$25 - $50</a></li>
-            <li><a href="#" class="">$50 - $100</a></li>
-            <li><a href="#" class="">$100 - $200</a></li>
-            <li><a href="#" class="">$200+</a></li>
-          </ul>
-        </div>
-
-        <div class="sidebarBox">
-          <h2 class="iconStarBlue">Rating</h2>
-          <hr>
-          <ul class="sidebarFilter">
-            <li><a href="#" class="active">Any Rating</a></li>
-            <li><a href="#" class="">5 Stars</a></li>
-            <li><a href="#" class="">4+ Stars</a></li>
-            <li><a href="#" class="">3+ Stars</a></li>
-            <li><a href="#" class="">3 Less Stars</a></li>
-          </ul>
-        </div>
-
-        <div class="sidebarBox">
-          <h2 class="iconBubbleBlue">By Reviews</h2>
-          <hr>
-          <ul class="sidebarFilter">
-            <li><a href="#" class="active">Any Review</a></li>
-            <li><a href="#">3+ Review</a></li>
-            <li><a href="#">10+ Review</a></li>
-            <li><a href="#">20+ Review</a></li>
-            <li><a href="#">50+ Review</a></li>
-          </ul>
-        </div>
-
-        <div class="sidebarBox">
-          <h2 class="iconBubbleBlue">Search by tested skills</h2>
-          <hr>
-          <form action="">
-            <label for="searchJobselectSkill"></label>
-            <select id="searchJobselectSkill" class="custom-select">
-              <option selected>Select one</option>
-              <option value="1">Web Design</option>
-              <option value="2">Drupal</option>
-              <option value="3">SQL</option>
-              <option value="4">Word</option>
-              <option value="5">Exel</option>
-              <option value="6">Something...</option>
-              <option value="7">Another skill</option>
-              <option value="8">Super Skill</option>
-            </select>
+        <h1>Find & Hire Freelancers
             <br>
-            <input type="submit" class="btn-custom1 sidebar-button" value="Go">
-          </form>
-        </div>
-
-      </div>
-
-
-      <div class="projectList">
-
-        <!-- Search box -->
-
-        <header class="clearfix">
-          <form action="" id="project-search-form" class="search-box">
-            <div class="row">
-              <div class="col-10 search-input no-padding-right">
-                <input type="search" id="keyword" placeholder="Search Freelancers...">
-              </div>
-              <div class="col-2 search-button no-padding-left">
-                <input type="submit" class="btn-custom1" value="Search">
-              </div>
-            </div>
-          </form>
-        </header>
-
-        <!-- Sorting -->
-
-        <div>
-          <div class="col-6">
-            <div class="row justify-content-start align-items-center">
-              <div class="sortBy">Sort by</div>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Relevance
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Relevance</a>
-                  <a class="dropdown-item" href="#">Total Earnings</a>
-                  <a class="dropdown-item" href="#">Rating</a>
-                  <a class="dropdown-item" href="#">Rate</a>
+            <span>Search 3,603,454 freelancers being offered. Submit a free quote and get hired today!</span>
+        </h1>
+    </div>
+</div>
+<div class="light-gray-wrap project-search-wrap">
+    <?= $this->layout('partial/search-tabs') ?>
+    <div class="container">
+        <div class="row search-page-content">
+            <div class="sidebarProjectFilter">
+                <div class="sidebarBox">
+                    <h2 class="iconCategoriesBlue">Categories</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li><a href="/freelancers/search/" class="active">All categories<span
+                                        class="total-number">(<?= $this->countAll ?>)</span></a></li>
+                        <?php foreach ($this->categories as $category): ?>
+                            <?php /** @var \MVC\Models\Category $category */ ?>
+                            <li><a href="/freelancers/category/<?= $category->getId() ?>/"><?= $category->getName() ?>
+                                    <span class="total-number">(<?= $category->getCountFreelancers() ?>)</span></a></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
-              </div>
+                <div class="sidebarBox jobType">
+                    <h2 class="iconBubbleBlue">Job type</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li>
+                            <label class="control control--radio radio-inline">
+                                <input type="radio" value="" checked="checked">All
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="control control--radio radio-inline">
+                                <input type="radio" value="">Fixed
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="control control--radio radio-inline">
+                                <input type="radio" value="">Per Hour
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebarBox">
+                    <h2 class="iconStarBlue">Show only</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li>
+                            <label class="control control--checkbox">
+                                <input type="checkbox" value="">Is online
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="control control--checkbox">
+                                <input type="checkbox" value="">Freelancers with portfolio
+                                <div class="control__indicator"></div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebarBox">
+                    <h2 class="iconCoinBlue">Rate/Hr</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li><a href="#" class="active">Any Rate</a></li>
+                        <li><a href="#" class="">$0 - $25</a></li>
+                        <li><a href="#" class="">$25 - $50</a></li>
+                        <li><a href="#" class="">$50 - $100</a></li>
+                        <li><a href="#" class="">$100 - $200</a></li>
+                        <li><a href="#" class="">$200+</a></li>
+                    </ul>
+                </div>
+                <div class="sidebarBox">
+                    <h2 class="iconStarBlue">Rating</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li><a href="#" class="active">Any Rating</a></li>
+                        <li><a href="#" class="">5 Stars</a></li>
+                        <li><a href="#" class="">4+ Stars</a></li>
+                        <li><a href="#" class="">3+ Stars</a></li>
+                        <li><a href="#" class="">3 Less Stars</a></li>
+                    </ul>
+                </div>
+                <div class="sidebarBox">
+                    <h2 class="iconBubbleBlue">By Reviews</h2>
+                    <hr>
+                    <ul class="sidebarFilter">
+                        <li><a href="#" class="active">Any Review</a></li>
+                        <li><a href="#">3+ Review</a></li>
+                        <li><a href="#">10+ Review</a></li>
+                        <li><a href="#">20+ Review</a></li>
+                        <li><a href="#">50+ Review</a></li>
+                    </ul>
+                </div>
+                <div class="sidebarBox">
+                    <h2 class="iconBubbleBlue">Search by tested skills</h2>
+                    <hr>
+                    <form action="">
+                        <label for="searchJobselectSkill"></label>
+                        <select id="searchJobselectSkill" class="custom-select">
+                            <option selected>Select one</option>
+                            <option value="1">Web Design</option>
+                            <option value="2">Drupal</option>
+                            <option value="3">SQL</option>
+                            <option value="4">Word</option>
+                            <option value="5">Exel</option>
+                            <option value="6">Something...</option>
+                            <option value="7">Another skill</option>
+                            <option value="8">Super Skill</option>
+                        </select>
+                        <br>
+                        <input type="submit" class="btn-custom1 sidebar-button" value="Go">
+                    </form>
+                </div>
             </div>
-          </div>
-        </div>
+            <div class="projectList">
+                <!-- Search box -->
+                <header class="clearfix">
+                    <form action="" id="project-search-form" class="search-box">
+                        <div class="row">
+                            <div class="col-10 search-input no-padding-right">
+                                <input type="search" id="keyword" placeholder="Search Freelancers...">
+                            </div>
+                            <div class="col-2 search-button no-padding-left">
+                                <input type="submit" class="btn-custom1" value="Search">
+                            </div>
+                        </div>
+                    </form>
+                </header>
 
-        <!-- Freelancers list -->
+                <!-- Sorting -->
 
-        <div class="freelancers-list-result">
+                <div>
+                    <div class="col-6">
+                        <div class="row justify-content-start align-items-center">
+                            <div class="sortBy">Sort by</div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Relevance
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Relevance</a>
+                                    <a class="dropdown-item" href="#">Total Earnings</a>
+                                    <a class="dropdown-item" href="#">Rating</a>
+                                    <a class="dropdown-item" href="#">Rate</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-          <!-- Freelancer-item -->
-          <?php foreach($this->freelancers as $freelancer):?>
-          <?php /** @var \MVC\Models\Freelancer $freelancer */?>
-          <div class="freelancer-item">
-            <div class="freelancer-item__header clearfix">
-              <h2 class="title float-left"><a href="#"><?= $freelancer->getUser()->getName() ?></a></h2>
-              <span class="float-right rating-amount">(<?= $freelancer->getRating() ?>)</span>
-              <span class="freelancer-rating float-right">
+                <!-- Freelancers list -->
+
+                <div class="freelancers-list-result">
+
+                    <!-- Freelancer-item -->
+                    <?php foreach ($this->freelancers as $freelancer): ?>
+                        <?php /** @var \MVC\Models\Freelancer $freelancer */ ?>
+                        <div class="freelancer-item">
+                            <div class="freelancer-item__header clearfix">
+                                <h2 class="title float-left"><a href="#"><?= $freelancer->getUser()->getName() ?></a>
+                                </h2>
+                                <span class="float-right rating-amount">(<?= $freelancer->getRating() ?>)</span>
+                                <span class="freelancer-rating float-right">
                 <span style="width: 100%;"></span>
               </span>
-            </div>
-            <div class="freelancer-item-meta">
-              <div class="clearfix">
-                <div class="freelancer-photo float-left">
-                  <a href="#"><img src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg" alt=""></a>
+                            </div>
+                            <div class="freelancer-item-meta">
+                                <div class="clearfix">
+                                    <div class="freelancer-photo float-left">
+                                        <a href="#"><img
+                                                    src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg"
+                                                    alt=""></a>
+                                    </div>
+                                    <div class="freelancer-meta float-right">
+                                        <ul class="freelancer-item-attributes clearfix">
+                                            <li><?= $freelancer->getRate() ?>$ / Hr</li>
+                                            <li><a href="#"><?= $freelancer->getJobCount() ?> review(s)</a></li>
+                                        </ul>
+                                        <p class="desc"><?= $freelancer->getDescription() ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <ul class="tags">
+                                    <li>
+                                        <a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a>
+                                    </li>
+                                    <!--<li><a href="#">Design</a></li>
+                                    <li><a href="#">PHP</a></li>
+                                    <li><a href="#">Admin</a></li>
+                                    <li><a href="#">Web Development</a></li>
+                                    <li><a href="#">Adobe Photoshop</a></li>
+                                    <li><a href="#">Javascript Senior</a></li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="freelancer-meta float-right">
-                  <ul class="freelancer-item-attributes clearfix">
-                    <li><?= $freelancer->getRate() ?>$ / Hr</li>
-                    <li><a href="#"><?= $freelancer->getJobCount() ?>  review(s)</a></li>
-                  </ul>
-                  <p class="desc"><?= $freelancer->getDescription() ?>
-                  </p>
-                </div>
-              </div>
-              <ul class="tags">
-                <li><a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a></li>
-                <!--<li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Web Development</a></li>
-                <li><a href="#">Adobe Photoshop</a></li>
-                <li><a href="#">Javascript Senior</a></li>-->
-              </ul>
+
             </div>
-          </div>
-          <?php endforeach;?>
-          <!-- Freelancer-item -->
-
-          <div class="freelancer-item">
-            <div class="freelancer-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum Web Developer</a></h2>
-              <span class="float-right rating-amount">(10)</span>
-              <span class="freelancer-rating float-right">
-                <span style="width: 80%;"></span>
-              </span>
-            </div>
-            <div class="freelancer-item-meta">
-              <div class="clearfix">
-                <div class="freelancer-photo float-left">
-                  <a href="#"><img src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg" alt=""></a>
-                </div>
-                <div class="freelancer-meta float-right">
-                  <ul class="freelancer-item-attributes clearfix">
-                    <li>70$ / Hr</li>
-                    <li><a href="#">4 reviews</a></li>
-
-                  </ul>
-                  <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                    bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                    elis, ultricies nec, pellentesque eu, pretium quis, sem.
-                  </p>
-                </div>
-              </div>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Web Development</a></li>
-                <li><a href="#">Adobe Photoshop</a></li>
-                <li><a href="#">Javascript Senior</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Freelancer-item -->
-
-          <div class="freelancer-item">
-            <div class="freelancer-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum Web Developer</a></h2>
-              <span class="float-right rating-amount">(8)</span>
-              <span class="freelancer-rating float-right">
-                <span style="width: 60%;"></span>
-              </span>
-            </div>
-            <div class="freelancer-item-meta">
-              <div class="clearfix">
-                <div class="freelancer-photo float-left">
-                  <a href="#"><img src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg" alt=""></a>
-                </div>
-                <div class="freelancer-meta float-right">
-                  <ul class="freelancer-item-attributes clearfix">
-                    <li>70$ / Hr</li>
-                    <li><a href="#">2 reviews</a></li>
-
-                  </ul>
-                  <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                    bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                    elis, ultricies nec, pellentesque eu, pretium quis, sem.
-                  </p>
-                </div>
-              </div>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Web Development</a></li>
-                <li><a href="#">Adobe Photoshop</a></li>
-                <li><a href="#">Javascript Senior</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Freelancer-item -->
-
-          <div class="freelancer-item">
-            <div class="freelancer-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum Web Developer</a></h2>
-              <span class="float-right rating-amount">(5)</span>
-              <span class="freelancer-rating float-right">
-                <span style="width: 40%;"></span>
-              </span>
-            </div>
-            <div class="freelancer-item-meta">
-              <div class="clearfix">
-                <div class="freelancer-photo float-left">
-                  <a href="#"><img src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg" alt=""></a>
-                </div>
-                <div class="freelancer-meta float-right">
-                  <ul class="freelancer-item-attributes clearfix">
-                    <li>70$ / Hr</li>
-                    <li><a href="#">3 reviews</a></li>
-
-                  </ul>
-                  <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                    bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                    elis, ultricies nec, pellentesque eu, pretium quis, sem.
-                  </p>
-                </div>
-              </div>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Web Development</a></li>
-                <li><a href="#">Adobe Photoshop</a></li>
-                <li><a href="#">Javascript Senior</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Freelancer-item -->
-
-          <div class="freelancer-item">
-            <div class="freelancer-item__header clearfix">
-              <h2 class="title float-left"><a href="#">Lorem ipsum Web Developer</a></h2>
-              <span class="float-right rating-amount">(1)</span>
-              <span class="freelancer-rating float-right">
-                <span style="width: 20%;"></span>
-              </span>
-            </div>
-            <div class="freelancer-item-meta">
-              <div class="clearfix">
-                <div class="freelancer-photo float-left">
-                  <a href="#"><img src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg" alt=""></a>
-                </div>
-                <div class="freelancer-meta float-right">
-                  <ul class="freelancer-item-attributes clearfix">
-                    <li>70$ / Hr</li>
-                    <li><a href="#">1 reviews</a></li>
-
-                  </ul>
-                  <p class="desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
-                    bus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f
-                    elis, ultricies nec, pellentesque eu, pretium quis, sem.
-                  </p>
-                </div>
-              </div>
-              <ul class="tags">
-                <li><a href="#">Drupal</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Web Development</a></li>
-                <li><a href="#">Adobe Photoshop</a></li>
-                <li><a href="#">Javascript Senior</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Freelancer-item -->
-
-
         </div>
-
-      </div>
     </div>
-  </div>
 </div>
