@@ -40,7 +40,11 @@
                                     <div>Proposal Balance</div>
                                     <div class="proposals-balance">
                                         <span class="proposals-available"><?= $this->freelancer->getRequestBalance() ?></span>
-                                        <span class="proposals-permissible">/<?= $this->freelancer->getPlan()->getRequestAmount() ?></span>
+
+                                        <?php if ($this->freelancer->getPlan() !== null) : ?>
+                                            <span class="proposals-permissible">/<?= $this->freelancer->getPlan()->getRequestAmount() ?></span>
+                                        <?php endif; ?>
+
                                     </div>
                                 </div>
                             </a>

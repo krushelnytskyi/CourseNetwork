@@ -52,11 +52,13 @@ class Freelancers extends Controller
     public function profileAction()
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
-        list(, $id) = explode('/', $url);
+        list(,,$id) = explode('/', $url);
 
         $repo       = new Repository(Freelancer::class);
         $freelancer = $repo->findOneBy(['id' => $id]);
-        echo abs($url);
+
+        $this->getView()->assign('freelancer', $freelancer);
+
         if ($freelancer === null) {
             $this->getView()->view('404');
         }

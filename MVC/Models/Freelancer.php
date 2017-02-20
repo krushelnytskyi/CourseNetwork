@@ -110,7 +110,7 @@ class Freelancer
     /**
      * @return \MVC\Models\Plan
      */
-    public function getPlan():Plan
+    public function getPlan()
     {
         $repo = new Repository(Plan::class);
 

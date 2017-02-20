@@ -2,6 +2,7 @@
 
 namespace MVC\Controllers;
 
+use MVC\Models\Customer;
 use MVC\Models\Project;
 use MVC\Models\Freelancer;
 use MVC\Models\Category;
@@ -359,6 +360,8 @@ class Projects extends Controller
                $role = $customer->getRole();
 
                if($role === User::ROLE_CUSTOMER){
+                   $repoCustomer = new Repository(Customer::class);
+                   $customerModel = $repoCustomer->findOneBy(['id' => $customer->getId()]);
                    $customer = $customer->getId();
 
                    $name = Connection::getInstance()->secureString($_POST['name']);
@@ -378,7 +381,7 @@ class Projects extends Controller
                    $project->setWorkType($workType);
                    $project->setBudget($budget);
                    $project->setCategory($categoryId);
-                   $project->setCustomer($customer);
+                   $project->setCustomer($customerModel->getId());
 
                    $countProjects = $category->getCount()+1;
 
