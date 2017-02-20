@@ -16,32 +16,54 @@ use System\ORM\Repository;
  */
 class Freelancers extends Controller
 {
-  /**
-   * Search Projects Action
-   */
-  public function searchAction()
-  {
-      $repo = new Repository(Freelancer::class);
-      $freelancersAll = $repo->findAll();
-      $countAll = count($freelancersAll);
 
-      $url =  Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
+    /**
+     * Search Projects Action
+     */
+    public function searchAction()
+    {
+        $repo           = new Repository(Freelancer::class);
+        $freelancersAll = $repo->findAll();
+        $countAll       = count($freelancersAll);
 
-      if(preg_match('/\/freelancers\/category\/([0-9]+)/', $url, $matches))
-      {
-          $id = (int)$matches[1];
-          $freelancers = $repo->findBy(['category'=>$id]);
-      }else{
-          $freelancers = $freelancersAll;
-      }
+        $url = Connection::getInstance()->secureString($_SERVER['REQUEST_URI']);
 
-      $repo = new Repository(Category::class);
-      $categories = $repo->findAll();
 
-      $this->getView()->assign('categories', $categories);
-      $this->getView()->assign('freelancers', $freelancers);
-      $this->getView()->assign('countAll', $countAll);
+        if (preg_match('/\/freelancers\/category\/([0-9]+)/', $url, $matches)) {
+            $id          = (int) $matches[1];
+            $freelancers = $repo->findBy(['category' => $id]);
+        }
+        else {
+            $freelancers = $freelancersAll;
+        }
+        $repo       = new Repository(Category::class);
+        $categories = $repo->findAll();
 
-      $this->getView()->view('freelancers/search');
-  }
+        $this->getView()->assign('categories', $categories);
+        $this->getView()->assign('freelancers', $freelancers);
+        $this->getView()->assign('countAll', $countAll);
+
+        $this->getView()->view('freelancers/search');
+    }
+
+    /**
+     * Detail profile page Action
+     */
+    public function profileAction()
+    {
+        $url = trim($_SERVER['REQUEST_URI'], '/');
+        list(, $id) = explode('/', $url);
+
+        $repo       = new Repository(Freelancer::class);
+        $freelancer = $repo->findOneBy(['id' => $id]);
+        echo abs($url);
+        if ($freelancer === null) {
+            $this->getView()->view('404');
+        }
+        else {
+            $this->getView()->view('freelancers/profile');
+            $this->getView()->assign('freelancer', $freelancer);
+        }
+    }
+
 }

@@ -1,11 +1,11 @@
-<?php $user = \System\Auth\UserSession::getInstance()->getIdentity();?>
+<?php $user = \System\Auth\UserSession::getInstance()->getIdentity(); ?>
 <div class="row">
     <?php $this->layout('user/menu'); ?>
     <div class="main-user col-sm-10">
         <div class="offset-1 project-item col-sm-10 main-user-one">
-            <img src="/assets/img/user-page/avatar/<?=$user->getAvatar(); ?>" class="float-left client-avatar" alt="">
+            <img src="/assets/img/user-page/avatar/<?= $user->getAvatar(); ?>" class="float-left client-avatar" alt="">
             <div class="project-item__header clearfix ">
-                <h2 class="title"><h1> Hello <?=  $user->getName();?>&nbsp;!!!</h1></h2>
+                <h2 class="title"> Hello <?= $user->getName(); ?>&nbsp;!!!</h2>
             </div>
             <p class="offset-2 col-sm-10">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
                 Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penati
@@ -25,31 +25,31 @@
                 <tbody>
                     <tr>
                         <td>Name:</td>
-                        <td><?= $user->getName()?:'none'?></td>
+                        <td><?= $user->getName() ?: 'none' ?></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
-                        <td><?= $user->getEmail()?:'none';?></td>
+                        <td><?= $user->getEmail() ?: 'none'; ?></td>
                     </tr>
                     <tr>
                         <td>Site:</td>
-                        <td><?= $user->getSite()?:'none';?></td>
+                        <td><?= $user->getSite() ?: 'none'; ?></td>
                     </tr>
                     <tr>
                         <td>Phone:</td>
-                        <td><?= $user->getPhone()?:'none';?></td>
+                        <td><?= $user->getPhone() ?: 'none'; ?></td>
                     </tr>
                     <tr>
                         <td>Skype:</td>
-                        <td><?= $user->getPhone()?:'none';?></td>
+                        <td><?= $user->getSkype() ?: 'none'; ?></td>
                     </tr>
                     <tr>
                         <td>Role:</td>
-                        <td><?= $user->getRole()?:'none';?></td>
+                        <td><?= $user->getRole() ?: 'none'; ?></td>
                     </tr>
                     <tr>
                         <td>Balance:</td>
-                        <td><?= $user->getBalance()?:'none';?></td>
+                        <td><?= $user->getBalance() ?: 'none'; ?></td>
                     </tr>
                     <tr class="tr-inverse"><td>Futer</td><td></td></tr>
                 </tbody>

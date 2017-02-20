@@ -1,0 +1,61 @@
+<div class="search-page-header">
+    <div class="container">
+        <h1>Find & Hire Freelancers
+            <br>
+            <span>Search 3,603,454 freelancers being offered. Submit a free quote and get hired today!</span>
+        </h1>
+    </div>
+</div>
+<div class="light-gray-wrap project-search-wrap">
+    <?= $this->layout('partial/search-tabs') ?>
+    <div class="container">
+        <div class="row search-page-content">
+
+            <div class="projectList">
+
+
+                <!--Freelancers list-->
+
+                <div class="freelancers-list-result">
+
+                    <div class="freelancer-item">
+                        <div class="freelancer-item__header clearfix">
+                            <h2 class="title float-left">
+                                <?= $this->freelancer->getUser()->getName() ?>
+                            </h2>
+                            <span class="float-right rating-amount">(<?= $this->freelancer->getRating() ?>)</span>
+                            <span class="freelancer-rating float-right">
+                                <span style="width: 100%;"></span>
+                            </span>
+                        </div>
+                        <div class="freelancer-item-meta">
+                            <div class="clearfix">
+                                <div class="freelancer-photo float-left">
+                                    <img
+                                        src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg"
+                                        alt="">
+                                </div>
+                                <div class="freelancer-meta float-right">
+                                    <ul class="freelancer-item-attributes clearfix">
+                                        <li><?= $this->freelancer->getRate() ?>$ / Hr</li>
+                                        <li><a href="#"><?= $this->freelancer->getJobCount() ?> review(s)</a></li>
+                                    </ul>
+                                    <p class="desc"><?= $this->freelancer->getDescription() ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <ul class="tags">
+                                <?php if ($this->freelancer->getCategory() !== null) : ?>
+                                    <li>
+                                        <a href="/freelancers/category/<?= $this->freelancer->getCategory()->getId() ?>/"><?= $this->freelancer->getCategory()->getName() ?></a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
