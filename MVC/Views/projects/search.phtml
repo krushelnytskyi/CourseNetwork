@@ -1,6 +1,6 @@
 <div class="search-page-header">
     <div class="container">
-        <h1>Fing Frellance Projects
+        <h1>Find Freelance Projects
             <br>
             <span>Search over 4,875 job postings in any category. Submit a free quote and get hired today!</span>
         </h1>
@@ -11,43 +11,54 @@
     <div class="container">
         <div class="row search-page-content">
             <div class="sidebarProjectFilter">
-                <div class="sidebarBox jobType">
-                    <h2 class="iconBubbleBlue">Job type</h2>
-                    <hr>
-                    <ul class="sidebarFilter">
-                        <li>
-                            <label class="control control--radio radio-inline">
-                                <input type="radio" value="" checked="checked">All
-                                <div class="control__indicator"></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="control control--radio radio-inline">
-                                <input type="radio" value="">Fixed
-                                <div class="control__indicator"></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="control control--radio radio-inline">
-                                <input type="radio" value="">Per Hour
-                                <div class="control__indicator"></div>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <div class="sidebarBox">
-                    <h2 class="iconCategoriesBlue">Categories</h2>
-                    <hr>
-                    <ul class="sidebarFilter">
-                        <li><a href="/projects/search/" class="active">All categories<span
-                                        class="total-number">(<?= $this->countAll ?>)</span></a></li>
-                        <?php foreach ($this->categories as $category): ?>
-                            <?php /** @var \MVC\Models\Category $category */ ?>
-                            <li><a href="/projects/category/<?= $category->getId() ?>/"><?= $category->getName() ?><span
-                                            class="total-number">(<?= $category->getCount() ?>)</span></a></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+                <form action=""   method="post">
+                    <div class="sidebarBox jobType">
+                        <h2 class="iconBubbleBlue">Job type</h2>
+                        <hr>
+                        <ul class="sidebarFilter">
+                            <li>
+                                <label class="control control--radio radio-inline">
+                                    <input type="radio" value=""  name="work_type" checked>All
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="control control--radio radio-inline">
+                                    <input type="radio" value="<?= \MVC\Models\Project::TYPE_FIXED?>" name="work_type">Fixed
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="control control--radio radio-inline">
+                                    <input type="radio" value="<?= MVC\Models\Project::TYPE_PER_HOUR?>" name="work_type">Per Hour
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sidebarBox">
+                        <h2 class="iconCategoriesBlue">Categories</h2>
+                        <hr>
+                        <ul class="sidebarFilter">
+                            <li><a href="/projects/search/" class="active">All categories
+                                    <span class="total-number">(<?= $this->countAll ?>)</span>
+                                </a>
+                            </li>
+                            <?php foreach ($this->categories as $category): ?>
+                                <?php /** @var \MVC\Models\Category $category */ ?>
+                                <li><a href="/projects/category/<?= $category->getId() ?>/">
+                                        <input type="radio" value="<?= $category->getId() ?>" name="category" />
+                                        <?= $category->getName() ?>
+                                        <span class="total-number">(<?= $category->getCount() ?>)</span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="col-2 search-button no-padding-left">
+                        <input type="submit" class="btn-custom1" value="Search">
+                    </div>
+                </form>
             </div>
             <div class="projectList">
                 <!-- Search box -->
@@ -84,7 +95,7 @@
                     </div>
                 </div>
                 <?php if (count($this->projects) > 0) : ?>
-                <!-- Project list -->
+                    <!-- Project list -->
                     <div class="project-list-result">
                         <!-- Project-item -->
                         <?php foreach ($this->projects as $project): ?>
@@ -92,18 +103,18 @@
                             <div class="project-item">
                                 <div class="project-item__header clearfix">
                                     <h2 class="title float-left"><a
-                                                href="/projects/project/<?= $project->getId() ?>"><?= $project->getName() ?></a>
+                                            href="/projects/project/<?= $project->getId() ?>"><?= $project->getName() ?></a>
                                     </h2>
                                     <a href="" class="project-item__bookmark float-right"></a>
                                 </div>
                                 <div class="project-item-meta">
                                     <ul class="project-item-attributes">
-                                            <li><?= $project->getWorkType() ?></li>
+                                        <li><?= $project->getWorkType() ?></li>
                                         <li><?= $project->getBudget() ?>$</li>
                                         <li>Posted <?= date('d F', $project->getCreated()) ?></li>
                                         <li><?= $project->getRequestsCount() ?> Proposals</li>
                                     </ul>
-                                    <p class="desc"><?= $string = substr($project->getDescription(), 0, 300) ?>
+                                    <p class="desc"><?= $string = stripslashes(substr($project->getDescription(), 0, 300)) ?>
                                     </p>
                                     <ul class="tags">
                                         <li>
@@ -117,7 +128,7 @@
                                                          alt=""></a>
                                         <div class="float-left">
                                             <h4 class="client-name">
-                                                <a href="#"><?= $project->getCustomer()->getUser()->getName() ?></a>
+                                                <a href="#"><?php//= $project->getCustomer()->getUser()->getName() ?></a>
                                             </h4>
                                         </div>
                                     </div>

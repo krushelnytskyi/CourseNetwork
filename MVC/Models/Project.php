@@ -12,6 +12,9 @@ use System\ORM\Repository;
  */
 class Project
 {
+
+    const TYPE_PER_HOUR = 'per-hour';
+    const TYPE_FIXED = 'fixed-price';
     /**
      * @var int
      * @column(id)

@@ -3,7 +3,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
- /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS `course_network`; /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `course_network`;
 
 CREATE TABLE IF NOT EXISTS `freelancers` (
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `balance` decimal(10,2) DEFAULT NULL,
-  `plan_id` int(11) NOT NULL DEFAULT 1,
+  `plan_id` int(11) DEFAULT NULL,
   `site` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `skype` varchar(255) DEFAULT NULL,

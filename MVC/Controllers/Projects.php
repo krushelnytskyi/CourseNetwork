@@ -66,21 +66,28 @@ class Projects extends Controller
      */
     public function searchAction()
     {
-        $url = $_SERVER['REQUEST_URI'];
 
         $criteria = new Criteria(new Repository(Project::class));
 
-        if (false === empty($_POST['search'])) {
-            $like = '%' . $_POST['search'] . '%';
+        if (false === empty($_POST['search']))
+        {
+           $like = '%' . $_POST['search'] . '%';
+
+           $like =  Connection::getInstance()->secureString($like);
 
             $criteria
                 ->whereLike('name', $like)
                 ->_or()->whereLike('description', $like);
         }
+        elseif(false === empty($_POST))
+        {
+            foreach ($_POST as $key => $value){
+                if (false === empty($value)) {
+                    $criteria
+                        ->_and()->where($key, '=', $value);
+                }
+            }
 
-        if (false === empty($_POST['category'])) {
-            $criteria
-                ->_and()->where('category', '=', $_POST['category']);
         }
 
         $repo = new Repository(Category::class);
@@ -92,6 +99,7 @@ class Projects extends Controller
 
         $this->getView()->view('projects/search');
     }
+
 
     /**
      * Detail project page
@@ -379,7 +387,7 @@ class Projects extends Controller
                    $repo->save($project);
                    $repoCategory->save($category, 'id', $categoryId);
 
-                   $this->redirect('projects/search');
+                   $this->forward('projects/search');
                }else{
                    $this->getView()->assign('error', 'Only customers can create project');
                }
