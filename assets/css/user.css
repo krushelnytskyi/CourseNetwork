@@ -1,7 +1,7 @@
 /********************=user menu*******************/
 div.main-user {
-
-
+    margin-left: -15px;
+    margin-right: -15px;
     background-image: url("/assets/img/user-page/setting/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -14,7 +14,6 @@ div.main-user {
     position: relative;
     top: -50px;
     left:70px;
-
 }
 .main-user-one table th{
     text-align: left;
@@ -23,7 +22,6 @@ div.main-user {
 .main-user-one table th:first-child{
     padding-left: 100px;
 }
-
 .main-user table td {
     color:#0275d8;
     text-align: left;
@@ -33,7 +31,6 @@ div.main-user {
     color: #1d1e1f;
     font-weight: 600;
     padding-left: 100px;
-
 }
 .tr-inverse{
     background-color: #1d1e1f;
@@ -43,7 +40,6 @@ div.main-user {
     background-color: #1d1e1f;
     color: #1d1e1f;
 }
-
 .main-user-one {
     background-color: white;
     text-align: center;
@@ -53,7 +49,6 @@ div.main-user {
     width: 160px;
     height: 160px;
     border-radius: 40px;
-
 }
 .main-user-one p {
     position: relative;
@@ -68,6 +63,8 @@ div.main-user {
     bottom: 25px;
 }
 .setting-user{
+    margin-left: -15px;
+    margin-right: -15px;
     background-image: url("/assets/img/user-page/setting/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -77,11 +74,12 @@ div.main-user {
 padding-bottom: 30px;
 }
 .portfolio-user{
+    margin-left: -15px;
+    margin-right: -15px;
     background-image: url("/assets/img/user-page/setting/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 30px
-
 }
 .custom {
   width: 70px;
@@ -91,7 +89,6 @@ padding-bottom: 30px;
 .custom img{
     width: 280px;
     hight: 280px;
-
 }
 .custom-checkbox{
     position: absolute;
@@ -113,13 +110,11 @@ padding-bottom: 30px;
     padding-top: 10px;
     width: 280px;
     margin-left: 15px;
-
 }
 
 .add-user {
-
-    width:auto;
-    height: 100%;
+    margin-left: -15px;
+    margin-right: -15px;
     background-image: url("/assets/img/user-page/setting/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -137,8 +132,6 @@ padding-bottom: 30px;
     text-align: left;
     vertical-align: middle;
     padding-left: 10px;
-
-
 }
 
 .fileform .selectbutton {
@@ -157,7 +150,6 @@ padding-bottom: 30px;
     height: 100%;
     padding-top: 5px;
 }
-
 .fileform #upload{
     position:absolute;
     top:0;
@@ -178,20 +170,9 @@ padding-bottom: 30px;
 .col-6 {
     position:relative;
 }
-.workdiary{
-    background-image: url("/assets/img/user-page/setting/background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding-top: 90px
-}
-/*style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"*/
-.workdiary iframe{
-    height: 600px;
-    frame-border:0;
-    scrolling:no;
-    border-width:0;
-}
 .jobs-user{
+    margin-left: -15px;
+    margin-right: -15px;
     background-image: url("/assets/img/user-page/setting/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -202,9 +183,6 @@ padding-bottom: 30px;
 }
 .jobs-user table th,td {
     text-align: center;
-}
-.news-user{
-
 }
 .news-user h1,h2,img {
     text-align: center;

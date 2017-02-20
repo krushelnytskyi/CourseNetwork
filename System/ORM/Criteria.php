@@ -1,16 +1,21 @@
 <?php
+
 namespace System\ORM;
+
 use System\Database\Statement\Select;
+
 /**
  * Class Criteria
  * @package System\ORM
  */
 class Criteria extends Select
 {
+
     /**
      * @var array
      */
     protected $repository;
+
     /**
      * Criteria constructor.
      * @param Repository $repository
@@ -21,6 +26,7 @@ class Criteria extends Select
         $this->repository = $repository;
         $this->from($repository->getStorage());
     }
+
     /**
      * @param $field
      * @param $values
@@ -32,6 +38,7 @@ class Criteria extends Select
         $field = $this->repository->getProperty($field);
         return parent::buildWhere($field, $values, $pattern);
     }
+
     /**
      * @param int $limit
      * @param int $offset
@@ -42,4 +49,5 @@ class Criteria extends Select
     {
         return $this->repository->findBy($this, $limit, $offset, $order);
     }
+
 }

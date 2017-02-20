@@ -1,4 +1,6 @@
 .idea
+.vagrant
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+/nbproject/private/

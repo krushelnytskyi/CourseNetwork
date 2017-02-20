@@ -1,0 +1,36 @@
+<?php $user = \System\Auth\UserSession::getInstance()->getIdentity(); ?>
+<?php $role = $user->getRole() === 'customer' ? 'Freelancer' : 'Customer'; ?>
+<div class="row">
+    <?php $this->layout('user/menu'); ?>
+    <div class="jobs-user col-sm-10">
+        <h2>About projects</h2>
+        <table class="table table-bordered offset-1 col-sm-10">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name Project</th>
+                <th><?= $role; ?></th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>Status</th>
+                <th>Paid</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->projects as $project): ?>
+            <?php /** @var \MVC\Models\Project $project */ ?>
+                <tr class=<?= $project->getPaid() === 1 ? 'bg-success ' : 'bg-warning'; ?>>
+                    <td scope="row"><?= $project->getId(); ?></td>
+                    <td><a href="#"><?= $project->getName(); ?></a></td>
+                    <td>sdfs</td>
+                    <td><?= substr($project->getStart(), 0, 10); ?></td>
+                    <td><?= substr($project->getFinish(), 0, 10); ?></td>
+                    <td><?= $project->getStatus() === 1 ? 'comleted' : 'in progress'; ?></td>
+                    <td><?= $project->getPaid() === 1 ? 'paid' : 'is not paid'; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+

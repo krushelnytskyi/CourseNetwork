@@ -82,7 +82,7 @@ class Freelancer
     /**
      * @return \MVC\Models\Category
      */
-    public function getCategory():Category
+    public function getCategory()
     {
         $repo = new Repository(Category::class);
 

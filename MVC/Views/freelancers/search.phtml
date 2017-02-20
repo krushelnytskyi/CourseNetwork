@@ -16,9 +16,9 @@
                     <hr>
                     <ul class="sidebarFilter">
                         <li><a href="/freelancers/search/" class="active">All categories<span
-                                        class="total-number">(<?= $this->countAll ?>)</span></a></li>
-                        <?php foreach ($this->categories as $category): ?>
-                            <?php /** @var \MVC\Models\Category $category */ ?>
+                                    class="total-number">(<?= $this->countAll ?>)</span></a></li>
+                            <?php foreach ($this->categories as $category): ?>
+                                <?php /** @var \MVC\Models\Category $category */ ?>
                             <li><a href="/freelancers/category/<?= $category->getId() ?>/"><?= $category->getName() ?>
                                     <span class="total-number">(<?= $category->getCountFreelancers() ?>)</span></a></li>
                         <?php endforeach; ?>
@@ -127,7 +127,7 @@
                     <form action="" id="project-search-form" class="search-box">
                         <div class="row">
                             <div class="col-10 search-input no-padding-right">
-                                <input type="search" id="keyword" placeholder="Search Freelancers...">
+                                <input type="search" id="keyword" placeholder="Search Freelancers..." name="search">
                             </div>
                             <div class="col-2 search-button no-padding-left">
                                 <input type="submit" class="btn-custom1" value="Search">
@@ -167,19 +167,20 @@
                         <?php /** @var \MVC\Models\Freelancer $freelancer */ ?>
                         <div class="freelancer-item">
                             <div class="freelancer-item__header clearfix">
-                                <h2 class="title float-left"><a href="#"><?= $freelancer->getUser()->getName() ?></a>
+                                <h2 class="title float-left">
+                                    <a href="/freelancers/profile/<?= $freelancer->getId() ?>"><?= $freelancer->getUser()->getName() ?></a>
                                 </h2>
                                 <span class="float-right rating-amount">(<?= $freelancer->getRating() ?>)</span>
                                 <span class="freelancer-rating float-right">
-                <span style="width: 100%;"></span>
-              </span>
+                                    <span style="width: 100%;"></span>
+                                </span>
                             </div>
                             <div class="freelancer-item-meta">
                                 <div class="clearfix">
                                     <div class="freelancer-photo float-left">
-                                        <a href="#"><img
-                                                    src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg"
-                                                    alt=""></a>
+                                        <a href="/freelancers/profile/<?= $freelancer->getId() ?>"><img
+                                                src="/assets/img/projects-freelancers-search-page/freelancer-random.jpg"
+                                                alt=""></a>
                                     </div>
                                     <div class="freelancer-meta float-right">
                                         <ul class="freelancer-item-attributes clearfix">
@@ -191,15 +192,11 @@
                                     </div>
                                 </div>
                                 <ul class="tags">
-                                    <li>
-                                        <a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a>
-                                    </li>
-                                    <!--<li><a href="#">Design</a></li>
-                                    <li><a href="#">PHP</a></li>
-                                    <li><a href="#">Admin</a></li>
-                                    <li><a href="#">Web Development</a></li>
-                                    <li><a href="#">Adobe Photoshop</a></li>
-                                    <li><a href="#">Javascript Senior</a></li>-->
+                                    <?php if ($freelancer->getCategory() !== null) : ?>
+                                        <li>
+                                            <a href="/freelancers/category/<?= $freelancer->getCategory()->getId() ?>/"><?= $freelancer->getCategory()->getName() ?></a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </div>

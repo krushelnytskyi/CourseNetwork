@@ -25,6 +25,12 @@ class Connection
      */
     protected $link;
 
+    /**
+     * @var \mysqli
+     */
+    protected $connect;
+
+
     public function __construct()
     {
         $databaseConfig = Config::getInstance()->get('database');
@@ -32,9 +38,10 @@ class Connection
         $this->link = new \mysqli(
             $databaseConfig['host'],
             $databaseConfig['username'],
-            $databaseConfig['password'],
-            $databaseConfig['database']
+            $databaseConfig['password']
         );
+
+        $this->getLink()->select_db($databaseConfig['database']);
     }
 
     /**
@@ -43,6 +50,14 @@ class Connection
     public function getLink(): \mysqli
     {
         return $this->link;
+    }
+
+    /**
+     * @return \mysqli
+     */
+    public function getConnect(): \mysqli
+    {
+        return $this->connect;
     }
 
     /**

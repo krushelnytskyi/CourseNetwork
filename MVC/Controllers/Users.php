@@ -143,13 +143,6 @@ class Users extends Controller
 
     public function testAction()
     {
-        $repo = new Repository(Category::class);
-
-        $criteria = new Criteria($repo);
-        $criteria->whereIn('id', [4, 5, 8]);
-
-        var_dump($repo->findBy($criteria));
-        exit(0);
 
     }
 
