@@ -27,6 +27,10 @@ return [
         'freelancers\/category\/[0-9]+' => [
             'controller' => \MVC\Controllers\Freelancers::class,
             'action'     => 'search'
+        ],
+        'freelancers\/profile\/[0-9]+' => [
+            'controller' => \MVC\Controllers\Freelancers::class,
+            'action'     => 'profile'
         ]
     ]
 ];
